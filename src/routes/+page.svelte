@@ -11,22 +11,13 @@
 	const margin = { top: 10, right: 10, bottom: 25, left: 25 };
 
 	let points = [
-		{ x: 6, y: 8 },
-		{ x: 9, y: 8 }
+		{ id: 1, x: 6, y: 8 },
+		{ id: 2, x: 9, y: 8 },
+		{ id: 3, x: 5, y: 7.5 }
 	];
 	let width, height;
 	let picked,
 		click = false;
-
-	// onMount(() =>
-	// 	fetch('https://raw.githubusercontent.com/vega/vega/master/docs/data/cars.json')
-	// 		.then((data) => data.json())
-	// 		.then((data) => {
-	// 			points = data
-	// 				.map((d, id) => ({ mpg: d.Miles_per_Gallon, hp: d.Horsepower, id }))
-	// 				.filter((d) => d.mpg && d.hp);
-	// 		})
-	// );
 
 	$: abscissa = scaleLinear()
 		.domain([0, 10])
@@ -37,6 +28,12 @@
 		.domain([0, 10])
 		.range([height - margin.bottom, margin.top])
 		.nice();
+
+	$: delaunay = Delaunay.from(
+		points,
+		(d) => abscissa(d.x),
+		(d) => ordinate(d.y)
+	);
 </script>
 
 <div class="app">
@@ -48,15 +45,24 @@
 			{width}
 			{height}
 			style="cursor: pointer"
+			on:mousemove={({ clientX: x, clientY: y }) => {
+				picked = delaunay.find(x, y);
+			}}
 			on:mousedown={() => (click = true)}
 			on:mouseup={() => (click = false)}
 			on:mouseout={() => (picked = null)}
 		>
-			<Axis type="x" scale={abscissa} tickNumber={8} {margin} />
+			<Axis type="x" scale={abscissa} tickNumber={10} {margin} />
 			<Axis type="y" scale={ordinate} tickNumber={10} {margin} />
 			<Bg />
-			{#each points as { x, y }}
-				<Point x={abscissa(x)} y={ordinate(y)} fill="tomato" r="5" />
+			{#each points as { x, y, id } (id)}
+				<Point
+					x={abscissa(x)}
+					y={ordinate(y)}
+					fill="tomato"
+					r={picked && id === points.at(picked).id && !click ? 5 : 3}
+					stroke={picked && id === points.at(picked).id && '#000'}
+				/>
 			{/each}
 		</Canvas>
 	</div>
