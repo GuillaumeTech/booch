@@ -48,12 +48,15 @@
 			{width}
 			{height}
 			style="cursor: pointer"
-			on:mousemove={({ clientX: x, clientY: y }) => {
-				picked = delaunay.find(x, y);
+			on:mousemove={({ layerX, layerY }) => {
+				const i = delaunay.find(layerX, layerY);
+				if (i) {
+					picked = points[i].id;
+				}
 			}}
+			on:mouseout={() => (picked = null)}
 			on:mousedown={() => (click = true)}
 			on:mouseup={() => (click = false)}
-			on:mouseout={() => (picked = null)}
 		>
 			<Axis type="x" scale={abscissa} tickNumber={10} {margin} />
 			<Axis type="y" scale={ordinate} tickNumber={10} {margin} />
