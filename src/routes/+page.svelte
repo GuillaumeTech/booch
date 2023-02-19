@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { onMount } from 'svelte';
 	import { Canvas } from 'svelte-canvas';
 	import { extent } from 'd3-array';
@@ -9,30 +9,33 @@
 	import Axis from './Axis.svelte';
 	import Bg from './Bg.svelte';
 	const margin = { top: 10, right: 10, bottom: 25, left: 25 };
+	type point = {
+		x: number;
+		y: number;
+		id: number;
+	};
 
-	let points = [
-		{ id: 1, x: 6, y: 8 },
+	let points: point[] = [
+		{ id: 1, x: 1, y: 8 },
 		{ id: 2, x: 9, y: 8 },
-		{ id: 3, x: 5, y: 7.5 }
+		{ id: 3, x: 8, y: 7.5 }
 	];
-	let width, height;
-	let picked,
+	let width: number, height: number;
+	let picked: number | null = null,
 		click = false;
 
 	$: abscissa = scaleLinear()
 		.domain([0, 10])
 		.range([margin.left, width - margin.right])
 		.nice();
-
 	$: ordinate = scaleLinear()
 		.domain([0, 10])
 		.range([height - margin.bottom, margin.top])
 		.nice();
-
 	$: delaunay = Delaunay.from(
 		points,
-		(d) => abscissa(d.x),
-		(d) => ordinate(d.y)
+		(d: point) => abscissa(d.x),
+		(d: point) => ordinate(d.y)
 	);
 </script>
 
@@ -60,8 +63,8 @@
 					x={abscissa(x)}
 					y={ordinate(y)}
 					fill="tomato"
-					r={picked && id === points.at(picked).id && !click ? 5 : 3}
-					stroke={picked && id === points.at(picked).id && '#000'}
+					r={id === picked && !click ? 5 : 3}
+					stroke={id === picked ? '#000' : null}
 				/>
 			{/each}
 		</Canvas>
