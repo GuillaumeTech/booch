@@ -49,9 +49,9 @@
 			{height}
 			style="cursor: pointer"
 			on:mousemove={({ layerX, layerY }) => {
-				const i = delaunay.find(layerX, layerY);
-				if (i) {
-					picked = points[i].id;
+				const index = delaunay.find(layerX, layerY);
+				if (Number.isInteger(index) && index >= 0) {
+					picked = points[index].id;
 				}
 			}}
 			on:mouseout={() => (picked = null)}
