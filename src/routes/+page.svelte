@@ -99,8 +99,8 @@
 		>
 			<!-- <Layer {render} /> -->
 
-			<Axis type="x" scale={abscissa} tickNumber={10} {margin} />
-			<Axis type="y" scale={ordinate} tickNumber={10} {margin} />
+			<Axis type="x" name={'Funk'} scale={abscissa} tickNumber={10} {margin} />
+			<Axis type="y" name={'Dryness'} scale={ordinate} tickNumber={10} {margin} />
 			<Bg />
 			{#each points as { x, y, id } (id)}
 				<Point

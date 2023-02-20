@@ -1,11 +1,12 @@
-<script>
+<script lang="ts">
 	import { Layer } from 'svelte-canvas';
-
-	export let scale,
+	import type { ScaleLinear } from 'd3-scale';
+	export let scale: ScaleLinear<any, any>,
 		tickSize = 4,
 		margin,
 		tickNumber = 10,
-		type = 'x';
+		type = 'x',
+		name = '';
 
 	$: ticks = scale.ticks(tickNumber);
 
@@ -28,6 +29,7 @@
 		context.textAlign = type === 'x' ? 'center' : 'right';
 		context.textBaseline = type === 'x' ? 'top' : 'middle';
 		context.fillStyle = 'black';
+		context.font = '14pt serif';
 
 		ticks.forEach((d) => {
 			if (type === 'x') {
@@ -36,6 +38,13 @@
 				context.fillText(d, width / 2 + margin.left - tickSize - 1, scale(d));
 			}
 		});
+
+		if (type === 'x') {
+			context.direction = 'rtl';
+			context.fillText(name, width - 20, height / 2 - margin.bottom - 20);
+		} else if (type === 'y') {
+			context.fillText(name, width / 2 + margin.left + 70, 10);
+		}
 	};
 </script>
 
