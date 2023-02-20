@@ -8,7 +8,7 @@
 	import Axis from './Axis.svelte';
 	import Bg from './Bg.svelte';
 	import { Layer } from 'svelte-canvas';
-
+	import Tooltip from './Tooltip.svelte';
 	const margin = { top: 10, right: 10, bottom: 25, left: 25 };
 	type Point = {
 		x: number;
@@ -23,9 +23,12 @@
 		{ id: 'vdds', x: 5, y: 8 },
 		{ id: 'vddsa', x: 8.1, y: 8 }
 	];
+
 	let width: number, height: number;
 	let picked: string | null = null,
 		click = false;
+
+	let showTooltip: boolean, tooltipX: number, tooltipY: number;
 
 	function computeDistance(xa: number, ya: number, xb: number, yb: number): number {
 		return Math.sqrt((xa - xb) ** 2 + (ya - yb) ** 2);
@@ -66,6 +69,7 @@
 		<li>test</li>
 	</ul>
 	<div class="graph" bind:clientWidth={width} bind:clientHeight={height}>
+		<Tooltip title="testiong" x={tooltipX} y={tooltipY} display={showTooltip} />
 		<Canvas
 			{width}
 			{height}
@@ -89,12 +93,19 @@
 			}}
 			on:mouseout={() => (picked = null)}
 			on:mousedown={() => (click = true)}
-			on:mouseup={() => (click = false)}
-			on:click={({ layerX, layerY }) => {
-				const x = PixelsToDomain(layerX, abscissa);
-				const y = PixelsToDomain(layerY, ordinate);
-				const id = uuidv4();
-				addToPoints({ x, y, id });
+			on:mouseup={(e) => console.log(e)}
+			on:click={({ layerX, layerY, clientX, clientY }) => {
+				if (picked) {
+					console.log('hey');
+					tooltipX = clientX;
+					tooltipY = clientY;
+					showTooltip = true;
+				} else {
+					const x = PixelsToDomain(layerX, abscissa);
+					const y = PixelsToDomain(layerY, ordinate);
+					const id = uuidv4();
+					addToPoints({ x, y, id });
+				}
 			}}
 		>
 			<!-- <Layer {render} /> -->
