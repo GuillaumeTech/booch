@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { Canvas } from 'svelte-canvas';
 	import { scaleLinear, type ScaleLinear } from 'd3-scale';
-
+	import { v4 as uuidv4 } from 'uuid';
 	import { Delaunay } from 'd3-delaunay';
 	import Point from './Point.svelte';
 	import Axis from './Axis.svelte';
@@ -10,13 +10,13 @@
 	import { Layer } from 'svelte-canvas';
 
 	const margin = { top: 10, right: 10, bottom: 25, left: 25 };
-	type point = {
+	type Point = {
 		x: number;
 		y: number;
 		id: string;
 	};
 
-	let points: point[] = [
+	let points: Point[] = [
 		{ id: 'a', x: 2, y: 8 },
 		{ id: 'v', x: 9, y: 7 },
 		{ id: 'vds', x: 3, y: 6 },
@@ -35,6 +35,10 @@
 		return scale.invert(valuePix);
 	}
 
+	function addToPoints(point: Point): void {
+		points = [...points, point];
+	}
+
 	$: abscissa = scaleLinear()
 		.domain([0, 10])
 		.range([margin.left, width - margin.right])
@@ -45,8 +49,8 @@
 		.nice();
 	$: delaunay = Delaunay.from(
 		points,
-		(d: point) => abscissa(d.x),
-		(d: point) => ordinate(d.y)
+		(d: Point) => abscissa(d.x),
+		(d: Point) => ordinate(d.y)
 	);
 
 	$: render = ({ context, width, height }) => {
@@ -86,7 +90,12 @@
 			on:mouseout={() => (picked = null)}
 			on:mousedown={() => (click = true)}
 			on:mouseup={() => (click = false)}
-			on:click={() => (click = false)}
+			on:click={({ layerX, layerY }) => {
+				const x = PixelsToDomain(layerX, abscissa);
+				const y = PixelsToDomain(layerY, ordinate);
+				const id = uuidv4();
+				addToPoints({ x, y, id });
+			}}
 		>
 			<!-- <Layer {render} /> -->
 
