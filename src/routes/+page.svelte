@@ -1,28 +1,39 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { Canvas } from 'svelte-canvas';
-	import { extent } from 'd3-array';
-	import { scaleLinear } from 'd3-scale';
-	import { Delaunay } from 'd3-delaunay';
+	import { scaleLinear, type ScaleLinear } from 'd3-scale';
 
+	import { Delaunay } from 'd3-delaunay';
 	import Point from './Point.svelte';
 	import Axis from './Axis.svelte';
 	import Bg from './Bg.svelte';
+	import { Layer } from 'svelte-canvas';
+
 	const margin = { top: 10, right: 10, bottom: 25, left: 25 };
 	type point = {
 		x: number;
 		y: number;
-		id: number;
+		id: string;
 	};
 
 	let points: point[] = [
-		{ id: 1, x: 1, y: 8 },
-		{ id: 2, x: 9, y: 8 },
-		{ id: 3, x: 8, y: 7.5 }
+		{ id: 'a', x: 2, y: 8 },
+		{ id: 'v', x: 9, y: 7 },
+		{ id: 'vds', x: 3, y: 6 },
+		{ id: 'vdds', x: 5, y: 8 },
+		{ id: 'vddsa', x: 8.1, y: 8 }
 	];
 	let width: number, height: number;
-	let picked: number | null = null,
+	let picked: string | null = null,
 		click = false;
+
+	function computeDistance(xa: number, ya: number, xb: number, yb: number): number {
+		return Math.sqrt((xa - xb) ** 2 + (ya - yb) ** 2);
+	}
+
+	function PixelsToDomain(valuePix: number, scale: ScaleLinear<any, any>): number {
+		return scale.invert(valuePix);
+	}
 
 	$: abscissa = scaleLinear()
 		.domain([0, 10])
@@ -37,6 +48,13 @@
 		(d: point) => abscissa(d.x),
 		(d: point) => ordinate(d.y)
 	);
+
+	$: render = ({ context, width, height }) => {
+		delaunay.voronoi().render(context);
+		delaunay.renderHull(context);
+
+		context.stroke();
+	};
 </script>
 
 <div class="app">
@@ -51,13 +69,27 @@
 			on:mousemove={({ layerX, layerY }) => {
 				const index = delaunay.find(layerX, layerY);
 				if (Number.isInteger(index) && index >= 0) {
-					picked = points[index].id;
+					const point = points[index];
+					const distance = computeDistance(
+						PixelsToDomain(layerX, abscissa),
+						PixelsToDomain(layerY, ordinate),
+						point.x,
+						point.y
+					);
+					if (distance < 0.3) {
+						picked = point.id;
+					} else {
+						picked = null;
+					}
 				}
 			}}
 			on:mouseout={() => (picked = null)}
 			on:mousedown={() => (click = true)}
 			on:mouseup={() => (click = false)}
+			on:click={() => (click = false)}
 		>
+			<!-- <Layer {render} /> -->
+
 			<Axis type="x" scale={abscissa} tickNumber={10} {margin} />
 			<Axis type="y" scale={ordinate} tickNumber={10} {margin} />
 			<Bg />
