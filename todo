@@ -1,6 +1,7 @@
 [x] axis names
 [x] add points
 [x] hover + distance
+[-] switch to svg
 [-] normal mode (click shows popup with info)
 [] edit mode (add on click + popup for description)
 [] relative labels
