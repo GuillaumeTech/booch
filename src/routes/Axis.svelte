@@ -6,46 +6,37 @@
 		margin,
 		tickNumber = 10,
 		type = 'x',
-		name = '';
-
+		name = '',
+		width: number,
+		height: number;
+	const isX = type === 'x';
 	$: ticks = scale.ticks(tickNumber);
-
-	$: render = ({ context, width, height }) => {
-		context.beginPath();
-
-		ticks.forEach((d) => {
-			if (type === 'x') {
-				context.moveTo(scale(d), height / 2 - margin.bottom);
-				context.lineTo(scale(d), height / 2 - margin.bottom + tickSize);
-			} else if (type === 'y') {
-				context.moveTo(width / 2 + margin.left, scale(d));
-				context.lineTo(width / 2 + margin.left - tickSize, scale(d));
-			}
-		});
-
-		context.strokeStyle = 'black';
-		context.stroke();
-
-		context.textAlign = type === 'x' ? 'center' : 'right';
-		context.textBaseline = type === 'x' ? 'top' : 'middle';
-		context.fillStyle = 'black';
-		context.font = '14pt serif';
-
-		ticks.forEach((d) => {
-			if (type === 'x') {
-				context.fillText(d, scale(d), height / 2 - margin.bottom + tickSize + 1);
-			} else if (type === 'y') {
-				context.fillText(d, width / 2 + margin.left - tickSize - 1, scale(d));
-			}
-		});
-
-		if (type === 'x') {
-			context.direction = 'rtl';
-			context.fillText(name, width - 20, height / 2 - margin.bottom - 20);
-		} else if (type === 'y') {
-			context.fillText(name, width / 2 + margin.left + 70, 10);
-		}
-	};
 </script>
 
-<Layer {render} />
+{#each ticks as tick}
+	{#if isX}
+		<line
+			x1={scale(tick)}
+			y1={height / 2}
+			x2={scale(tick)}
+			y2={height / 2 + tickSize}
+			stroke="black"
+		/>
+		<text x={scale(tick) - 5} y={height / 2 - 5}>{tick}</text>
+	{:else}
+		<line
+			x1={width / 2}
+			y1={scale(tick)}
+			x2={width / 2 - tickSize}
+			y2={scale(tick)}
+			stroke="black"
+		/>
+		<text x={width / 2 + 10} y={scale(tick) + 5}>{tick}</text>
+	{/if}
+{/each}
+
+{#if isX}
+	<text x={width - 50} y={height / 2 + 20}>{name}</text>
+{:else}
+	<text x={width / 2 - 65} y={27}>{name}</text>
+{/if}
