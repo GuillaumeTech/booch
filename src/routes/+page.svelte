@@ -9,7 +9,7 @@
 	import Bg from './Bg.svelte';
 	import { Layer } from 'svelte-canvas';
 	import Tooltip from './Tooltip.svelte';
-	const margin = { top: 10, right: 10, bottom: 25, left: 25 };
+	const margin = { top: 25, right: 25, bottom: 25, left: 25 };
 	type Point = {
 		x: number;
 		y: number;
@@ -70,49 +70,34 @@
 	</ul>
 	<div class="graph" bind:clientWidth={width} bind:clientHeight={height}>
 		<Tooltip title="testiong" x={tooltipX} y={tooltipY} display={showTooltip} />
-		<Canvas
-			{width}
-			{height}
+		<!-- svelte-ignore a11y-mouse-events-have-key-events -->
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<svg
+			width="100%"
+			height="100%"
 			style="cursor: pointer"
-			on:mousemove={({ layerX, layerY }) => {
-				const index = delaunay.find(layerX, layerY);
-				if (Number.isInteger(index) && index >= 0) {
-					const point = points[index];
-					const distance = computeDistance(
-						PixelsToDomain(layerX, abscissa),
-						PixelsToDomain(layerY, ordinate),
-						point.x,
-						point.y
-					);
-					if (distance < 0.3) {
-						picked = point.id;
-					} else {
-						picked = null;
-					}
-				}
-			}}
 			on:mouseout={() => (picked = null)}
 			on:mousedown={() => (click = true)}
-			on:mouseup={(e) => console.log(e)}
+			on:mouseup={(e) => console.log(height, width)}
 			on:click={({ layerX, layerY, clientX, clientY }) => {
-				if (picked) {
-					console.log('hey');
-					tooltipX = clientX;
-					tooltipY = clientY;
-					showTooltip = true;
-				} else {
-					const x = PixelsToDomain(layerX, abscissa);
-					const y = PixelsToDomain(layerY, ordinate);
-					const id = uuidv4();
-					addToPoints({ x, y, id });
-				}
+				// if (picked) {
+				// 	console.log('hey');
+				// 	tooltipX = clientX;
+				// 	tooltipY = clientY;
+				// 	showTooltip = true;
+				// } else {
+				// 	const x = PixelsToDomain(layerX, abscissa);
+				// 	const y = PixelsToDomain(layerY, ordinate);
+				// 	const id = uuidv4();
+				// 	addToPoints({ x, y, id });
+				// }
 			}}
 		>
 			<!-- <Layer {render} /> -->
 
-			<Axis type="x" name={'Funk'} scale={abscissa} tickNumber={10} {margin} />
-			<Axis type="y" name={'Dryness'} scale={ordinate} tickNumber={10} {margin} />
-			<Bg />
+			<Axis {width} {height} type="x" name={'Funk'} scale={abscissa} tickNumber={10} {margin} />
+			<Axis {width} {height} type="y" name={'Dryness'} scale={ordinate} tickNumber={10} {margin} />
+			<!-- <Bg /> 
 			{#each points as { x, y, id } (id)}
 				<Point
 					x={abscissa(x)}
@@ -121,8 +106,8 @@
 					r={id === picked && !click ? 5 : 3}
 					stroke={id === picked ? '#000' : null}
 				/>
-			{/each}
-		</Canvas>
+			{/each} -->
+		</svg>
 	</div>
 </div>
 
@@ -130,6 +115,7 @@
 	div.graph {
 		width: 65%;
 		top: 50%;
+		height: 40rem;
 		margin-left: 5rem;
 		margin-top: 5rem;
 	}
@@ -144,5 +130,6 @@
 	}
 	.app {
 		display: flex;
+		min-height: 100%;
 	}
 </style>
