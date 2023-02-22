@@ -113,9 +113,9 @@
 
 <style>
 	div.graph {
-		width: 65%;
+		width: min(65vw, 65vh);
 		top: 50%;
-		height: 40rem;
+		height: min(65vw, 65vh);
 		margin-left: 5rem;
 		margin-top: 5rem;
 	}
