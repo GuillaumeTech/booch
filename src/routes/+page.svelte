@@ -55,13 +55,6 @@
 		(d: Point) => abscissa(d.x),
 		(d: Point) => ordinate(d.y)
 	);
-
-	$: render = ({ context, width, height }) => {
-		delaunay.voronoi().render(context);
-		delaunay.renderHull(context);
-
-		context.stroke();
-	};
 </script>
 
 <div class="app">
@@ -109,8 +102,6 @@
 				}
 			}}
 		>
-			<!-- <Layer {render} /> -->
-
 			<Axis {width} {height} type="x" name={'Funk'} scale={abscissa} tickNumber={10} {margin} />
 			<Axis {width} {height} type="y" name={'Dryness'} scale={ordinate} tickNumber={10} {margin} />
 			<!-- <Bg /> -->
