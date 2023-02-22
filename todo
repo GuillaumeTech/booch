@@ -1,11 +1,15 @@
 [x] axis names
 [x] add points
 [x] hover + distance
-[-] switch to svg
-[-] normal mode (click shows popup with info)
-[] edit mode (add on click + popup for description)
+
+- [-] normal mode (click shows popup with info)
+  [x] switch to svg
+  [-] integrrate tippy.js
+
+[] edit mode (add on click)
 [] relative labels
+[] add more projects
+[] styling
+[] google fire base
 [] table view
 [] more axis
-[] add more projects
-[] google fire base
