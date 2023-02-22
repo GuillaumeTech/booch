@@ -76,37 +76,53 @@
 			width="100%"
 			height="100%"
 			style="cursor: pointer"
+			on:mousemove={({ offsetX, offsetY }) => {
+				const index = delaunay.find(offsetX, offsetY);
+				if (Number.isInteger(index) && index >= 0) {
+					const point = points[index];
+					const distance = computeDistance(
+						PixelsToDomain(offsetX, abscissa),
+						PixelsToDomain(offsetY, ordinate),
+						point.x,
+						point.y
+					);
+					if (distance < 0.3) {
+						picked = point.id;
+					} else {
+						picked = null;
+					}
+				}
+			}}
 			on:mouseout={() => (picked = null)}
 			on:mousedown={() => (click = true)}
-			on:mouseup={(e) => console.log(height, width)}
-			on:click={({ layerX, layerY, clientX, clientY }) => {
-				// if (picked) {
-				// 	console.log('hey');
-				// 	tooltipX = clientX;
-				// 	tooltipY = clientY;
-				// 	showTooltip = true;
-				// } else {
-				// 	const x = PixelsToDomain(layerX, abscissa);
-				// 	const y = PixelsToDomain(layerY, ordinate);
-				// 	const id = uuidv4();
-				// 	addToPoints({ x, y, id });
-				// }
+			on:mouseup={(e) => (click = false)}
+			on:click={({ offsetX, offsetY, clientX, clientY }) => {
+				if (picked) {
+					tooltipX = clientX;
+					tooltipY = clientY;
+					showTooltip = true;
+				} else {
+					const x = PixelsToDomain(offsetX, abscissa);
+					const y = PixelsToDomain(offsetY, ordinate);
+					const id = uuidv4();
+					addToPoints({ x, y, id });
+				}
 			}}
 		>
 			<!-- <Layer {render} /> -->
 
 			<Axis {width} {height} type="x" name={'Funk'} scale={abscissa} tickNumber={10} {margin} />
 			<Axis {width} {height} type="y" name={'Dryness'} scale={ordinate} tickNumber={10} {margin} />
-			<!-- <Bg /> 
+			<!-- <Bg /> -->
 			{#each points as { x, y, id } (id)}
 				<Point
 					x={abscissa(x)}
 					y={ordinate(y)}
 					fill="tomato"
-					r={id === picked && !click ? 5 : 3}
+					r={id === picked && !click ? 6 : 3}
 					stroke={id === picked ? '#000' : null}
 				/>
-			{/each} -->
+			{/each}
 		</svg>
 	</div>
 </div>
