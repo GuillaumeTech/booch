@@ -6,6 +6,7 @@
 	import Point from './Point.svelte';
 	import Axis from './Axis.svelte';
 	import Bg from './Bg.svelte';
+	import Modal from './Modal.svelte';
 
 	const margin = { top: 25, right: 25, bottom: 25, left: 25 };
 	type Point = {
@@ -18,6 +19,7 @@
 	};
 
 	let addMode = false;
+	let showModal = false;
 	let points: Point[] = [
 		{ id: 'a', x: 2, y: 8, title: 'truc', details: 'lorem ipsum dolor sit ament va consectetyr' },
 		{ id: 'v', x: 9, y: 7 },
@@ -72,6 +74,15 @@
 		>
 			{addMode ? 'View' : 'Add'} mode</button
 		>
+		<Modal
+			{showModal}
+			onCancel={() => {
+				showModal = false;
+			}}
+			onClose={() => {
+				showModal = false;
+			}}>test</Modal
+		>
 		<!-- svelte-ignore a11y-mouse-events-have-key-events -->
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<svg
@@ -114,7 +125,8 @@
 					const x = PixelsToDomain(offsetX, abscissa);
 					const y = PixelsToDomain(offsetY, ordinate);
 					const id = uuidv4();
-					addToPoints({ x, y, id });
+					showModal = true;
+					// addToPoints({ x, y, id });
 				}
 			}}
 		>
