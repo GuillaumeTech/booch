@@ -1,23 +1,24 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Canvas } from 'svelte-canvas';
 	import { scaleLinear, type ScaleLinear } from 'd3-scale';
 	import { v4 as uuidv4 } from 'uuid';
 	import { Delaunay } from 'd3-delaunay';
 	import Point from './Point.svelte';
 	import Axis from './Axis.svelte';
 	import Bg from './Bg.svelte';
-	import { Layer } from 'svelte-canvas';
-	import Tooltip from './Tooltip.svelte';
+
 	const margin = { top: 25, right: 25, bottom: 25, left: 25 };
 	type Point = {
 		x: number;
 		y: number;
 		id: string;
+		title?: string;
+		details?: string;
+		date?: Date;
 	};
 
 	let points: Point[] = [
-		{ id: 'a', x: 2, y: 8 },
+		{ id: 'a', x: 2, y: 8, title: 'truc', details: 'lorem ipsum dolor sit ament va consectetyr' },
 		{ id: 'v', x: 9, y: 7 },
 		{ id: 'vds', x: 3, y: 6 },
 		{ id: 'vdds', x: 5, y: 8 },
@@ -62,7 +63,6 @@
 		<li>test</li>
 	</ul>
 	<div class="graph" bind:clientWidth={width} bind:clientHeight={height}>
-		<Tooltip title="testiong" x={tooltipX} y={tooltipY} display={showTooltip} />
 		<!-- svelte-ignore a11y-mouse-events-have-key-events -->
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<svg
@@ -91,9 +91,8 @@
 			on:mouseup={(e) => (click = false)}
 			on:click={({ offsetX, offsetY, clientX, clientY }) => {
 				if (picked) {
-					tooltipX = clientX;
-					tooltipY = clientY;
-					showTooltip = true;
+					const pointPicked = document.getElementById(picked);
+					pointPicked?.dispatchEvent(new Event('click')); //trigger the popup
 				} else {
 					const x = PixelsToDomain(offsetX, abscissa);
 					const y = PixelsToDomain(offsetY, ordinate);
@@ -105,13 +104,17 @@
 			<Axis {width} {height} type="x" name={'Funk'} scale={abscissa} tickNumber={10} {margin} />
 			<Axis {width} {height} type="y" name={'Dryness'} scale={ordinate} tickNumber={10} {margin} />
 			<!-- <Bg /> -->
-			{#each points as { x, y, id } (id)}
+			{#each points as { x, y, id, title, details, date } (id)}
 				<Point
 					x={abscissa(x)}
 					y={ordinate(y)}
 					fill="tomato"
-					r={id === picked && !click ? 6 : 3}
+					{id}
+					r={id === picked && !click ? 6 : 4}
 					stroke={id === picked ? '#000' : null}
+					{title}
+					{details}
+					{date}
 				/>
 			{/each}
 		</svg>
