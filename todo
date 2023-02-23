@@ -2,15 +2,15 @@
 [x] add points
 [x] hover + distance
 
-- [-] normal mode (click shows popup with info)
-  [x] switch to svg
-  [-] integrrate tippy.js
+- [x] normal mode (click shows popup with info)
+      [x] switch to svg
+      [x] integrrate tippy.js
 
 [] edit mode (add on click)
-[] relative labels
 [] add more projects
+[] table view
+[] relative labels
 [] styling
 [] google fire base
-[] table view
 [] more axis
 [] solve a11y

@@ -17,6 +17,7 @@
 		date?: Date;
 	};
 
+	let addMode = false;
 	let points: Point[] = [
 		{ id: 'a', x: 2, y: 8, title: 'truc', details: 'lorem ipsum dolor sit ament va consectetyr' },
 		{ id: 'v', x: 9, y: 7 },
@@ -62,13 +63,29 @@
 	<ul>
 		<li>test</li>
 	</ul>
+
 	<div class="graph" bind:clientWidth={width} bind:clientHeight={height}>
+		<button
+			on:click={() => {
+				addMode = !addMode;
+			}}
+		>
+			{addMode ? 'View' : 'Add'} mode</button
+		>
 		<!-- svelte-ignore a11y-mouse-events-have-key-events -->
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<svg
 			width="100%"
 			height="100%"
-			style="cursor: pointer"
+			style={(function () {
+				if (picked && !addMode) {
+					return 'cursor: pointer';
+				}
+				if (addMode) {
+					return 'cursor: crosshair';
+				}
+				return '';
+			})()}
 			on:mousemove={({ offsetX, offsetY }) => {
 				const index = delaunay.find(offsetX, offsetY);
 				if (Number.isInteger(index) && index >= 0) {
@@ -89,11 +106,11 @@
 			on:mouseout={() => (picked = null)}
 			on:mousedown={() => (click = true)}
 			on:mouseup={(e) => (click = false)}
-			on:click={({ offsetX, offsetY, clientX, clientY }) => {
-				if (picked) {
+			on:click={({ offsetX, offsetY }) => {
+				if (picked && !addMode) {
 					const pointPicked = document.getElementById(picked);
 					pointPicked?.dispatchEvent(new Event('click')); //trigger the popup
-				} else {
+				} else if (addMode) {
 					const x = PixelsToDomain(offsetX, abscissa);
 					const y = PixelsToDomain(offsetY, ordinate);
 					const id = uuidv4();
