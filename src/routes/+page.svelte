@@ -7,6 +7,7 @@
 	import Axis from './Axis.svelte';
 	import Bg from './Bg.svelte';
 	import Modal from './Modal.svelte';
+	import { writable } from 'svelte/store';
 
 	const margin = { top: 25, right: 25, bottom: 25, left: 25 };
 	type Point = {
@@ -17,6 +18,18 @@
 		details?: string;
 		date?: Date;
 	};
+
+	type NewPoint = {
+		x?: number;
+		y?: number;
+		id?: string;
+		title?: string;
+		details?: string;
+		date?: Date;
+	};
+
+	const emptyNewPoint: NewPoint = { title: '', details: '' };
+	let newPoint = writable(emptyNewPoint);
 
 	let addMode = false;
 	let showModal = false;
@@ -32,10 +45,12 @@
 	let picked: string | null = null,
 		click = false;
 
-	let showTooltip: boolean, tooltipX: number, tooltipY: number;
-
 	function computeDistance(xa: number, ya: number, xb: number, yb: number): number {
 		return Math.sqrt((xa - xb) ** 2 + (ya - yb) ** 2);
+	}
+
+	function resetNewPoint() {
+		newPoint.set(emptyNewPoint);
 	}
 
 	function PixelsToDomain(valuePix: number, scale: ScaleLinear<any, any>): number {
@@ -78,11 +93,21 @@
 			{showModal}
 			onCancel={() => {
 				showModal = false;
+				resetNewPoint();
 			}}
 			onClose={() => {
 				showModal = false;
-			}}>test</Modal
+				addToPoints($newPoint);
+				resetNewPoint();
+			}}
 		>
+			<form class="content">
+				<label>Title</label>
+				<input type="text" bind:value={$newPoint.title} />
+				<label>Details</label>
+				<textarea bind:value={$newPoint.details} />
+			</form>
+		</Modal>
 		<!-- svelte-ignore a11y-mouse-events-have-key-events -->
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<svg
@@ -125,8 +150,9 @@
 					const x = PixelsToDomain(offsetX, abscissa);
 					const y = PixelsToDomain(offsetY, ordinate);
 					const id = uuidv4();
+
 					showModal = true;
-					// addToPoints({ x, y, id });
+					newPoint.set({ x, y, id });
 				}
 			}}
 		>
