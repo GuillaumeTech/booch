@@ -6,11 +6,15 @@
       [x] switch to svg
       [x] integrrate tippy.js
 
-[] edit mode (add on click)
-[] add more projects
-[] table view
+[x] edit mode (add on click)
+- [-] add more projects
+      [x] refactor main compoment
+      [] more recipes
+[] localstorage
+[] table view == [] editable points
 [] relative labels
 [] styling
 [] google fire base
 [] more axis
 [] solve a11y
+[] proper ssr
