@@ -21,24 +21,15 @@
 		date?: Date;
 	};
 
-	type NewPoint = {
-		x?: number;
-		y?: number;
-		id?: string;
-		title?: string;
-		details?: string;
-		date?: Date;
-	};
-
 	type Recipe = {
 		name: string;
 		id: string;
 		points: Point[];
 	};
 
-	const emptyNewPoint: NewPoint = { title: '', details: '' };
-	let newPoint = writable(emptyNewPoint);
-	let name = 'test';
+	let selectedRecipeIndex = 0;
+	let addingNewRecipe = false;
+	let newRecipeName = '';
 
 	let points: Point[] = [
 		{ id: 'a', x: 2, y: 8, title: 'truc', details: 'lorem ipsum dolor sit ament va consectetyr' },
@@ -48,22 +39,78 @@
 		{ id: 'vddsa', x: 8.1, y: 8 }
 	];
 
+	let recipes: Recipe[] = [
+		{
+			name: 'Kombucha',
+			id: 'aaaa',
+			points: points
+		},
+		{
+			name: 'Bread',
+			id: 'bb',
+			points: [
+				{ id: 'v', x: 9, y: 7 },
+				{ id: 'vds', x: 3, y: 6 }
+			]
+		}
+	];
+
 	let width: number, height: number;
 
-	function addToPoints(point: Point): void {
-		points = [...points, point];
+	function getAddToPoints(selectedRecipeIndex: number) {
+		return function (point: Point): void {
+			const points = recipes[selectedRecipeIndex].points;
+			const updatedPoints = [...points, point];
+			recipes[selectedRecipeIndex].points = updatedPoints;
+		};
+	}
+
+	function addNewRecipe() {
+		const id = uuidv4();
+		recipes = [...recipes, { name: newRecipeName, id, points: [] }];
+		newRecipeName = '';
 	}
 </script>
 
 <div class="app">
 	<ul>
-		<li>test</li>
+		{#each recipes as { name, id }, index (id)}
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<li
+				on:click={() => {
+					selectedRecipeIndex = index;
+				}}
+			>
+				{name}
+			</li>
+		{/each}
 
-		<li><button>add</button></li>
+		<li>
+			{#if addingNewRecipe}
+				<input type="text" bind:value={newRecipeName} />
+			{/if}
+
+			<button
+				on:click={() => {
+					if (addingNewRecipe) {
+						addNewRecipe();
+						addingNewRecipe = false;
+					} else {
+						addingNewRecipe = true;
+					}
+				}}>{addingNewRecipe ? 'add' : 'new recipe'}</button
+			>
+		</li>
 	</ul>
 
 	<div class="graph" bind:clientWidth={width} bind:clientHeight={height}>
-		<Recipe {width} {height} onAddPoint={addToPoints} {name} {points} />
+		<Recipe
+			{width}
+			{height}
+			onAddPoint={getAddToPoints(selectedRecipeIndex)}
+			name={recipes[selectedRecipeIndex].name}
+			points={recipes[selectedRecipeIndex].points}
+		/>
 	</div>
 </div>
 
