@@ -9,6 +9,7 @@
 [x] edit mode (add on click)
 - [-] add more projects
       [x] refactor main compoment
+      [-] one generic recipe
       [] more recipes
 [] localstorage
 [] table view == [] editable points
