@@ -9,12 +9,15 @@
 [x] edit mode (add on click)
 - [-] add more projects
       [x] refactor main compoment
-      [-] one generic recipe
-      [] more recipes
+      [x] one generic recipe
+      [x] more recipes
+      [x] seprated recipe compoment
+      [-] edit recipes
 [] localstorage
 [] table view == [] editable points
 [] relative labels
-[] styling
+- [] styling
+      [] side panel for point detail
 [] google fire base
 [] more axis
 [] solve a11y
