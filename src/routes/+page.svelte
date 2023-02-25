@@ -1,31 +1,9 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { scaleLinear, type ScaleLinear } from 'd3-scale';
 	import { v4 as uuidv4 } from 'uuid';
-	import { Delaunay } from 'd3-delaunay';
-	import Point from './Point.svelte';
-	import Axis from './Axis.svelte';
-	import Bg from './Bg.svelte';
-	import Modal from './Modal.svelte';
-	import { writable } from 'svelte/store';
-	import Recipe from './Recipe.svelte';
+	import type { Point, Recipe } from '../types/recipe';
+	import RecipeChart from './Recipe.svelte';
 
 	const margin = { top: 25, right: 25, bottom: 25, left: 25 };
-
-	type Point = {
-		x: number;
-		y: number;
-		id: string;
-		title?: string;
-		details?: string;
-		date?: Date;
-	};
-
-	type Recipe = {
-		name: string;
-		id: string;
-		points: Point[];
-	};
 
 	let selectedRecipeIndex = 0;
 	let addingNewRecipe = false;
@@ -104,7 +82,7 @@
 	</ul>
 
 	<div class="graph" bind:clientWidth={width} bind:clientHeight={height}>
-		<Recipe
+		<RecipeChart
 			{width}
 			{height}
 			onAddPoint={getAddToPoints(selectedRecipeIndex)}

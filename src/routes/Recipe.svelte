@@ -2,31 +2,15 @@
 	import { scaleLinear, type ScaleLinear } from 'd3-scale';
 	import { v4 as uuidv4 } from 'uuid';
 	import { Delaunay } from 'd3-delaunay';
-	import Point from './Point.svelte';
+	import Entry from './Entry.svelte';
 	import Axis from './Axis.svelte';
 	import Modal from './Modal.svelte';
 	import { writable } from 'svelte/store';
+	import type { NewPoint, Point } from '../types/recipe';
 
 	export let width: number, height: number, onAddPoint: Function, name: string, points: Point[];
 
 	const margin = { top: 25, right: 25, bottom: 25, left: 25 };
-	type Point = {
-		x: number;
-		y: number;
-		id: string;
-		title?: string;
-		details?: string;
-		date?: Date;
-	};
-
-	type NewPoint = {
-		x?: number;
-		y?: number;
-		id?: string;
-		title?: string;
-		details?: string;
-		date?: Date;
-	};
 
 	const emptyNewPoint: NewPoint = { title: '', details: '' };
 	let newPoint = writable(emptyNewPoint);
@@ -143,7 +127,7 @@
 	<Axis {width} {height} type="y" name={'Dryness'} scale={ordinate} tickNumber={10} {margin} />
 	<!-- <Bg /> -->
 	{#each points as { x, y, id, title, details, date } (id)}
-		<Point
+		<Entry
 			x={abscissa(x)}
 			y={ordinate(y)}
 			fill="tomato"
