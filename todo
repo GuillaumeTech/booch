@@ -15,7 +15,7 @@
       [x] edit recipes
       [x] delete recipes
 - [x] localstorage
-     [] fix deleteing localstorage
+     [x] fix deleteing localstorage
 
 [] table view == [] editable points
 [] relative labels

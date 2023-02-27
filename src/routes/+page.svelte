@@ -37,7 +37,6 @@
 	};
 
 	const recipes = writable<Record<string, Recipe>>(localStorageRecipes || defaultValueRecipes);
-	console.log($recipes);
 
 	recipes.subscribe((value) => {
 		if (browser) localStorage.recipes = JSON.stringify(value);
@@ -64,7 +63,9 @@
 	}
 
 	function deleteRecipe(id: string) {
-		delete $recipes[id];
+		let toEdit = $recipes;
+		delete toEdit[id]; // delete won't trigger store update
+		$recipes = toEdit;
 	}
 
 	function resetDeletingInfo() {
