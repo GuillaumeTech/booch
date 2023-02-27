@@ -17,7 +17,11 @@
 - [x] localstorage
      [x] fix deleteing localstorage
 
-[] table view == [] editable points
+- [-] table view 
+     [-] show everting in a table
+     [] cells are editable
+
+[-] change add behavior
 [] relative labels
 - [] styling
       [] side panel for point detail
