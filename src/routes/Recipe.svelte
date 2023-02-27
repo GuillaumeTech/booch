@@ -7,7 +7,7 @@
 	import Modal from './Modal.svelte';
 	import { writable } from 'svelte/store';
 	import type { NewPoint, Point } from '../types/recipe';
-	import { each } from 'svelte/internal';
+	import { fade, fly } from 'svelte/transition';
 
 	export let width: number, height: number, onAddPoint: Function, name: string, points: Point[];
 
@@ -18,6 +18,7 @@
 
 	let addMode = false;
 	let showModal = false;
+	let showTable = false;
 
 	let picked: string | null = null,
 		click = false;
@@ -142,23 +143,29 @@
 		/>
 	{/each}
 </svg>
-
-<table>
-	<tr>
-		<th>Title</th>
-		<th>Details</th>
-		<th>Funk</th>
-		<th>Dryness</th>
-	</tr>
-	{#each points as { x, y, id, title, details, date } (id)}
+<button
+	on:click={() => {
+		showTable = !showTable;
+	}}>{showTable ? 'Hide' : 'Show'} underlying table</button
+>
+{#if showTable}
+	<table in:fly={{ y: 100, duration: 500 }} out:fade>
 		<tr>
-			<td>{title ?? ''}</td>
-			<td>{details ?? ''}</td>
-			<td>{x}</td>
-			<td>{y}</td>
+			<th>Title</th>
+			<th>Details</th>
+			<th>Funk</th>
+			<th>Dryness</th>
 		</tr>
-	{/each}
-</table>
+		{#each points as { x, y, id, title, details, date } (id)}
+			<tr>
+				<td>{title ?? ''}</td>
+				<td>{details ?? ''}</td>
+				<td>{x}</td>
+				<td>{y}</td>
+			</tr>
+		{/each}
+	</table>
+{/if}
 
 <style>
 	table {

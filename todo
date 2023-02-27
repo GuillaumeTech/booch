@@ -19,7 +19,7 @@
 
 - [-] table view 
      [x] show everting in a table
-     [-] toggle table on an off
+     [x] toggle table on an off
      [] cells are editable
 [x] fix precision
 [x] change add behavior
