@@ -22,7 +22,6 @@
 
 	let addMode = false;
 	let showModal = false;
-	let showTable = false;
 
 	let picked: string | null = null,
 		click = false;
@@ -147,45 +146,3 @@
 		/>
 	{/each}
 </svg>
-<button
-	on:click={() => {
-		showTable = !showTable;
-	}}>{showTable ? 'Hide' : 'Show'} underlying table</button
->
-{#if showTable}
-	<table in:fly={{ y: 100, duration: 500 }} out:fade>
-		<tr>
-			<th>Title</th>
-			<th>Details</th>
-			<th>Funk</th>
-			<th>Dryness</th>
-		</tr>
-		{#each points as { x, y, id, title, details, date } (id)}
-			<tr>
-				<td><input bind:value={title} />{title ?? ''}</td>
-				<td>{details ?? ''}</td>
-				<td>{x}</td>
-				<td>{y}</td>
-			</tr>
-		{/each}
-	</table>
-{/if}
-
-<style>
-	table {
-		font-family: arial, sans-serif;
-		border-collapse: collapse;
-		width: 100%;
-	}
-
-	td,
-	th {
-		border: 1px solid #dddddd;
-		text-align: left;
-		padding: 8px;
-	}
-
-	tr:nth-child(even) {
-		background-color: #dddddd;
-	}
-</style>

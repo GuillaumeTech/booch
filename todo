@@ -22,7 +22,14 @@
      [x] toggle table on an off
      [x] better store
      [x] localstorage with new store
-     [-] cells are editable
+     [-] cells are editable 
+     --> saved on feat/table
+
+[-] table view is meh, side panel better
+      [x] delete table
+      [] side panel with change with point on click
+      [] editable
+
 [x] fix precision
 [x] change add behavior
 [] relative labels
