@@ -3,9 +3,8 @@
 	import type { Point, Recipe } from '../types/recipe';
 	import Modal from './Modal.svelte';
 	import RecipeChart from './Recipe.svelte';
-
-	const margin = { top: 25, right: 25, bottom: 25, left: 25 };
-
+	import { writable } from 'svelte/store';
+	import { browser } from '$app/environment';
 	let selectedRecipeId = 'aaaa';
 	let addingNewRecipe = false;
 	let newRecipeName = '';
@@ -23,7 +22,9 @@
 		{ id: 'vddsa', x: 8.1, y: 8 }
 	];
 
-	let recipes: Record<string, Recipe> = {
+	const localStorageRecipes = browser && localStorage.recipes && JSON.parse(localStorage.recipes);
+
+	const defaultValueRecipes: Record<string, Recipe> = {
 		aaaa: { name: 'Kombucha', points: points, id: 'aaaa' },
 		bb: {
 			name: 'Bread',
@@ -35,28 +36,35 @@
 		}
 	};
 
+	const recipes = writable<Record<string, Recipe>>(localStorageRecipes || defaultValueRecipes);
+	console.log($recipes);
+
+	recipes.subscribe((value) => {
+		if (browser) localStorage.recipes = JSON.stringify(value);
+	});
+
 	let width: number, height: number;
 
 	function getAddToPoints(recipeId: string) {
 		return function (point: Point): void {
-			const points = recipes[recipeId].points;
+			const points = $recipes[recipeId].points;
 			const updatedPoints = [...points, point];
-			recipes[recipeId].points = updatedPoints;
+			$recipes[recipeId].points = updatedPoints;
 		};
 	}
 
 	function addNewRecipe() {
 		const id = uuidv4();
-		recipes = { ...recipes, id: { name: newRecipeName, id, points: [] } };
+		$recipes = { ...$recipes, [id]: { name: newRecipeName, id, points: [] } };
 		newRecipeName = '';
 	}
 
 	function editRecipeName(recipeId: string, newName: string) {
-		recipes[recipeId].name = newName;
+		$recipes[recipeId].name = newName;
 	}
 
 	function deleteRecipe(id: string) {
-		delete recipes[id];
+		delete $recipes[id];
 	}
 
 	function resetDeletingInfo() {
@@ -69,7 +77,7 @@
 
 <div class="app">
 	<ul>
-		{#each Object.entries(recipes) as [_, { name, id }] (id)}
+		{#each Object.entries($recipes) as [_, { name, id }] (id)}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			{#if editingId == id}
 				<li>
@@ -138,8 +146,8 @@
 			{width}
 			{height}
 			onAddPoint={getAddToPoints(selectedRecipeId)}
-			name={recipes[selectedRecipeId].name}
-			points={recipes[selectedRecipeId].points}
+			name={$recipes[selectedRecipeId].name}
+			points={$recipes[selectedRecipeId].points}
 		/>
 	</div>
 	<Modal
