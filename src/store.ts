@@ -3,7 +3,7 @@ import { writable } from 'svelte/store';
 import type { Point, PointUpdate, Recipe, RecipeUpdate } from './types/recipe';
 
 
-export const activeRecipe = writable('');
+export const activeRecipe = writable('kom');
 
 const defaultValueRecipes: Record<string, Recipe> = {
     kom: {

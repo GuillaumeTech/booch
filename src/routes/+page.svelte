@@ -5,7 +5,8 @@
 	import RecipeChart from './Recipe.svelte';
 	import { writable } from 'svelte/store';
 	import { browser } from '$app/environment';
-	let selectedRecipeId = 'aaaa';
+	import { recipes, activeRecipe, points } from '../store';
+
 	let addingNewRecipe = false;
 	let newRecipeName = '';
 	let editingId = '';
@@ -14,66 +15,37 @@
 	let deletingName = '';
 	let showDeleteConfirm = false;
 
-	let points: Point[] = [
-		{ id: 'a', x: 2, y: 8, title: 'truc', details: 'lorem ipsum dolor sit ament va consectetyr' },
-		{ id: 'v', x: 9, y: 7 },
-		{ id: 'vds', x: 3, y: 6 },
-		{ id: 'vdds', x: 5, y: 8 },
-		{ id: 'vddsa', x: 8.1, y: 8 }
-	];
-
-	const localStorageRecipes = browser && localStorage.recipes && JSON.parse(localStorage.recipes);
-
-	const defaultValueRecipes: Record<string, Recipe> = {
-		aaaa: { name: 'Kombucha', points: points, id: 'aaaa' },
-		bb: {
-			name: 'Bread',
-			id: 'bb',
-			points: [
-				{ id: 'v', x: 9, y: 7 },
-				{ id: 'vds', x: 3, y: 6 }
-			]
-		}
-	};
-
-	const recipes = writable<Record<string, Recipe>>(localStorageRecipes || defaultValueRecipes);
-
-	recipes.subscribe((value) => {
-		if (browser) localStorage.recipes = JSON.stringify(value);
-	});
-
 	let width: number, height: number;
 
 	function getAddToPoints(recipeId: string) {
 		return function (point: Point): void {
-			const points = $recipes[recipeId].points;
-			const updatedPoints = [...points, point];
-			$recipes[recipeId].points = updatedPoints;
+			points.add(point, recipeId);
 		};
 	}
 
 	function addNewRecipe() {
 		const id = uuidv4();
-		$recipes = { ...$recipes, [id]: { name: newRecipeName, id, points: [] } };
-		newRecipeName = '';
+		const newRecipe = { name: newRecipeName, id, points: [] };
+		recipes.add(newRecipe);
 	}
 
+	recipes.subscribe((value) => {
+		console.log(value);
+		if (browser) localStorage.recipes = JSON.stringify(value);
+	});
+
 	function editRecipeName(recipeId: string, newName: string) {
-		$recipes[recipeId].name = newName;
+		recipes.updateName(recipeId, newName);
 	}
 
 	function deleteRecipe(id: string) {
-		let toEdit = $recipes;
-		delete toEdit[id]; // delete won't trigger store update
-		$recipes = toEdit;
+		recipes.remove(id);
 	}
 
 	function resetDeletingInfo() {
 		deletingId = '';
 		deletingName = '';
 	}
-
-	resetDeletingInfo;
 </script>
 
 <div class="app">
@@ -97,7 +69,7 @@
 			{:else}
 				<li
 					on:click={() => {
-						selectedRecipeId = id;
+						$activeRecipe = id;
 					}}
 				>
 					{name}
@@ -146,9 +118,9 @@
 		<RecipeChart
 			{width}
 			{height}
-			onAddPoint={getAddToPoints(selectedRecipeId)}
-			name={$recipes[selectedRecipeId].name}
-			points={$recipes[selectedRecipeId].points}
+			onAddPoint={getAddToPoints($activeRecipe)}
+			name={$recipes[$activeRecipe].name}
+			points={$recipes[$activeRecipe].points}
 		/>
 	</div>
 	<Modal
