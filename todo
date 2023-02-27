@@ -7,12 +7,13 @@
       [x] integrrate tippy.js
 
 [x] edit mode (add on click)
-- [-] add more projects
+- [x] add more projects
       [x] refactor main compoment
       [x] one generic recipe
       [x] more recipes
       [x] seprated recipe compoment
-      [-] edit recipes
+      [x] edit recipes
+      [x] delete recipes
 [] localstorage
 [] table view == [] editable points
 [] relative labels
