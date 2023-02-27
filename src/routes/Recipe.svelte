@@ -54,7 +54,7 @@
 		addMode = !addMode;
 	}}
 >
-	{addMode ? 'View' : 'Add'} mode</button
+	{addMode ? 'Cancel' : 'New entry'}</button
 >
 <Modal
 	{showModal}
@@ -120,6 +120,7 @@
 
 			showModal = true;
 			newPoint.set({ x, y, id });
+			addMode = false;
 		}
 	}}
 >
