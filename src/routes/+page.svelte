@@ -3,7 +3,6 @@
 	import type { Point, Recipe } from '../types/recipe';
 	import Modal from './Modal.svelte';
 	import RecipeChart from './Recipe.svelte';
-	import { writable } from 'svelte/store';
 	import { browser } from '$app/environment';
 	import { recipes, activeRecipe, points } from '../store';
 
