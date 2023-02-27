@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { v4 as uuidv4 } from 'uuid';
-	import type { Point, Recipe } from '../types/recipe';
+	import type { Point } from '../types/recipe';
 	import Modal from './Modal.svelte';
 	import RecipeChart from './Recipe.svelte';
 	import { browser } from '$app/environment';
