@@ -158,7 +158,7 @@
 		</tr>
 		{#each points as { x, y, id, title, details, date } (id)}
 			<tr>
-				<td>{title ?? ''}</td>
+				<td><input bind:value={title} />{title ?? ''}</td>
 				<td>{details ?? ''}</td>
 				<td>{x}</td>
 				<td>{y}</td>

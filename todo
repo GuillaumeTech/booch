@@ -20,6 +20,7 @@
 - [-] table view 
      [x] show everting in a table
      [x] toggle table on an off
+     [-] better store
      [] cells are editable
 [x] fix precision
 [x] change add behavior
