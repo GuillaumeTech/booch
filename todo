@@ -14,7 +14,9 @@
       [x] seprated recipe compoment
       [x] edit recipes
       [x] delete recipes
-[x] localstorage
+- [x] localstorage
+     [] fix deleteing localstorage
+
 [] table view == [] editable points
 [] relative labels
 - [] styling
