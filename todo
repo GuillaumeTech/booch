@@ -21,7 +21,7 @@
      [x] show everting in a table
      [x] toggle table on an off
      [x] better store
-     [-] localstorage with new store
+     [x] localstorage with new store
      [] cells are editable
 [x] fix precision
 [x] change add behavior
