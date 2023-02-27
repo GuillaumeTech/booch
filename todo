@@ -18,7 +18,13 @@
 [] relative labels
 - [] styling
       [] side panel for point detail
-[] google fire base
+- [] google fire base 
+      [] login page
+      [] store
+      [] permission
 [] more axis
 [] solve a11y
+[] check XSS 
+---------- PROD
+[] share a page to someone else as readonly 
 [] proper ssr
