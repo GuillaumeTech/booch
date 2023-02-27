@@ -9,7 +9,11 @@
 	import type { NewPoint, Point } from '../types/recipe';
 	import { fade, fly } from 'svelte/transition';
 
-	export let width: number, height: number, onAddPoint: Function, name: string, points: Point[];
+	export let width: number,
+		height: number,
+		onAddPoint: Function,
+		name: string,
+		points: Point[] = [];
 
 	const margin = { top: 25, right: 25, bottom: 25, left: 25 };
 

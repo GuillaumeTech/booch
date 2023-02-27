@@ -3,7 +3,6 @@
 	import type { Point } from '../types/recipe';
 	import Modal from './Modal.svelte';
 	import RecipeChart from './Recipe.svelte';
-	import { browser } from '$app/environment';
 	import { recipes, activeRecipe, points } from '../store';
 
 	let addingNewRecipe = false;
@@ -27,11 +26,6 @@
 		const newRecipe = { name: newRecipeName, id, points: [] };
 		recipes.add(newRecipe);
 	}
-
-	recipes.subscribe((value) => {
-		console.log(value);
-		if (browser) localStorage.recipes = JSON.stringify(value);
-	});
 
 	function editRecipeName(recipeId: string, newName: string) {
 		recipes.updateName(recipeId, newName);
@@ -118,8 +112,8 @@
 			{width}
 			{height}
 			onAddPoint={getAddToPoints($activeRecipe)}
-			name={$recipes[$activeRecipe].name}
-			points={$recipes[$activeRecipe].points}
+			name={$recipes[$activeRecipe]?.name}
+			points={$recipes[$activeRecipe]?.points}
 		/>
 	</div>
 	<Modal

@@ -3,7 +3,16 @@ import { writable } from 'svelte/store';
 import type { Point, PointUpdate, Recipe, RecipeUpdate } from './types/recipe';
 
 
-export const activeRecipe = writable('kom');
+
+const initActiveRecipe = browser && localStorage.activeRecipe && JSON.parse(localStorage.activeRecipe);
+
+export const activeRecipe = writable(initActiveRecipe ?? 'kom');
+
+activeRecipe.subscribe((activeRecipeId) => {
+    if (browser) {
+        localStorage.activeRecipe = JSON.stringify(activeRecipeId)
+    }
+})
 
 const defaultValueRecipes: Record<string, Recipe> = {
     kom: {
@@ -32,9 +41,10 @@ const defaultValueRecipes: Record<string, Recipe> = {
     }
 };
 
+const initRecipes = browser && localStorage.recipes && JSON.parse(localStorage.recipes);
 
 export const recipes = (() => {
-    const { subscribe, set, update } = writable<Record<string, Recipe>>(defaultValueRecipes);
+    const { subscribe, set, update } = writable<Record<string, Recipe>>(initRecipes ?? defaultValueRecipes);
 
     function defaultUpdate(props: RecipeUpdate) {
         return (recipe: Recipe) => {
@@ -42,6 +52,11 @@ export const recipes = (() => {
         };
     }
 
+    subscribe((recipes) => {
+        if (browser) {
+            localStorage.recipes = JSON.stringify(recipes)
+        }
+    })
 
     return {
         subscribe,
@@ -112,7 +127,4 @@ function updatePointFromRecipe(pointUpdate: PointUpdate) {
     };
 }
 
-
-
-// const localStorageRecipes = browser && localStorage.recipes && JSON.parse(localStorage.recipes);
 
