@@ -22,7 +22,7 @@
      [x] toggle table on an off
      [x] better store
      [x] localstorage with new store
-     [] cells are editable
+     [-] cells are editable
 [x] fix precision
 [x] change add behavior
 [] relative labels
