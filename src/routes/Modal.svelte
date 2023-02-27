@@ -1,6 +1,5 @@
 <script lang="ts">
 	export let showModal: Boolean, onClose: Function, onCancel: Function;
-	// boolean
 
 	let dialog: HTMLDialogElement;
 

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { Layer } from 'svelte-canvas';
 	import type { ScaleLinear } from 'd3-scale';
 	export let scale: ScaleLinear<any, any>,
 		tickSize = 4,

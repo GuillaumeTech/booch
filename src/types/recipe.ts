@@ -1,5 +1,3 @@
-import type { Writable } from "svelte/store";
-
 type AtLeast<T, K extends keyof T> = Partial<T> & Pick<T, K>
 
 export type Point = {
