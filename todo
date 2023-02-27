@@ -27,6 +27,9 @@
 [] solve a11y
 [] check XSS 
 ---------- PROD
-[] tests
+- [] CI/CI 
+    [] tests
+    [] github actions
+
 [] share a page to someone else as readonly 
 [] proper ssr
