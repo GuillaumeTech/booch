@@ -115,8 +115,8 @@
 			const pointPicked = document.getElementById(picked);
 			pointPicked?.dispatchEvent(new Event('click')); //trigger the popup
 		} else if (addMode) {
-			const x = PixelsToDomain(offsetX, abscissa);
-			const y = PixelsToDomain(offsetY, ordinate);
+			const x = PixelsToDomain(offsetX, abscissa).toFixed(2);
+			const y = PixelsToDomain(offsetY, ordinate).toFixed(2);
 			const id = uuidv4();
 
 			showModal = true;
