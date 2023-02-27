@@ -18,7 +18,8 @@
      [x] fix deleteing localstorage
 
 - [-] table view 
-     [-] show everting in a table
+     [x] show everting in a table
+     [-] toggle table on an off
      [] cells are editable
 
 [x] change add behavior

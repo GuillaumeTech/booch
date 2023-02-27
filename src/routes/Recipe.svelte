@@ -7,6 +7,7 @@
 	import Modal from './Modal.svelte';
 	import { writable } from 'svelte/store';
 	import type { NewPoint, Point } from '../types/recipe';
+	import { each } from 'svelte/internal';
 
 	export let width: number, height: number, onAddPoint: Function, name: string, points: Point[];
 
@@ -141,3 +142,39 @@
 		/>
 	{/each}
 </svg>
+
+<table>
+	<tr>
+		<th>Title</th>
+		<th>Details</th>
+		<th>Funk</th>
+		<th>Dryness</th>
+	</tr>
+	{#each points as { x, y, id, title, details, date } (id)}
+		<tr>
+			<td>{title ?? ''}</td>
+			<td>{details ?? ''}</td>
+			<td>{x}</td>
+			<td>{y}</td>
+		</tr>
+	{/each}
+</table>
+
+<style>
+	table {
+		font-family: arial, sans-serif;
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	td,
+	th {
+		border: 1px solid #dddddd;
+		text-align: left;
+		padding: 8px;
+	}
+
+	tr:nth-child(even) {
+		background-color: #dddddd;
+	}
+</style>
