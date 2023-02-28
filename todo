@@ -39,13 +39,15 @@
       [] login page
       [] store
       [] permission
-[] more axis
+[] rename axis
 [] solve a11y
 [] check XSS 
+[] add analytics
 [] share a page to someone else as readonly 
 ---------- PROD
 - [] CI/CI 
     [] tests
     [] github actions
 [] proper ssr
+[] more axis
 [] collaborative ??
