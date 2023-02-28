@@ -8,7 +8,7 @@
 	import { writable } from 'svelte/store';
 	import type { NewPoint, Point } from '../types/recipe';
 	import { fade, fly } from 'svelte/transition';
-
+	import { quadOut } from 'svelte/easing';
 	export let width: number,
 		height: number,
 		onAddPoint: Function,
@@ -22,8 +22,8 @@
 
 	let addMode = false;
 	let showModal = false;
-
-	let picked: string | null = null,
+	let pointPicked: Point | undefined;
+	let nearestPoint: Point | null = null,
 		click = false;
 
 	function computeDistance(xa: number, ya: number, xb: number, yb: number): number {
@@ -86,7 +86,7 @@
 	width="100%"
 	height="100%"
 	style={(function () {
-		if (picked && !addMode) {
+		if (nearestPoint && !addMode) {
 			return 'cursor: pointer';
 		}
 		if (addMode) {
@@ -96,7 +96,7 @@
 	})()}
 	on:mousemove={({ offsetX, offsetY }) => {
 		const index = delaunay.find(offsetX, offsetY);
-		if (Number.isInteger(index) && index >= 0) {
+		if (Number.isInteger(index) && index >= 0 && !addMode) {
 			const point = points[index];
 			const distance = computeDistance(
 				PixelsToDomain(offsetX, abscissa),
@@ -105,19 +105,20 @@
 				point.y
 			);
 			if (distance < 0.3) {
-				picked = point.id;
+				nearestPoint = point;
 			} else {
-				picked = null;
+				nearestPoint = null;
 			}
 		}
 	}}
-	on:mouseout={() => (picked = null)}
+	on:mouseout={() => (nearestPoint = null)}
 	on:mousedown={() => (click = true)}
 	on:mouseup={(e) => (click = false)}
 	on:click={({ offsetX, offsetY }) => {
-		if (picked && !addMode) {
-			const pointPicked = document.getElementById(picked);
-			pointPicked?.dispatchEvent(new Event('click')); //trigger the popup
+		if (nearestPoint && !addMode) {
+			const elementPicked = document.getElementById(nearestPoint.id);
+			pointPicked = points.find((point) => point.id === nearestPoint.id);
+			elementPicked?.dispatchEvent(new Event('mouseenter')); //trigger the popup
 		} else if (addMode) {
 			const x = PixelsToDomain(offsetX, abscissa).toFixed(2);
 			const y = PixelsToDomain(offsetY, ordinate).toFixed(2);
@@ -126,23 +127,45 @@
 			showModal = true;
 			newPoint.set({ x, y, id });
 			addMode = false;
+		} else if (!nearestPoint) {
+			pointPicked = undefined;
 		}
 	}}
 >
 	<Axis {width} {height} type="x" name={'Funk'} scale={abscissa} tickNumber={10} {margin} />
 	<Axis {width} {height} type="y" name={'Dryness'} scale={ordinate} tickNumber={10} {margin} />
 	<!-- <Bg /> -->
-	{#each points as { x, y, id, title, details, date } (id)}
+	{#each points as { x, y, id, title } (id)}
 		<Entry
 			x={abscissa(x)}
 			y={ordinate(y)}
-			fill="tomato"
 			{id}
-			r={id === picked && !click ? 6 : 4}
-			stroke={id === picked ? '#000' : null}
+			fill={id === pointPicked?.id ? 'aquamarine' : 'tomato'}
+			r={(id === nearestPoint?.id && !click) || id === pointPicked?.id ? 6 : 4}
+			stroke={id === nearestPoint?.id || id === pointPicked?.id ? '#000' : null}
+			showTooltip={id === nearestPoint?.id}
 			{title}
-			{details}
-			{date}
 		/>
 	{/each}
+	{#if nearestPoint}
+		<text
+			transition:fade={{ duration: 300, easing: quadOut }}
+			text-anchor="middle"
+			x={abscissa(nearestPoint.x)}
+			y={ordinate(nearestPoint.y) - 10}>{nearestPoint.title}</text
+		>
+	{/if}
 </svg>
+
+{#if pointPicked}
+	<div in:fly={{ y: 10, duration: 500 }} out:fade>
+		<h3>Title</h3>
+		<p>{pointPicked.title}</p>
+		<h3>Details</h3>
+		<p>{pointPicked.details}</p>
+		<h3>Funk</h3>
+		<p>{pointPicked.x}</p>
+		<h3>Dryness</h3>
+		<p>{pointPicked.y}</p>
+	</div>
+{/if}
