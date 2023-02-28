@@ -1,8 +1,9 @@
 <script lang="ts">
 	import type { ScaleLinear } from 'd3-scale';
+	import type { Margin } from '../types/layout';
 	export let scale: ScaleLinear<any, any>,
 		tickSize = 4,
-		margin,
+		margin: Margin,
 		tickNumber = 10,
 		type = 'x',
 		name = '',
@@ -16,26 +17,28 @@
 	{#if isX}
 		<line
 			x1={scale(tick)}
-			y1={height / 2}
+			y1={height - margin.bottom}
 			x2={scale(tick)}
-			y2={height / 2 + tickSize}
-			stroke="black"
+			y2={margin.top}
+			stroke="#888"
+			stroke-dasharray="3"
 		/>
-		<text x={scale(tick) - 5} y={height / 2 - 5}>{tick}</text>
+		<text x={scale(tick) - 5} y={height - 25}>{tick}</text>
 	{:else}
 		<line
-			x1={width / 2}
+			x1={margin.left}
 			y1={scale(tick)}
-			x2={width / 2 - tickSize}
+			x2={width - margin.right}
 			y2={scale(tick)}
-			stroke="black"
+			stroke="#888"
+			stroke-dasharray="3"
 		/>
-		<text x={width / 2 + 10} y={scale(tick) + 5}>{tick}</text>
+		<text x={5} y={scale(tick) + 5}>{tick}</text>
 	{/if}
 {/each}
 
 {#if isX}
-	<text x={width - 50} y={height / 2 + 20}>{name}</text>
+	<text text-anchor="end" x={width - 15} y={height - 5}>{name}</text>
 {:else}
-	<text x={width / 2 - 65} y={27}>{name}</text>
+	<text text-anchor="start" x={5} y={30}>{name}</text>
 {/if}

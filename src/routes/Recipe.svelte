@@ -10,13 +10,14 @@
 	import { fade } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
 	import EntryDetails from './EntryDetails.svelte';
+	import type { Margin } from '../types/layout';
 	export let width: number,
 		height: number,
 		onAddPoint: Function,
 		name: string,
 		points: Point[] = [];
 
-	const margin = { top: 25, right: 25, bottom: 25, left: 25 };
+	const margin: Margin = { top: 50, right: 25, bottom: 50, left: 30 };
 
 	const emptyNewPoint: NewPoint = { title: '', details: '' };
 	let newPoint = writable(emptyNewPoint);
