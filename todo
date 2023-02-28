@@ -32,9 +32,15 @@
 
 [x] fix precision
 [x] change add behavior
-[] relative labels
+[] better plot
+[] relative to window size labels
 - [] styling
-      [] side panel for point detail
+      [x] side panel for point detail
+      --> became a detail box
+      [] font
+      [] css buttons
+      [] csss general style
+      [] validate on enter
 - [] google fire base 
       [] login page
       [] store
