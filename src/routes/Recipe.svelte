@@ -9,6 +9,7 @@
 	import type { NewPoint, Point } from '../types/recipe';
 	import { fade, fly } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
+	import { points as pointStore, activeRecipe } from '../store';
 	export let width: number,
 		height: number,
 		onAddPoint: Function,
@@ -36,6 +37,10 @@
 
 	function PixelsToDomain(valuePix: number, scale: ScaleLinear<any, any>): number {
 		return scale.invert(valuePix);
+	}
+
+	function resetPickedPoint() {
+		pointPicked = undefined;
 	}
 
 	$: abscissa = scaleLinear()
@@ -159,6 +164,22 @@
 
 {#if pointPicked}
 	<div in:fly={{ y: 10, duration: 500 }} out:fade>
+		<div>
+			<button>edit</button>
+			<button
+				on:click={() => {
+					if (pointPicked) {
+						pointStore.remove(pointPicked.id, $activeRecipe); // makes ts happy but if is un-needed really
+						resetPickedPoint();
+					}
+				}}>delete</button
+			>
+			<button
+				on:click={() => {
+					resetPickedPoint();
+				}}>hide</button
+			>
+		</div>
 		<h3>Title</h3>
 		<p>{pointPicked.title}</p>
 		<h3>Details</h3>

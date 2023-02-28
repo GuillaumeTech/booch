@@ -6,7 +6,7 @@ import type { Point, PointUpdate, Recipe, RecipeUpdate } from './types/recipe';
 
 const initActiveRecipe = browser && localStorage.activeRecipe && JSON.parse(localStorage.activeRecipe);
 
-export const activeRecipe = writable(initActiveRecipe ?? 'kom');
+export const activeRecipe = writable<string>(initActiveRecipe ?? 'kom');
 
 activeRecipe.subscribe((activeRecipeId) => {
     if (browser) {
@@ -114,7 +114,7 @@ function addPointToRecipe(point: Point) {
 
 function removePointFromRecipe(pointId: string) {
     return (recipe: Recipe) => {
-        recipe.points.filter(({ id }) => id !== pointId)
+        recipe.points = recipe.points.filter(({ id }) => id !== pointId)
         return recipe;
     };
 }
