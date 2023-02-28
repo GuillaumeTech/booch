@@ -38,7 +38,7 @@
 {/each}
 
 {#if isX}
-	<text text-anchor="end" x={width - 15} y={height - 5}>{name}</text>
+	<text font-size="1.1rem" text-anchor="end" x={width - 15} y={height - 5}>{name}</text>
 {:else}
-	<text text-anchor="start" x={5} y={30}>{name}</text>
+	<text font-size="1.1rem" text-anchor="start" x={5} y={30}>{name}</text>
 {/if}
