@@ -25,10 +25,10 @@
      [-] cells are editable 
      --> saved on feat/table
 
-[-] table view is meh, side panel better
+[x] table view is meh, side panel better
       [x] delete table
       [x] side panel with change with point on click
-      [] editable
+      [x] editable
 
 [x] fix precision
 [x] change add behavior
