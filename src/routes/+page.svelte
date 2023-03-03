@@ -93,7 +93,7 @@
 								editingName = '';
 							}}
 						>
-							OK
+							<Icon strokeWidth="4px" name="check" stroke="black" />
 						</button>
 					</li>
 				{:else}
@@ -104,17 +104,14 @@
 					>
 						{name}
 						<span
-							><button>
-								<Icon
-									on:click={(e) => {
-										e.stopPropagation();
-										editingId = id;
-										editingName = name;
-									}}
-									name="edit-2"
-									fill="black"
-									stroke="black"
-								/>
+							><button
+								on:click={(e) => {
+									e.stopPropagation();
+									editingId = id;
+									editingName = name;
+								}}
+							>
+								<Icon name="edit-2" fill="black" stroke="black" />
 							</button>
 							<button
 								on:click={(e) => {
@@ -124,16 +121,7 @@
 									showDeleteConfirm = true;
 								}}
 							>
-								<Icon
-									on:click={(e) => {
-										e.stopPropagation();
-										editingId = id;
-										editingName = name;
-									}}
-									name="trash"
-									fill="black"
-									stroke="black"
-								/>
+								<Icon name="trash" fill="black" stroke="black" />
 							</button></span
 						>
 					</li>

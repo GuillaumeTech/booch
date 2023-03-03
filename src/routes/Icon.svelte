@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import feather from 'feather-icons';
 	export const directions = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'];
 	export let name;
@@ -7,7 +7,7 @@
 	export let stroke = 'black';
 	export let width = '1em';
 	export let height = '1em';
-	export let fill = '';
+	export let fill: string | null = null;
 
 	$: icon = feather.icons[name];
 	$: rotation = directions.indexOf(direction) * 45;
