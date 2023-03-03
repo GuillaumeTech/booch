@@ -35,13 +35,14 @@
 [x] better plot
 [x] relative to window size labels
     -> fixed with the better plot stuff 
-[-] rename axes
+[x] rename axes
 - [-] styling
       [-] header
       [x] side panel for point detail
       --> became a detail box
       [x] font
       [-] css buttons
+      [] css icons
       [-] csss general style
       [] validate on enter
       [] better modal

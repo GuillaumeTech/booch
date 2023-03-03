@@ -23,7 +23,12 @@
 
 	function addNewRecipe() {
 		const id = uuidv4();
-		const newRecipe = { name: newRecipeName, id, points: [] };
+		const newRecipe = {
+			name: newRecipeName,
+			id,
+			points: [],
+			axisNames: { x: 'Funk', y: 'Dryness' }
+		};
 		recipes.add(newRecipe);
 	}
 

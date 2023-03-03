@@ -13,14 +13,16 @@ export type NewPoint = Partial<Point>
 
 export type PointUpdate = AtLeast<Point, 'id'>
 
+export interface AxisNames {
+    x: string
+    y: string
+}
+
 export type Recipe = {
     name: string;
     id: string;
     points: Point[];
-    axisNames: {
-        x: string
-        y: string
-    }
+    axisNames: AxisNames
 };
 
 export type RecipeUpdate = AtLeast<Recipe, 'id'>

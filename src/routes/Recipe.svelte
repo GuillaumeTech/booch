@@ -52,11 +52,14 @@
 	$: abscissa = scaleLinear()
 		.domain([0, 10])
 		.range([margin.left, width - margin.right])
+		.clamp(true)
 		.nice();
 	$: ordinate = scaleLinear()
 		.domain([0, 10])
 		.range([height - margin.bottom, margin.top])
+		.clamp(true)
 		.nice();
+
 	$: delaunay = Delaunay.from(
 		points,
 		(d: Point) => abscissa(d.x),
