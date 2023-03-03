@@ -4,6 +4,7 @@
 	import Modal from './Modal.svelte';
 	import RecipeChart from './Recipe.svelte';
 	import { recipes, activeRecipe, points } from '../store';
+	import Icon from './Icon.svelte';
 
 	let addingNewRecipe = false;
 	let newRecipeName = '';
@@ -67,7 +68,6 @@
 			{:else}
 				<li class="add-recipe">
 					<input type="text" bind:value={newRecipeName} />
-
 					<button
 						on:click={() => {
 							if (addingNewRecipe) {
@@ -103,25 +103,39 @@
 						}}
 					>
 						{name}
-						<button
-							on:click={(e) => {
-								e.stopPropagation();
-								deletingId = id;
-								deletingName = name;
-								showDeleteConfirm = true;
-							}}
+						<span
+							><button>
+								<Icon
+									on:click={(e) => {
+										e.stopPropagation();
+										editingId = id;
+										editingName = name;
+									}}
+									name="edit-2"
+									fill="black"
+									stroke="black"
+								/>
+							</button>
+							<button
+								on:click={(e) => {
+									e.stopPropagation();
+									deletingId = id;
+									deletingName = name;
+									showDeleteConfirm = true;
+								}}
+							>
+								<Icon
+									on:click={(e) => {
+										e.stopPropagation();
+										editingId = id;
+										editingName = name;
+									}}
+									name="trash"
+									fill="black"
+									stroke="black"
+								/>
+							</button></span
 						>
-							del
-						</button>
-						<button
-							on:click={(e) => {
-								e.stopPropagation();
-								editingId = id;
-								editingName = name;
-							}}
-						>
-							edit
-						</button>
 					</li>
 				{/if}
 			{/each}
@@ -200,6 +214,23 @@
 			&:hover {
 				background-color: salmon;
 				color: white;
+				button {
+					filter: invert(1);
+				}
+			}
+			button {
+				margin: 0;
+				padding: 0;
+				border: 0;
+				background: none;
+				transition: transform 0.1s;
+				&:hover {
+					transform: scale(1.2);
+				}
+			}
+			span {
+				float: right;
+				margin-right: 0.5rem;
 			}
 		}
 		&.more {
