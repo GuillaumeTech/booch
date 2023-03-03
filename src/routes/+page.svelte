@@ -177,6 +177,7 @@
 	}
 	div.graph {
 		margin: auto;
+		max-width: 90%;
 		width: min(65vw, 65vh);
 		height: min(65vw, 65vh);
 		margin-top: 0;
