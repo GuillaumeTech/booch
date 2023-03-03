@@ -47,13 +47,22 @@
 					<input bind:value={$editablePoint.y} />
 				</form>
 			{:else}
-				<h3>{pointPicked.title}</h3>
-				<h4>Details</h4>
-				<p>{pointPicked.details}</p>
-				<h4>Funk</h4>
-				<p>{pointPicked.x}</p>
-				<h4>Dryness</h4>
-				<p>{pointPicked.y}</p>
+				<div
+					on:click={() => {
+						if (editing) {
+							points.update($editablePoint, $activeRecipe);
+						}
+						editing = !editing;
+					}}
+				>
+					<h3>{pointPicked.title}</h3>
+					<h4>Details</h4>
+					<p>{pointPicked.details}</p>
+					<h4>Funk</h4>
+					<p>{pointPicked.x}</p>
+					<h4>Dryness</h4>
+					<p>{pointPicked.y}</p>
+				</div>
 			{/if}
 		</div>
 	{/key}

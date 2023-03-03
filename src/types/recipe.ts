@@ -17,6 +17,10 @@ export type Recipe = {
     name: string;
     id: string;
     points: Point[];
+    axisNames: {
+        x: string
+        y: string
+    }
 };
 
 export type RecipeUpdate = AtLeast<Recipe, 'id'>

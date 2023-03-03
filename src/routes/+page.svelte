@@ -140,6 +140,7 @@
 					onAddPoint={getAddToPoints($activeRecipe)}
 					name={$recipes[$activeRecipe]?.name}
 					points={$recipes[$activeRecipe]?.points}
+					axisNames={$recipes[$activeRecipe]?.axisNames}
 				/>
 			{/if}
 		</div>

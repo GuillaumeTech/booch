@@ -11,11 +11,13 @@
 	import { quadOut } from 'svelte/easing';
 	import EntryDetails from './EntryDetails.svelte';
 	import type { Margin } from '../types/layout';
+	import { recipes, activeRecipe } from '../store';
 	export let width: number,
 		height: number,
 		onAddPoint: Function,
 		name: string,
-		points: Point[] = [];
+		points: Point[] = [],
+		axisNames: { x: string; y: string };
 
 	const margin: Margin = { top: 50, right: 25, bottom: 50, left: 30 };
 
@@ -23,6 +25,9 @@
 	let newPoint = writable(emptyNewPoint);
 
 	let addMode = false;
+	let editingAxes = false;
+	$: editableAxisNames = writable(axisNames);
+
 	let showModal = false;
 	let pointPicked: Point | undefined;
 	let nearestPoint: Point | null = null,
@@ -59,14 +64,37 @@
 	);
 </script>
 
-<h1>{name}</h1>
-<button
-	on:click={() => {
-		addMode = !addMode;
-	}}
->
-	{addMode ? 'Cancel' : 'New entry'}</button
->
+<div class="recipe-header">
+	<h1>{name}</h1>
+	<button
+		on:click={() => {
+			addMode = !addMode;
+		}}
+		class="add-entry {addMode ? 'adding' : ''}"
+	>
+		{addMode ? 'Cancel' : 'New entry'}</button
+	>
+</div>
+
+{#if editingAxes}
+	<span><b>X-Axis:</b> <input bind:value={$editableAxisNames.x} /></span>
+	<span><b>Y-Axis:</b> <input bind:value={$editableAxisNames.y} /></span>
+	<button
+		on:click={() => {
+			editingAxes = !editingAxes;
+			recipes.update({ id: $activeRecipe, axisNames: $editableAxisNames });
+		}}>Done</button
+	>
+{:else}
+	<span><b>X-Axis:</b> {axisNames.x}</span>
+	<span><b>Y-Axis:</b> {axisNames.y}</span>
+	<button
+		on:click={() => {
+			editingAxes = !editingAxes;
+		}}>Edit</button
+	>
+{/if}
+
 <Modal
 	{showModal}
 	onCancel={() => {
@@ -138,8 +166,8 @@
 		}
 	}}
 >
-	<Axis {width} {height} type="x" name={'Funk'} scale={abscissa} tickNumber={10} {margin} />
-	<Axis {width} {height} type="y" name={'Dryness'} scale={ordinate} tickNumber={10} {margin} />
+	<Axis {width} {height} type="x" name={axisNames.x} scale={abscissa} tickNumber={10} {margin} />
+	<Axis {width} {height} type="y" name={axisNames.y} scale={ordinate} tickNumber={10} {margin} />
 	<!-- <Bg /> -->
 	{#each points as { x, y, id, title } (id)}
 		<Entry
@@ -166,3 +194,24 @@
 {#if pointPicked}
 	<EntryDetails {pointPicked} {resetPickedPoint} />
 {/if}
+
+<style lang="less">
+	.recipe-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.add-entry {
+		float: right;
+		margin-right: 25px;
+		font-size: 1rem;
+		&.adding {
+			color: white;
+			background-color: black;
+			border: 2px solid black;
+			&:hover {
+				border: 2px solid salmon;
+			}
+		}
+	}
+</style>

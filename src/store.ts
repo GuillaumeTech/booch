@@ -25,7 +25,8 @@ const defaultValueRecipes: Record<string, Recipe> = {
         {
             id: 'b', x: 6, y: 8, title: 'Orange',
             details: 'need a few more days, made with Ceylan tea'
-        }]
+        }],
+        axisNames: { x: 'Dryness', y: 'Funk' }
     },
     bread: {
         name: 'Bread',
@@ -37,7 +38,8 @@ const defaultValueRecipes: Record<string, Recipe> = {
         {
             id: 'd', x: 6, y: 7, title: '20% Complete Wheat',
             details: 'Good one but not enough fermentation'
-        }]
+        }],
+        axisNames: { x: 'Tenderness', y: 'Funk' }
     }
 };
 
