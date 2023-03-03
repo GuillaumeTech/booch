@@ -33,9 +33,9 @@
 [x] fix precision
 [x] change add behavior
 [x] better plot
-[-] relative to window size labels
+[x] relative to window size labels
     -> fixed with the better plot stuff 
-
+[-] rename axes
 - [-] styling
       [-] header
       [x] side panel for point detail
@@ -49,7 +49,7 @@
       [] login page
       [] store
       [] permission
-[] rename axis
+
 [] solve a11y
 [] check XSS 
 [] add analytics
