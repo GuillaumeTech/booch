@@ -89,12 +89,10 @@
 			{/if}
 		{/each}
 
-		<li>
-			{#if addingNewRecipe}
-				<input type="text" bind:value={newRecipeName} />
-			{/if}
-
-			<button
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		{#if !addingNewRecipe}
+			<li
+				class="add-recipe"
 				on:click={() => {
 					if (addingNewRecipe) {
 						addNewRecipe();
@@ -102,9 +100,26 @@
 					} else {
 						addingNewRecipe = true;
 					}
-				}}>{addingNewRecipe ? 'add' : 'new recipe'}</button
+				}}
 			>
-		</li>
+				{addingNewRecipe ? 'add' : ' + new recipe'}
+			</li>
+		{:else}
+			<li class="add-recipe">
+				<input type="text" bind:value={newRecipeName} />
+
+				<button
+					on:click={() => {
+						if (addingNewRecipe) {
+							addNewRecipe();
+							addingNewRecipe = false;
+						} else {
+							addingNewRecipe = true;
+						}
+					}}>{addingNewRecipe ? 'add' : 'new recipe'}</button
+				>
+			</li>
+		{/if}
 	</ul>
 
 	<div class="recipe">
@@ -173,6 +188,10 @@
 	}
 	.app {
 		display: flex;
-		min-height: 100%;
+		min-height: calc(100% - 3rem);
+	}
+	.add-recipe {
+		margin-top: 0.7rem;
+		border-top: 1px solid salmon;
 	}
 </style>

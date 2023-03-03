@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width" />
 		%sveltekit.head%
 	</head>
-	<header>Fermentation Notes</header>
+	<header>Fermentation Notes<button>Login</button></header>
 	<body data-sveltekit-preload-data="hover">
 		<div  style="display: contents">%sveltekit.body%</div>
 	</body>
@@ -52,4 +52,14 @@
 
     border-style: solid;
     border-width: 1px;}
+
+	button{
+		border: none;
+		border-radius: 0.1rem;
+    background: salmon;
+	border: 2px salmon solid;
+}
+button:hover{
+	border: 2px black solid;
+}
 </style>

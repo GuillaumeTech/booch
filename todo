@@ -36,13 +36,13 @@
 [-] relative to window size labels
     -> fixed with the better plot stuff 
 
-- [] styling
-      [] header
+- [-] styling
+      [-] header
       [x] side panel for point detail
       --> became a detail box
-      [] font
-      [] css buttons
-      [] csss general style
+      [x] font
+      [-] css buttons
+      [-] csss general style
       [] validate on enter
 - [] google fire base 
       [] login page
