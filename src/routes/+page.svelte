@@ -108,13 +108,18 @@
 	</ul>
 
 	<div class="graph" bind:clientWidth={width} bind:clientHeight={height}>
-		<RecipeChart
-			{width}
-			{height}
-			onAddPoint={getAddToPoints($activeRecipe)}
-			name={$recipes[$activeRecipe]?.name}
-			points={$recipes[$activeRecipe]?.points}
-		/>
+		<!-- Can't render it as long as we don't have width height -->
+		<!-- fix ssr issue logically and seems on very first render  -->
+		<!-- width height are undefined as well -->
+		{#if width && height}
+			<RecipeChart
+				{width}
+				{height}
+				onAddPoint={getAddToPoints($activeRecipe)}
+				name={$recipes[$activeRecipe]?.name}
+				points={$recipes[$activeRecipe]?.points}
+			/>
+		{/if}
 	</div>
 	<Modal
 		showModal={showDeleteConfirm}
