@@ -107,52 +107,69 @@
 		</li>
 	</ul>
 
-	<div class="graph" bind:clientWidth={width} bind:clientHeight={height}>
+	<div class="recipe">
 		<!-- Can't render it as long as we don't have width height -->
 		<!-- fix ssr issue logically and seems on very first render  -->
 		<!-- width height are undefined as well -->
-		{#if width && height}
-			<RecipeChart
-				{width}
-				{height}
-				onAddPoint={getAddToPoints($activeRecipe)}
-				name={$recipes[$activeRecipe]?.name}
-				points={$recipes[$activeRecipe]?.points}
-			/>
-		{/if}
+		<div class="graph" bind:clientWidth={width} bind:clientHeight={height}>
+			{#if width && height}
+				<RecipeChart
+					{width}
+					{height}
+					onAddPoint={getAddToPoints($activeRecipe)}
+					name={$recipes[$activeRecipe]?.name}
+					points={$recipes[$activeRecipe]?.points}
+				/>
+			{/if}
+		</div>
+
+		<Modal
+			showModal={showDeleteConfirm}
+			onCancel={() => {
+				showDeleteConfirm = false;
+				resetDeletingInfo();
+			}}
+			onClose={() => {
+				showDeleteConfirm = false;
+				deleteRecipe(deletingId);
+				resetDeletingInfo();
+			}}
+		>
+			<p>Are you sure about deleting <b>{deletingName}</b> ? This can't be undone</p>
+		</Modal>
 	</div>
-	<Modal
-		showModal={showDeleteConfirm}
-		onCancel={() => {
-			showDeleteConfirm = false;
-			resetDeletingInfo();
-		}}
-		onClose={() => {
-			showDeleteConfirm = false;
-			deleteRecipe(deletingId);
-			resetDeletingInfo();
-		}}
-	>
-		<p>Are you sure about deleting <b>{deletingName}</b> ? This can't be undone</p>
-	</Modal>
 </div>
 
-<style>
+<style lang="less">
+	div.recipe {
+		width: 100%;
+		position: static;
+		overflow-y: scroll;
+	}
 	div.graph {
+		margin: auto;
 		width: min(65vw, 65vh);
-		top: 50%;
 		height: min(65vw, 65vh);
-		margin-left: 5rem;
-		margin-top: 5rem;
+		margin-top: 0;
 	}
 	ul {
 		list-style-type: none;
 		margin: 0;
 		padding: 0;
+
+		padding-top: 0.7rem;
 		width: 25%;
-		background-color: #f1f1f1;
+		border-right: 1px solid salmon;
 		height: 100%;
 		overflow: auto;
+
+		> li {
+			padding-left: 0.7rem;
+			&:hover {
+				background-color: salmon;
+				color: white;
+			}
+		}
 	}
 	.app {
 		display: flex;

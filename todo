@@ -32,9 +32,12 @@
 
 [x] fix precision
 [x] change add behavior
-[-] better plot
-[] relative to window size labels
+[x] better plot
+[-] relative to window size labels
+    -> fixed with the better plot stuff 
+
 - [] styling
+      [] header
       [x] side panel for point detail
       --> became a detail box
       [] font

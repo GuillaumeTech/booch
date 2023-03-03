@@ -6,13 +6,50 @@
 		<meta name="viewport" content="width=device-width" />
 		%sveltekit.head%
 	</head>
+	<header>Fermentation Notes</header>
 	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
+		<div  style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;800&family=Merriweather:wght@300&display=swap" rel="stylesheet">
 <style type="text/css">
 	html, body {
-		height: 100%;
+		height:calc(100% - 1.2rem);
 		margin: 0;
 	}
+
+	body {
+		overflow: hidden;
+	}
+	
+	html {
+		background-image: url("bg-texture.png");
+	}
+	
+	header {
+		font-family: 'Gloock', serif;
+		font-size: 2em;
+		background: salmon;
+		color: white;
+		padding: 0.4rem 0.7rem 0.4rem 0.7rem;
+	}
+
+    body, button{
+        font-family: 'Inter', sans-serif;
+		
+    }
+	h1,h2 {
+		font-family: 'Gloock', serif;
+	}
+
+	body {    border:  salmon;
+		
+    margin: 1rem;
+    margin-bottom:0;
+
+    border-style: solid;
+    border-width: 1px;}
 </style>
