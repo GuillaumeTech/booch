@@ -22,7 +22,9 @@ export type Recipe = {
     name: string;
     id: string;
     points: Point[];
-    axisNames: AxisNames
+    axisNames: AxisNames;
+    public: boolean
+    createdAt: Date
 };
 
 export type RecipeUpdate = AtLeast<Recipe, 'id'>
