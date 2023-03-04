@@ -68,7 +68,7 @@
 </script>
 
 <div class="recipe-header">
-	<h1>{name}</h1>
+	<h2>{name}</h2>
 	<button
 		on:click={() => {
 			addMode = !addMode;
