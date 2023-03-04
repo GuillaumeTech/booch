@@ -63,6 +63,6 @@
 - [] CI/CI 
     [] tests
     [] github actions
-[] proper ssr
+[-] proper ssr -> see feat/ssr
 [] more axis
 [] collaborative ??
