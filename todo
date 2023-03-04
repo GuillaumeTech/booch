@@ -46,7 +46,11 @@
       [-] csss general style
       [] validate on enter
       [] better modal
-- [] google fire base 
+- [-] suppabase
+      [] some order in compoments
+            [] app compoment
+            [] side bar one
+            [] dedicated folder
       [] login page
       [] store
       [] permission
