@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { supabaseClient } from '../lib/supabaseClient';
+	import { supabase } from '../supabaseClient';
 
 	let loading = false;
 	let email: string;
@@ -7,7 +7,7 @@
 	const handleLogin = async () => {
 		try {
 			loading = true;
-			const { error } = await supabaseClient.auth.signInWithOtp({ email });
+			const { error } = await supabase.auth.signInWithOtp({ email });
 			if (error) throw error;
 			alert('Check your email for the login link!');
 		} catch (error) {
