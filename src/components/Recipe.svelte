@@ -104,7 +104,7 @@
 		showModal = false;
 		resetNewPoint();
 	}}
-	onClose={() => {
+	onOk={() => {
 		showModal = false;
 		onAddPoint($newPoint);
 		resetNewPoint();

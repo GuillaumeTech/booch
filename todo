@@ -52,7 +52,11 @@
             [x] side bar one
             [x] dedicated folder
       [x] login page
+      [x] login flow with create/already existing account
+      [-] login flow css
+
       [] store
+      [] google sign in
       [x] permission
 
 [] solve a11y

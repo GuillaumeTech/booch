@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let showModal: Boolean, onClose: Function, onCancel: Function;
+	export let showModal: Boolean, onOk: Function, onCancel: Function;
 
 	let dialog: HTMLDialogElement;
 
@@ -9,7 +9,10 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <dialog
 	bind:this={dialog}
-	on:close={() => (showModal = false)}
+	on:close={() => {
+		dialog.close();
+		onCancel();
+	}}
 	on:click|self={() => dialog.close()}
 >
 	<div on:click|stopPropagation>
@@ -27,7 +30,7 @@
 		<button
 			autofocus
 			on:click={() => {
-				onClose();
+				onOk();
 				dialog.close();
 			}}>OK</button
 		>

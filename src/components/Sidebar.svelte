@@ -3,6 +3,7 @@
 	import Modal from './Modal.svelte';
 	import { recipes, activeRecipe } from '../store';
 	import Icon from './Icon.svelte';
+	import LoginModal from './LoginModal.svelte';
 
 	let addingNewRecipe = false;
 	let newRecipeName = '';
@@ -11,7 +12,7 @@
 	let deletingId = '';
 	let deletingName = '';
 	let showDeleteConfirm = false;
-
+	let showLoginModal = false;
 	function addNewRecipe() {
 		const id = uuidv4();
 		const newRecipe = {
@@ -120,7 +121,13 @@
 		{/each}
 	</ul>
 	<ul class="more">
-		<li>Login</li>
+		<li
+			on:click={() => {
+				showLoginModal = true;
+			}}
+		>
+			Login
+		</li>
 		<li>About</li>
 		<li>Contact</li>
 	</ul>
@@ -131,7 +138,7 @@
 		showDeleteConfirm = false;
 		resetDeletingInfo();
 	}}
-	onClose={() => {
+	onOk={() => {
 		showDeleteConfirm = false;
 		deleteRecipe(deletingId);
 		resetDeletingInfo();
@@ -139,6 +146,14 @@
 >
 	<p>Are you sure about deleting <b>{deletingName}</b> ? This can't be undone</p>
 </Modal>
+<LoginModal
+	showModal={showLoginModal}
+	onCancel={() => {
+		showLoginModal = false;
+	}}
+>
+	<p>Are you sure about deleting <b>{deletingName}</b> ? This can't be undone</p>
+</LoginModal>
 
 <style lang="less">
 	div.side-bar {
