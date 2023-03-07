@@ -1,15 +1,55 @@
 <script lang="ts">
+	import { supabase } from '../supabaseClient';
+
 	export let showModal: Boolean, onCancel: Function;
 	enum LoginKind {
 		GOOGLE = 'GOOGLE',
 		EMAIL = 'EMAIL'
 	}
+
+	enum LoginStep {
+		DOES_ACCOUNT_EXIST = 'DOES_ACCOUNT_EXIST',
+		PICK_KIND = 'PICK_KIND',
+		ENTER_ACCOUNT_INFO = 'ENTER_ACCOUNT_INFO',
+		ERROR = 'ERROR',
+		CHECK_EMAIL = 'CHECK_EMAIL',
+		LOGGED_IN = 'LOGGED_IN'
+	}
 	let dialog: HTMLDialogElement;
 	let hasAccount = false;
-	let loginStep = 0;
+	let loginStep: LoginStep = LoginStep.DOES_ACCOUNT_EXIST;
 	let loginKind: LoginKind | undefined;
+	let email = '';
+	let password = '';
+	let passwordConfirm = '';
+	let emailError = false;
+	let extra = '';
+
+	async function login() {
+		const { data, error } = await supabase.auth.signInWithPassword({
+			email,
+			password
+		});
+		console.log(data);
+		console.log(error);
+
+		if (!error) {
+			loginStep = LoginStep.LOGGED_IN;
+		}
+	}
+
+	async function createAccount() {
+		const { data, error } = await supabase.auth.signUp({
+			email,
+			password
+		});
+		if (!error) {
+			loginStep = LoginStep.CHECK_EMAIL;
+		}
+	}
 
 	$: if (dialog && showModal) dialog.showModal();
+	$: passwordMatch = passwordConfirm === password;
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -18,20 +58,19 @@
 	on:close={() => {
 		dialog.close();
 		hasAccount = false;
-		loginStep = 0;
+		loginStep = LoginStep.DOES_ACCOUNT_EXIST;
 		loginKind = undefined;
 		onCancel();
 	}}
 	on:click|self={() => dialog.close()}
 >
-	{#if loginStep == 0}
+	{#if loginStep == LoginStep.DOES_ACCOUNT_EXIST}
 		<div on:click|stopPropagation>
-			<slot name="header" />
 			<hr />
 			<button
 				on:click={() => {
 					hasAccount = false;
-					loginStep = 1;
+					loginStep = LoginStep.PICK_KIND;
 				}}
 			>
 				I'm a new user
@@ -39,40 +78,61 @@
 			<button
 				on:click={() => {
 					hasAccount = true;
-					loginStep = 1;
+					loginStep = LoginStep.PICK_KIND;
 				}}
 			>
 				I have an account already
 			</button>
 		</div>
-	{:else if loginStep == 1}
+	{:else if loginStep == LoginStep.PICK_KIND}
 		<p>{hasAccount ? 'Login in using' : 'Create an account using'}</p>
 		<button
 			on:click={() => {
 				loginKind = LoginKind.EMAIL;
-				loginStep = 2;
+				loginStep = LoginStep.ENTER_ACCOUNT_INFO;
 			}}
 			>Email
 		</button>
 		<button
 			on:click={() => {
 				loginKind = LoginKind.GOOGLE;
-				loginStep = 2;
+				loginStep = LoginStep.ENTER_ACCOUNT_INFO;
 			}}
 			>Google
 		</button>
-	{:else if loginStep == 2 && loginKind == LoginKind.EMAIL}
-		<form>
+	{:else if loginStep == LoginStep.ENTER_ACCOUNT_INFO && loginKind == LoginKind.EMAIL}
+		<form
+			on:submit={() => {
+				if (hasAccount) {
+					login();
+				} else {
+					createAccount();
+				}
+			}}
+		>
 			<label>E-mail</label>
-			<input />
-			<label>Password</label>
-			<input />
+			<input type="email" bind:value={email} />
+			{#if emailError}
+				<b>The password do not match</b>
+			{/if}
+			<label> Password</label>
+			<input type="password" bind:value={password} />
 			{#if !hasAccount}
 				<label>Confirm Password</label>
-				<input />
+				<input type="password" bind:value={passwordConfirm} />
+				{#if !passwordMatch}
+					<b>The passwords do not match</b>
+				{/if}
 			{/if}
-			<button>{hasAccount ? 'Login' : 'Create'} </button>
+
+			<input type="submit" value={hasAccount ? 'Login' : 'Create'} />
 		</form>
+	{:else if loginStep == LoginStep.CHECK_EMAIL}
+		<p>Check your email for the verification link</p>
+	{:else if loginStep == LoginStep.LOGGED_IN}
+		<p>You succesfully logged in !</p>
+	{:else if loginStep == LoginStep.ERROR}
+		<p>There was an error when login in</p>
 	{/if}
 </dialog>
 

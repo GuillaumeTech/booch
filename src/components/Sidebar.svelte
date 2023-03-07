@@ -4,6 +4,8 @@
 	import { recipes, activeRecipe } from '../stores/recipe';
 	import Icon from './Icon.svelte';
 	import LoginModal from './LoginModal.svelte';
+	import { activeSession } from '../stores/auth';
+	import { supabase } from '../supabaseClient';
 
 	let addingNewRecipe = false;
 	let newRecipeName = '';
@@ -121,13 +123,24 @@
 		{/each}
 	</ul>
 	<ul class="more">
-		<li
-			on:click={() => {
-				showLoginModal = true;
-			}}
-		>
-			Login
-		</li>
+		{#if $activeSession}
+			<li
+				on:click={async () => {
+					await supabase.auth.signOut();
+				}}
+			>
+				Logout
+			</li>
+		{:else}
+			<li
+				on:click={() => {
+					showLoginModal = true;
+				}}
+			>
+				Login
+			</li>
+		{/if}
+
 		<li>About</li>
 		<li>Contact</li>
 	</ul>
@@ -151,9 +164,7 @@
 	onCancel={() => {
 		showLoginModal = false;
 	}}
->
-	<p>Are you sure about deleting <b>{deletingName}</b> ? This can't be undone</p>
-</LoginModal>
+/>
 
 <style lang="less">
 	div.side-bar {
