@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { v4 as uuidv4 } from 'uuid';
 	import Modal from './Modal.svelte';
-	import { recipes, activeRecipe } from '../store';
+	import { recipes, activeRecipe } from '../stores/recipe';
 	import Icon from './Icon.svelte';
 	import LoginModal from './LoginModal.svelte';
 

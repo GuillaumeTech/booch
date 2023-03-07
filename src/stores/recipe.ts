@@ -1,6 +1,6 @@
 import { browser } from '$app/environment';
 import { writable } from 'svelte/store';
-import type { Point, PointUpdate, Recipe, RecipeUpdate } from './types/recipe';
+import type { Point, PointUpdate, Recipe, RecipeUpdate } from '../types/recipe';
 
 
 

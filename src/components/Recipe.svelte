@@ -11,7 +11,7 @@
 	import { quadOut } from 'svelte/easing';
 	import EntryDetails from './EntryDetails.svelte';
 	import type { Margin } from '../types/layout';
-	import { recipes, activeRecipe } from '../store';
+	import { recipes, activeRecipe } from '../stores/recipe';
 	export let width: number,
 		height: number,
 		onAddPoint: Function,

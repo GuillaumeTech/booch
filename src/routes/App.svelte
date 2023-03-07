@@ -1,10 +1,8 @@
 <script lang="ts">
 	import type { Point } from '../types/recipe';
 	import RecipeChart from '../components/Recipe.svelte';
-	import { recipes, activeRecipe, points } from '../store';
+	import { recipes, activeRecipe, points } from '../stores/recipe';
 	import Sidebar from '../components/Sidebar.svelte';
-	import type { AuthSession } from '@supabase/supabase-js';
-	export let session: AuthSession;
 
 	let width: number, height: number;
 

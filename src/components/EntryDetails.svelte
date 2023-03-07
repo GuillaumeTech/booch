@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Point } from '../types/recipe';
-	import { points, activeRecipe } from '../store';
+	import { points, activeRecipe } from '../stores/recipe';
 	import { fade, fly } from 'svelte/transition';
 	import { writable } from 'svelte/store';
 
