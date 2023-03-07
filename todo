@@ -53,9 +53,17 @@
             [x] dedicated folder
       [x] login page
       [x] login flow with create/already existing account
+      [x] signin logic
+      [x] login logic
+      [x] logout logic
       [-] login flow css
 
       [] store
+      [] create recipe
+      [] get recipe
+      [] eedit recipe
+      [] delete recipe
+      [] localstorage reconcialliation
       [] google sign in
       [x] permission
 
