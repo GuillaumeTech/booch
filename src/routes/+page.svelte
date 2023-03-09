@@ -4,19 +4,19 @@
 	import { onMount } from 'svelte';
 	import { supabase } from '../supabaseClient';
 	import type { AuthSession } from '@supabase/supabase-js';
-	import { activeSession } from '../stores/auth';
+	import { activeSession } from '../stores/supabase';
 
 	let session: AuthSession | null;
 	onMount(() => {
 		supabase.auth.getSession().then(({ data }) => {
 			session = data.session;
-			console.log(session);
+			console.log('session', session);
 
 			activeSession.set(session);
 		});
 		supabase.auth.onAuthStateChange((_event, _session) => {
 			session = _session;
-			console.log(session);
+			console.log('auth change', session);
 
 			activeSession.set(session);
 		});

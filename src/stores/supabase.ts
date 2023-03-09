@@ -4,3 +4,7 @@ import { writable } from 'svelte/store';
 
 
 export const activeSession = writable<AuthSession | null>(null);
+
+
+
+export const syncing = writable(new Set());

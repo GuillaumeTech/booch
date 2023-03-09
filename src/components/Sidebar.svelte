@@ -4,7 +4,7 @@
 	import { recipes, activeRecipe } from '../stores/recipe';
 	import Icon from './Icon.svelte';
 	import LoginModal from './LoginModal.svelte';
-	import { activeSession } from '../stores/auth';
+	import { activeSession } from '../stores/supabase';
 	import { supabase } from '../supabaseClient';
 
 	let addingNewRecipe = false;
@@ -22,8 +22,7 @@
 			id,
 			points: [],
 			axisNames: { x: 'Funk', y: 'Dryness' },
-			public: false,
-			createdAt: new Date()
+			public: false
 		};
 		recipes.add(newRecipe);
 	}
@@ -137,7 +136,7 @@
 					showLoginModal = true;
 				}}
 			>
-				Login
+				Login/Sign-up
 			</li>
 		{/if}
 

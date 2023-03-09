@@ -15,24 +15,27 @@
 
 <div class="app">
 	<Sidebar />
-
-	<div class="recipe">
-		<!-- Can't render it as long as we don't have width height -->
-		<!-- fix ssr issue logically and seems on very first render  -->
-		<!-- width height are undefined as well -->
-		<div class="graph" bind:clientWidth={width} bind:clientHeight={height}>
-			{#if width && height}
-				<RecipeChart
-					{width}
-					{height}
-					onAddPoint={getAddToPoints($activeRecipe)}
-					name={$recipes[$activeRecipe]?.name}
-					points={$recipes[$activeRecipe]?.points}
-					axisNames={$recipes[$activeRecipe]?.axisNames}
-				/>
-			{/if}
+	{#if Object.keys($recipes).includes($activeRecipe)}
+		<div class="recipe">
+			<!-- Can't render it as long as we don't have width height -->
+			<!-- fix ssr issue logically and seems on very first render  -->
+			<!-- width height are undefined as well -->
+			<div class="graph" bind:clientWidth={width} bind:clientHeight={height}>
+				{#if width && height}
+					<RecipeChart
+						{width}
+						{height}
+						onAddPoint={getAddToPoints($activeRecipe)}
+						name={$recipes[$activeRecipe]?.name}
+						points={$recipes[$activeRecipe]?.points}
+						axisNames={$recipes[$activeRecipe]?.axisNames}
+					/>
+				{/if}
+			</div>
 		</div>
-	</div>
+	{:else}
+		<p>select a recipe</p>
+	{/if}
 </div>
 
 <style lang="less">
