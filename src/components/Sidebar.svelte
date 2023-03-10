@@ -15,6 +15,7 @@
 	let deletingName = '';
 	let showDeleteConfirm = false;
 	let showLoginModal = false;
+
 	function addNewRecipe() {
 		const id = uuidv4();
 		const newRecipe = {
@@ -22,7 +23,8 @@
 			id,
 			points: [],
 			axisNames: { x: 'Funk', y: 'Dryness' },
-			public: false
+			public: false,
+			created_at: new Date()
 		};
 		recipes.add(newRecipe);
 	}
@@ -39,6 +41,13 @@
 		deletingId = '';
 		deletingName = '';
 	}
+
+	// order by created at date
+	$: recipesOrdered = Object.entries($recipes)
+		.sort(([_, RecipeA], [__, RecipeB]) => {
+			return RecipeA.created_at.valueOf() - RecipeB.created_at.valueOf();
+		})
+		.map(([_, recipe]) => recipe); // easier to render straight from the array
 </script>
 
 <div class="side-bar">
@@ -73,7 +82,7 @@
 				>
 			</li>
 		{/if}
-		{#each Object.entries($recipes) as [_, { name, id }] (id)}
+		{#each recipesOrdered as { name, id } (id)}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			{#if editingId == id}
 				<li>
