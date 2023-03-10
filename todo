@@ -61,11 +61,12 @@
       [-] store
       [x] create recipe
       [x] get recipe
-      [] eedit recipe
-      [] delete recipe
-      [] localstorage reconcialliation
+      [x] eedit recipe
+      [x] delete recipe
+      [x] localstorage reconcialliation -> not doing this
       [] google sign in
       [x] permission
+      [] delete old default values
 
 [] solve a11y
 [] check XSS 
