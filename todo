@@ -67,12 +67,14 @@
       [] google sign in
       [x] permission
       [] delete old default values
+      [] sync indicator
 [] sort recipes by created at 
 [] keep point creation date
 [] solve a11y
 [] check XSS 
 [] add analytics
 [] share a page to someone else as readonly 
+[] help page
 ---------- PROD
 - [] CI/CI 
     [] tests
