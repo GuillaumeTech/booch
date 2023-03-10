@@ -2,7 +2,7 @@ import { browser } from '$app/environment';
 import type { AuthSession } from '@supabase/supabase-js';
 import { writable } from 'svelte/store';
 import type { Point, PointUpdate, Recipe, RecipeUpdate } from '../types/recipe';
-import { activeSession } from './supabase'
+import { activeSession, syncing } from './supabase'
 import { supabase } from '../supabaseClient';
 import { omit } from 'lodash'
 const initActiveRecipe = browser && localStorage.activeRecipe && JSON.parse(localStorage.activeRecipe);
@@ -65,44 +65,59 @@ export const recipes = (() => {
     }
 
     async function createOnSupabase(recipeId: string, recipe: Recipe, orignalRecipes: Record<string, Recipe>) {
-
-        const { data, error } = await supabase
-            .from('recipes')
-            .insert([
-                recipe
-            ])
-        console.log(data)
-        if (error) { // cancel the localstorage change
-            console.log(error)
-            update(() => {
-                return orignalRecipes
-            });
+        syncing.add(recipeId)
+        try {
+            const { error } = await supabase
+                .from('recipes')
+                .insert([
+                    recipe
+                ])
+            if (error) { // cancel the localstorage change
+                console.log(error)
+                update(() => {
+                    return orignalRecipes
+                });
+            }
+        } finally { // whatever happens this one isn't syncing anymore
+            syncing.remove(recipeId)
         }
+
+
 
     }
 
     async function updateOnSupabase(recipeId: string, recipe: Recipe, orignalRecipe: Recipe) {
-        const { error } = await supabase
-            .from('recipes')
-            .update(recipe)
-            .eq('id', recipeId)
-        if (error) { // cancel the localstorage change
-            update((recipes) => {
-                recipes[recipeId] = orignalRecipe
-                return recipes
-            });
+        syncing.add(recipeId)
+        try {
+            const { error } = await supabase
+                .from('recipes')
+                .update(recipe)
+                .eq('id', recipeId)
+            if (error) { // cancel the localstorage change
+                update((recipes) => {
+                    recipes[recipeId] = orignalRecipe
+                    return recipes
+                });
+            }
+        } finally { // whatever happens this one isn't syncing anymore
+            syncing.remove(recipeId)
         }
     }
 
     async function deleteOnSupabase(recipeId: string, orignalRecipe: Recipe) {
-        const { error } = await supabase
-            .from('recipes')
-            .delete().eq('id', recipeId);
-        if (error) { // cancel the localstorage change
-            update((recipes) => {
-                recipes[recipeId] = orignalRecipe
-                return recipes
-            });
+        syncing.add(recipeId)
+        try {
+            const { error } = await supabase
+                .from('recipes')
+                .delete().eq('id', recipeId);
+            if (error) { // cancel the localstorage change
+                update((recipes) => {
+                    recipes[recipeId] = orignalRecipe
+                    return recipes
+                });
+            }
+        } finally { // whatever happens this one isn't syncing anymore
+            syncing.remove(recipeId)
         }
     }
 
