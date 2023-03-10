@@ -58,16 +58,16 @@ activeSession.subscribe(async (session) => {
 }
 )
 
-function reshapeFromSupabase(recipes) {
+function reshapeFromSupabase(recipes: Array<Recipe>) {
 
-    const reshaped = recipes.reduce((accumulator: Record<string, Recipe>, current) => {
+    const reshaped = recipes.reduce((accumulator: Record<string, Recipe>, current: Recipe) => {
 
         return { ...accumulator, [current.id]: current }
     }, {})
     return reshaped
 }
 
-async function loadRecipesFromSupabase(): Record<string, Recipe> {
+async function loadRecipesFromSupabase(): Promise<Record<string, Recipe>> {
     const { data, error } = await supabase
         .from('recipes')
         .select()
@@ -92,7 +92,7 @@ export const recipes = (() => {
         };
     }
 
-    async function createOnSupabase(recipeId, recipe, orignalRecipes) {
+    async function createOnSupabase(recipeId: string, recipe: Recipe, orignalRecipes: Record<string, Recipe>) {
 
         const { data, error } = await supabase
             .from('recipes')
@@ -102,15 +102,18 @@ export const recipes = (() => {
         console.log(data)
         if (error) { // cancel the localstorage change
             console.log(error)
-            update((recipes) => {
-                delete orignalRecipes[recipeId]
-                return recipes
+            update(() => {
+                return orignalRecipes
             });
         }
 
     }
 
-    async function updateOnSupabase(recipeId, recipe, orignalRecipe) {
+    async function updateOnSupabase(recipeId: string, recipe, orignalRecipe: Recipe) {
+        const { error } = await supabase
+            .from('recipes')
+            .update(recipe)
+            .eq('id', recipeId)
         if (error) { // cancel the localstorage change
             update((recipes) => {
                 recipes[recipeId] = orignalRecipe
@@ -119,7 +122,10 @@ export const recipes = (() => {
         }
     }
 
-    async function deleteOnSupabase(recipeId, orignalRecipe) {
+    async function deleteOnSupabase(recipeId: string, orignalRecipe: Recipe) {
+        const { error } = await supabase
+            .from('recipes')
+            .delete().eq('id', recipeId);
         if (error) { // cancel the localstorage change
             update((recipes) => {
                 recipes[recipeId] = orignalRecipe
