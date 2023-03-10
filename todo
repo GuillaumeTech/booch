@@ -66,15 +66,16 @@
       [x] localstorage reconcialliation -> not doing this
       [] google sign in
       [x] permission
-      [] delete old default values
+      [x] delete old default values
       [] sync indicator
-[] sort recipes by created at 
+[x] sort recipes by created at 
 [] keep point creation date
 [] solve a11y
 [] check XSS 
 [] add analytics
 [] share a page to someone else as readonly 
 [] help page
+[] console.log cleanup
 ---------- PROD
 - [] CI/CI 
     [] tests
