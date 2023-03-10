@@ -11,31 +11,31 @@ export interface Database {
         Tables: {
             recipes: {
                 Row: {
-                    axisNames: Json | null
+                    axisNames: Json
                     created_at: string | null
                     id: string
-                    name: string | null
+                    name: string
                     points: Json | null
                     public: boolean | null
-                    user_id: string | null
+                    user_id: string
                 }
                 Insert: {
-                    axisNames?: Json | null
+                    axisNames: Json
                     created_at?: string | null
                     id?: string
-                    name?: string | null
+                    name: string
                     points?: Json | null
                     public?: boolean | null
-                    user_id?: string | null
+                    user_id?: string
                 }
                 Update: {
-                    axisNames?: Json | null
+                    axisNames?: Json
                     created_at?: string | null
                     id?: string
-                    name?: string | null
+                    name?: string
                     points?: Json | null
                     public?: boolean | null
-                    user_id?: string | null
+                    user_id?: string
                 }
             }
         }
