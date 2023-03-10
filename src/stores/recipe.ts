@@ -15,34 +15,6 @@ activeRecipe.subscribe((activeRecipeId) => {
     }
 })
 
-const defaultValueRecipes: Record<string, Recipe> = {
-    kom: {
-        name: 'Kombucha',
-        id: 'kom',
-        points: [{
-            id: 'a', x: 2, y: 8, title: 'Apple&Cranberries',
-            details: 'Good one but not enough fermentaion'
-        },
-        {
-            id: 'b', x: 6, y: 8, title: 'Orange',
-            details: 'need a few more days, made with Ceylan tea'
-        }],
-        axisNames: { x: 'Dryness', y: 'Funk' }
-    },
-    bread: {
-        name: 'Bread',
-        id: 'bread',
-        points: [{
-            id: 'c', x: 4, y: 8, title: '10% Buckwheat 10% Complete',
-            details: 'Not a lot of rising, 65% hydratation'
-        },
-        {
-            id: 'd', x: 6, y: 7, title: '20% Complete Wheat',
-            details: 'Good one but not enough fermentation'
-        }],
-        axisNames: { x: 'Tenderness', y: 'Funk' }
-    }
-};
 
 const initRecipes = browser && localStorage.recipes && JSON.parse(localStorage.recipes);
 
@@ -83,7 +55,7 @@ async function loadRecipesFromSupabase(): Promise<Record<string, Recipe>> {
 
 
 export const recipes = (() => {
-    const { subscribe, set, update } = writable<Record<string, Recipe>>(initRecipes ?? defaultValueRecipes);
+    const { subscribe, set, update } = writable<Record<string, Recipe>>(initRecipes);
 
 
     function defaultUpdate(props: RecipeUpdate) {
@@ -109,7 +81,7 @@ export const recipes = (() => {
 
     }
 
-    async function updateOnSupabase(recipeId: string, recipe, orignalRecipe: Recipe) {
+    async function updateOnSupabase(recipeId: string, recipe: Recipe, orignalRecipe: Recipe) {
         const { error } = await supabase
             .from('recipes')
             .update(recipe)
