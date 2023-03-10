@@ -67,7 +67,8 @@
       [] google sign in
       [x] permission
       [] delete old default values
-
+[] sort recipes by created at 
+[] keep point creation date
 [] solve a11y
 [] check XSS 
 [] add analytics
