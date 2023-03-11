@@ -70,10 +70,12 @@
       [x] sync indicator
 [x] sort recipes by created at 
 [x] keep point creation date
+[] share a page to someone else as readonly 
+      [] share button 
+      [] access recipe by id
 [] solve a11y
 [] check XSS 
 [] add analytics
-[] share a page to someone else as readonly 
 [] help page
 [] console.log cleanup
 ---------- PROD
