@@ -69,7 +69,7 @@
       [x] delete old default values
       [x] sync indicator
 [x] sort recipes by created at 
-[] keep point creation date
+[x] keep point creation date
 [] solve a11y
 [] check XSS 
 [] add analytics
