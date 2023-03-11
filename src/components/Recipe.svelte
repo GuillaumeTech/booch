@@ -17,7 +17,11 @@
 		onAddPoint: Function,
 		name: string,
 		points: Point[] = [],
-		axisNames: { x: string; y: string };
+		isPublic: Boolean = false,
+		axisNames: {
+			x: string;
+			y: string;
+		};
 
 	const margin: Margin = { top: 50, right: 25, bottom: 50, left: 30 };
 
@@ -69,14 +73,24 @@
 
 <div class="recipe-header">
 	<h2>{name}</h2>
-	<button
-		on:click={() => {
-			addMode = !addMode;
-		}}
-		class="add-entry {addMode ? 'adding' : ''}"
-	>
-		{addMode ? 'Cancel' : 'New entry'}</button
-	>
+	<div>
+		<button
+			on:click={() => {
+				addMode = !addMode;
+			}}
+			class="add-entry {addMode ? 'adding' : ''}"
+		>
+			{addMode ? 'Cancel' : 'New entry'}</button
+		>
+		<button
+			on:click={() => {
+				recipes.update({ id: $activeRecipe, public: !isPublic });
+			}}
+			class="add-entry {addMode ? 'adding' : ''}"
+		>
+			{isPublic ? 'Make private' : 'Make public'}</button
+		>
+	</div>
 </div>
 
 {#if editingAxes}

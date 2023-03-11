@@ -29,6 +29,7 @@
 						name={$recipes[$activeRecipe]?.name}
 						points={$recipes[$activeRecipe]?.points}
 						axisNames={$recipes[$activeRecipe]?.axisNames}
+						isPublic={$recipes[$activeRecipe]?.public}
 					/>
 				{/if}
 			</div>
