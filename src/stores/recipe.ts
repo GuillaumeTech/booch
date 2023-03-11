@@ -183,7 +183,7 @@ export const points = {
 
 function addPointToRecipe(point: Point) {
     return (recipe: Recipe) => {
-        recipe.points.push(point);
+        recipe.points.push({ ...point, tasted_at: new Date() });
         return recipe;
     };
 }

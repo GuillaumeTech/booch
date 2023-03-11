@@ -80,6 +80,8 @@
 - [] CI/CI 
     [] tests
     [] github actions
+[] show points tasted at date
+[] make tasted at editable
 [-] proper ssr -> see feat/ssr
 [] more axis
 [] collaborative ??

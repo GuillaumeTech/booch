@@ -6,7 +6,8 @@ export type Point = {
     id: string;
     title?: string;
     details?: string;
-    date?: Date;
+    tasted_at?: Date;
+
 };
 
 export type NewPoint = Partial<Point>
