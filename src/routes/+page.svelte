@@ -10,14 +10,10 @@
 	onMount(() => {
 		supabase.auth.getSession().then(({ data }) => {
 			session = data.session;
-			console.log('session', session);
-
 			activeSession.set(session);
 		});
 		supabase.auth.onAuthStateChange((_event, _session) => {
 			session = _session;
-			console.log('auth change', session);
-
 			activeSession.set(session);
 		});
 	});
