@@ -69,8 +69,10 @@
       [x] sync indicator
 [x] sort recipes by created at 
 [x] keep point creation date
+[] no save mode
+[] grades as row
 [] share a page to someone else as readonly 
-      [] share button 
+      [x] share button 
       [] access recipe by id
 [] solve a11y
 [] check XSS 
