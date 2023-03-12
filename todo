@@ -73,7 +73,8 @@
 [] grades as row
 [] share a page to someone else as readonly 
       [x] share button 
-      [] access recipe by id
+      [] readonly compoment
+      [-] access recipe by id
 [] solve a11y
 [] check XSS 
 [] add analytics
