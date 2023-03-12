@@ -69,7 +69,7 @@
       [x] sync indicator
 [x] sort recipes by created at 
 [x] keep point creation date
-[] no save mode
+[x] not logged mode
 [] grades as row
 [] share a page to someone else as readonly 
       [x] share button 
@@ -79,6 +79,7 @@
 [] check XSS 
 [] add analytics
 [] help page
+[] alerts
 [] console.log cleanup
 ---------- PROD
 [] google sign in
