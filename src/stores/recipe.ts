@@ -22,7 +22,12 @@ activeSession.subscribe(async (session) => {
     if (session && session.user) {
         try {
             const recipesFromSupabase = await loadRecipesFromSupabase()
-            recipes.set(recipesFromSupabase)
+            if (!recipesFromSupabase && initRecipes && false) { //TO-DO proper code
+                // warn and call back depending on user choice
+            } else {
+                recipes.set(recipesFromSupabase)
+
+            }
         } catch (e) {
             console.log(e)
         }
@@ -64,31 +69,37 @@ export const recipes = (() => {
         };
     }
 
+    // generic try block for all supabseOperation + sync indicator
+    async function supabaseOperation(operation: () => Promise<void>, onId: string) {
+        const { data } = await supabase.auth.getSession()
+        if (data.session) {
+            syncing.add(onId)
+            try {
+                await operation()
+            } finally { // whatever happens this one isn't syncing anymore
+                syncing.remove(onId)
+            }
+        }
+
+    }
     async function createOnSupabase(recipeId: string, recipe: Recipe, orignalRecipes: Record<string, Recipe>) {
-        syncing.add(recipeId)
-        try {
+        supabaseOperation(async () => {
             const { error } = await supabase
                 .from('recipes')
                 .insert([
                     recipe
                 ])
             if (error) { // cancel the localstorage change
-                console.log(error)
                 update(() => {
                     return orignalRecipes
                 });
             }
-        } finally { // whatever happens this one isn't syncing anymore
-            syncing.remove(recipeId)
-        }
-
-
+        }, recipeId)
 
     }
 
     async function updateOnSupabase(recipeId: string, recipe: Recipe, orignalRecipe: Recipe) {
-        syncing.add(recipeId)
-        try {
+        supabaseOperation(async () => {
             const { error } = await supabase
                 .from('recipes')
                 .update(recipe)
@@ -99,14 +110,12 @@ export const recipes = (() => {
                     return recipes
                 });
             }
-        } finally { // whatever happens this one isn't syncing anymore
-            syncing.remove(recipeId)
-        }
+
+        }, recipeId)
     }
 
     async function deleteOnSupabase(recipeId: string, orignalRecipe: Recipe) {
-        syncing.add(recipeId)
-        try {
+        supabaseOperation(async () => {
             const { error } = await supabase
                 .from('recipes')
                 .delete().eq('id', recipeId);
@@ -116,10 +125,10 @@ export const recipes = (() => {
                     return recipes
                 });
             }
-        } finally { // whatever happens this one isn't syncing anymore
-            syncing.remove(recipeId)
-        }
+
+        }, recipeId)
     }
+
 
     subscribe((recipes) => {
         if (browser && recipes) {
@@ -127,6 +136,8 @@ export const recipes = (() => {
             localStorage.recipes = JSON.stringify(recipes)
         }
     })
+
+
 
     function reusableUpdate(props: RecipeUpdate, fn = defaultUpdate(props)) {
         update((recipes) => {
@@ -136,6 +147,7 @@ export const recipes = (() => {
             return recipes
         });
     }
+
     return {
         subscribe,
         set,
