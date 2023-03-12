@@ -71,26 +71,27 @@
 	);
 </script>
 
+<div>
+	<button
+		on:click={() => {
+			recipes.update({ id: $activeRecipe, public: !isPublic });
+		}}
+		class="public-button"
+	>
+		{isPublic ? 'Make private' : 'Make public'}</button
+	>{isPublic}
+</div>
+
 <div class="recipe-header">
 	<h2>{name}</h2>
-	<div>
-		<button
-			on:click={() => {
-				addMode = !addMode;
-			}}
-			class="add-entry {addMode ? 'adding' : ''}"
-		>
-			{addMode ? 'Cancel' : 'New entry'}</button
-		>
-		<button
-			on:click={() => {
-				recipes.update({ id: $activeRecipe, public: !isPublic });
-			}}
-			class="add-entry {addMode ? 'adding' : ''}"
-		>
-			{isPublic ? 'Make private' : 'Make public'}</button
-		>
-	</div>
+	<button
+		on:click={() => {
+			addMode = !addMode;
+		}}
+		class="add-entry {addMode ? 'adding' : ''}"
+	>
+		{addMode ? 'Cancel' : 'New entry'}</button
+	>
 </div>
 
 {#if editingAxes}
@@ -229,6 +230,14 @@
 			&:hover {
 				border: 2px solid salmon;
 			}
+		}
+	}
+	.pulic-button {
+		margin-top: 1rem;
+		font-size: 1rem;
+
+		&:hover {
+			border: 2px solid salmon;
 		}
 	}
 </style>
