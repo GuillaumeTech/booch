@@ -232,7 +232,7 @@
 			}
 		}
 	}
-	.pulic-button {
+	.public-button {
 		margin-top: 1rem;
 		font-size: 1rem;
 
