@@ -64,7 +64,6 @@
       [x] eedit recipe
       [x] delete recipe
       [x] localstorage reconcialliation -> not doing this
-      [] google sign in
       [x] permission
       [x] delete old default values
       [x] sync indicator
@@ -79,6 +78,7 @@
 [] help page
 [] console.log cleanup
 ---------- PROD
+[] google sign in
 - [] CI/CI 
     [] tests
     [] github actions
