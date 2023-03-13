@@ -4,7 +4,7 @@
 	import { fade, fly } from 'svelte/transition';
 	import { writable } from 'svelte/store';
 
-	export let pointPicked: Point, resetPickedPoint: Function;
+	export let pointPicked: Point, resetPickedPoint: Function, readOnly: Boolean;
 
 	$: editablePoint = writable(pointPicked);
 	let editing = false;
@@ -13,30 +13,33 @@
 <div in:fly={{ y: 10, duration: 500 }} out:fade>
 	{#key pointPicked.id}
 		<div>
-			<button
-				on:click={() => {
-					if (editing) {
-						points.update($editablePoint, $activeRecipe);
-					}
-					editing = !editing;
-				}}>{editing ? 'Done' : 'Edit'}</button
-			>
-			<button
-				on:click={() => {
-					if (pointPicked) {
-						points.remove(pointPicked.id, $activeRecipe); // makes ts happy but if is un-needed really
-						resetPickedPoint();
-					}
-				}}>delete</button
-			>
+			{#if !readOnly}
+				<button
+					on:click={() => {
+						if (editing) {
+							points.update($editablePoint, $activeRecipe);
+						}
+						editing = !editing;
+					}}>{editing ? 'Done' : 'Edit'}</button
+				>
+				<button
+					on:click={() => {
+						if (pointPicked) {
+							points.remove(pointPicked.id, $activeRecipe); // makes ts happy but if is un-needed really
+							resetPickedPoint();
+						}
+					}}>delete</button
+				>
+			{/if}
 			<button
 				on:click={() => {
 					resetPickedPoint();
 				}}>hide</button
 			>
 		</div>
+
 		<div>
-			{#if editing}
+			{#if editing && !readOnly}
 				<form>
 					<input bind:value={$editablePoint.title} />
 					<h4>Details</h4>
@@ -49,10 +52,9 @@
 			{:else}
 				<div
 					on:click={() => {
-						if (editing) {
-							points.update($editablePoint, $activeRecipe);
+						if (!editing && !readOnly) {
+							editing = true;
 						}
-						editing = !editing;
 					}}
 				>
 					<h3>{pointPicked.title}</h3>
