@@ -60,12 +60,33 @@
 					<h3>{pointPicked.title}</h3>
 					<h4>Details</h4>
 					<p>{pointPicked.details}</p>
-					<h4>Funk</h4>
-					<p>{pointPicked.x}</p>
-					<h4>Dryness</h4>
-					<p>{pointPicked.y}</p>
+					<div class="grades">
+						<div class="grade">
+							<h4>Funk</h4>
+							<p>{pointPicked.x}</p>
+						</div>
+						<div class="grade">
+							<h4>Dryness</h4>
+							<p>{pointPicked.y}</p>
+						</div>
+					</div>
 				</div>
 			{/if}
 		</div>
 	{/key}
 </div>
+
+<style lang="less">
+	.grades {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		:nth-child(1).grade {
+			margin-right: 1rem;
+			margin-left: 0;
+		}
+		.grade {
+			margin-left: 1rem;
+		}
+	}
+</style>
