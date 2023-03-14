@@ -12,6 +12,9 @@
 	import EntryDetails from './EntryDetails.svelte';
 	import type { Margin } from '../types/layout';
 	import { recipes, activeRecipe } from '../stores/recipe';
+
+	import { page } from '$app/stores';
+
 	export let width: number,
 		height: number,
 		onAddPoint: Function,
@@ -79,7 +82,10 @@
 		class="public-button"
 	>
 		{isPublic ? 'Make private' : 'Make public'}</button
-	>{isPublic}
+	>
+	{#if isPublic}
+		<span>{$page.url}recipe/{$activeRecipe}</span>
+	{/if}
 </div>
 
 <div class="recipe-header">
