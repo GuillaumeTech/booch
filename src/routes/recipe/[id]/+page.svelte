@@ -3,19 +3,16 @@
 	import ReadOnlyRecipe from '../../../components/ReadOnlyRecipe.svelte';
 
 	let width: number, height: number;
+
+	const name = $page.data.recipe.name;
+	const points = $page.data.recipe.points;
+	const axisNames = $page.data.recipe.axisNames;
 </script>
 
 <div>
-	{JSON.stringify($page, null, 2)}
 	<div class="graph" bind:clientWidth={width} bind:clientHeight={height}>
 		{#if width && height}
-			<ReadOnlyRecipe
-				{width}
-				{height}
-				name={'name'}
-				points={[]}
-				axisNames={{ x: 'test', y: 'tea' }}
-			/>
+			<ReadOnlyRecipe {width} {height} {name} {points} {axisNames} />
 		{/if}
 	</div>
 </div>
