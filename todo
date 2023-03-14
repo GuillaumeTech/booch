@@ -71,10 +71,12 @@
 [x] keep point creation date
 [x] not logged mode
 [] grades as row
-[] share a page to someone else as readonly 
+[-] share a page to someone else as readonly 
       [x] share button 
       [x] readonly compoment
-      [-] access recipe by id
+      [x] access recipe by id
+      [-] fix styling of readonly
+      [] display link to be shared
 [] solve a11y
 [] check XSS 
 [] add analytics
