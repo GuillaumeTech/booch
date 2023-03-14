@@ -75,7 +75,7 @@
       [x] share button 
       [x] readonly compoment
       [x] access recipe by id
-      [-] fix styling of readonly
+      [] fix styling of readonly
       [] display link to be shared
 [] solve a11y
 [] check XSS 
