@@ -9,7 +9,7 @@
 	const axisNames = $page.data.recipe.axisNames;
 </script>
 
-<div>
+<div class="recipe">
 	<div class="graph" bind:clientWidth={width} bind:clientHeight={height}>
 		{#if width && height}
 			<ReadOnlyRecipe {width} {height} {name} {points} {axisNames} />
@@ -18,6 +18,12 @@
 </div>
 
 <style>
+	div.recipe {
+		width: 100%;
+		position: static;
+		overflow-y: scroll;
+		min-height: calc(100% - 3rem - 6px);
+	}
 	div.graph {
 		margin: auto;
 		max-width: 90%;
