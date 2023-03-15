@@ -65,74 +65,79 @@
 	}}
 	on:click|self={() => dialog.close()}
 >
-	{#if loginStep == LoginStep.DOES_ACCOUNT_EXIST}
-		<div on:click|stopPropagation>
-			<hr />
+	<div class="login">
+		{#if loginStep == LoginStep.DOES_ACCOUNT_EXIST}
+			<div on:click|stopPropagation>
+				<button
+					on:click={() => {
+						hasAccount = false;
+						loginKind = LoginKind.EMAIL;
+						loginStep = LoginStep.ENTER_ACCOUNT_INFO;
+						// loginStep = LoginStep.PICK_KIND; // skip google for now
+					}}
+				>
+					I'm a new user
+				</button>
+				<button
+					on:click={() => {
+						hasAccount = true;
+						loginKind = LoginKind.EMAIL;
+						loginStep = LoginStep.ENTER_ACCOUNT_INFO;
+						// loginStep = LoginStep.PICK_KIND; // skip google for now
+					}}
+				>
+					I have an account already
+				</button>
+			</div>
+		{:else if loginStep == LoginStep.PICK_KIND}
+			<p>{hasAccount ? 'Login in using' : 'Create an account using'}</p>
 			<button
 				on:click={() => {
-					hasAccount = false;
-					loginStep = LoginStep.PICK_KIND;
+					loginKind = LoginKind.EMAIL;
+					loginStep = LoginStep.ENTER_ACCOUNT_INFO;
 				}}
-			>
-				I'm a new user
+				>Email
 			</button>
 			<button
 				on:click={() => {
-					hasAccount = true;
-					loginStep = LoginStep.PICK_KIND;
+					loginKind = LoginKind.GOOGLE;
+					loginStep = LoginStep.ENTER_ACCOUNT_INFO;
+				}}
+				>Google
+			</button>
+		{:else if loginStep == LoginStep.ENTER_ACCOUNT_INFO && loginKind == LoginKind.EMAIL}
+			<form
+				on:submit={() => {
+					if (hasAccount) {
+						login();
+					} else {
+						createAccount();
+					}
 				}}
 			>
-				I have an account already
-			</button>
-		</div>
-	{:else if loginStep == LoginStep.PICK_KIND}
-		<p>{hasAccount ? 'Login in using' : 'Create an account using'}</p>
-		<button
-			on:click={() => {
-				loginKind = LoginKind.EMAIL;
-				loginStep = LoginStep.ENTER_ACCOUNT_INFO;
-			}}
-			>Email
-		</button>
-		<button
-			on:click={() => {
-				loginKind = LoginKind.GOOGLE;
-				loginStep = LoginStep.ENTER_ACCOUNT_INFO;
-			}}
-			>Google
-		</button>
-	{:else if loginStep == LoginStep.ENTER_ACCOUNT_INFO && loginKind == LoginKind.EMAIL}
-		<form
-			on:submit={() => {
-				if (hasAccount) {
-					login();
-				} else {
-					createAccount();
-				}
-			}}
-		>
-			<label>E-mail</label>
-			<input autocomplete="email" type="email" bind:value={email} />
-			{#if emailError}
-				<b>The password do not match</b>
-			{/if}
-			<label> Password</label>
-			<input type="password" bind:value={password} />
-			{#if !hasAccount}
-				<label>Confirm Password</label>
-				<input type="password" bind:value={passwordConfirm} />
-				{#if !passwordMatch}
-					<b>The passwords do not match</b>
+				<label>E-mail</label>
+				<input autocomplete="email" type="email" bind:value={email} />
+				{#if emailError}
+					<b>The password do not match</b>
 				{/if}
-			{/if}
+				<label> Password</label>
+				<input type="password" bind:value={password} />
+				{#if !hasAccount}
+					<label>Confirm Password</label>
+					<input type="password" bind:value={passwordConfirm} />
+					{#if !passwordMatch}
+						<b>The passwords do not match</b>
+					{/if}
+				{/if}
 
-			<input type="submit" value={hasAccount ? 'Login' : 'Create'} />
-		</form>
-	{:else if loginStep == LoginStep.CHECK_EMAIL}
-		<p>Check your email for the verification link</p>
-	{:else if loginStep == LoginStep.ERROR}
-		<p>There was an error when login in</p>
-	{/if}
+				<input type="submit" value={hasAccount ? 'Login' : 'Create'} />
+			</form>
+		{:else if loginStep == LoginStep.CHECK_EMAIL}
+			<p>Check your email for the verification link</p>
+		{:else if loginStep == LoginStep.ERROR}
+			<p>There was an error when login in</p>
+		{/if}
+	</div>
 </dialog>
 
 <style>
@@ -172,5 +177,15 @@
 	}
 	button {
 		display: block;
+		font-size: 1rem;
+		width: 100%;
+		padding: 1rem;
+		margin: 0.5rem 0 0.5rem 0;
+	}
+	.login {
+		margin: 0.5rem 0.2rem 0.5rem 0.2rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
 	}
 </style>
