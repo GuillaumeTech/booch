@@ -5,11 +5,13 @@
 </script>
 
 <header>
-	<h1><a href="/">Fermentation Notes</a></h1>
+	<h1><a href="/">My fermentation Notes</a></h1>
 	{#if $syncing.size !== 0}
 		<div class="loader"><span>&#9632;</span> syncing</div>
 	{/if}
 </header>
+<!-- limit this to client side rendering, behave a bit weirdly with ssr -->
+<!-- Also not even sure SSRing this make sense -->
 {#if browser}
 	<SvelteToast target="loggedin" />
 	<SvelteToast target="notloggedin" />
