@@ -23,15 +23,12 @@
 	let password = '';
 	let passwordConfirm = '';
 	let emailError = false;
-	let extra = '';
 
 	async function login() {
 		const { data, error } = await supabase.auth.signInWithPassword({
 			email,
 			password
 		});
-		console.log(data);
-		console.log(error);
 
 		if (!error) {
 			loginStep = LoginStep.LOGGED_IN;
@@ -60,6 +57,9 @@
 		hasAccount = false;
 		loginStep = LoginStep.DOES_ACCOUNT_EXIST;
 		loginKind = undefined;
+		email = '';
+		password = '';
+		passwordConfirm = '';
 		onCancel();
 	}}
 	on:click|self={() => dialog.close()}
