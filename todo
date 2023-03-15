@@ -70,6 +70,7 @@
 [x] sort recipes by created at 
 [x] keep point creation date
 [x] not logged mode
+  [x] no save if not logged in
 [] grades as row
 [x] share a page to someone else as readonly 
       [x] share button 
@@ -93,4 +94,5 @@
 [] make tasted at editable
 [-] proper ssr -> see feat/ssr
 [] more axis
+[] download you data
 [] collaborative ??
