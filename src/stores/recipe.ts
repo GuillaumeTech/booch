@@ -1,10 +1,9 @@
 import { browser } from '$app/environment';
-import type { AuthSession } from '@supabase/supabase-js';
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import type { Point, PointUpdate, Recipe, RecipeUpdate } from '../types/recipe';
 import { activeSession, syncing } from './supabase'
 import { supabase } from '../supabaseClient';
-import { omit } from 'lodash'
+
 const initActiveRecipe = browser && localStorage.activeRecipe && JSON.parse(localStorage.activeRecipe);
 
 export const activeRecipe = writable<string>(initActiveRecipe ?? 'kom');
@@ -15,19 +14,13 @@ activeRecipe.subscribe((activeRecipeId) => {
     }
 })
 
-
 const initRecipes = browser && localStorage.recipes && JSON.parse(localStorage.recipes);
 
 activeSession.subscribe(async (session) => {
     if (session && session.user) {
         try {
             const recipesFromSupabase = await loadRecipesFromSupabase()
-            if (!recipesFromSupabase && initRecipes && false) { //TO-DO proper code
-                // warn and call back depending on user choice
-            } else {
-                recipes.set(recipesFromSupabase)
-
-            }
+            recipes.set(recipesFromSupabase)
         } catch (e) {
             console.log(e)
         }
@@ -131,11 +124,13 @@ export const recipes = (() => {
 
 
     subscribe((recipes) => {
-        if (browser && recipes) {
+        const session = get(activeSession);
+        if (browser && recipes && session) {
             localStorage.recipesLastUpdate = JSON.stringify(new Date())
             localStorage.recipes = JSON.stringify(recipes)
         }
     })
+
 
 
 
