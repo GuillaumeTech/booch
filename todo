@@ -83,7 +83,7 @@
 [] add analytics
 [] help page
 [] alerts
-  [] when not logged
+  [x] when not logged
   [] when error
 [] console.log cleanup
 [x] click on header bring to home
