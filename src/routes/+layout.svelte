@@ -1,6 +1,7 @@
 <script>
 	import { syncing } from '../stores/supabase';
 	import { SvelteToast } from '@zerodevx/svelte-toast';
+	import { browser } from '$app/environment';
 </script>
 
 <header>
@@ -9,8 +10,11 @@
 		<div class="loader"><span>&#9632;</span> syncing</div>
 	{/if}
 </header>
-<SvelteToast target="loggedin" />
-<SvelteToast target="notloggedin" />
+{#if browser}
+	<SvelteToast target="loggedin" />
+	<SvelteToast target="notloggedin" />
+{/if}
+
 <slot />
 
 <style lang="less">

@@ -3,7 +3,7 @@ import { get, writable } from 'svelte/store';
 import type { Point, PointUpdate, Recipe, RecipeUpdate } from '../types/recipe';
 import { activeSession, syncing } from './supabase'
 import { supabase } from '../supabaseClient';
-
+import { toast } from '@zerodevx/svelte-toast'
 const initActiveRecipe = browser && localStorage.activeRecipe && JSON.parse(localStorage.activeRecipe);
 
 export const activeRecipe = writable<string>(initActiveRecipe ?? 'kom');
@@ -21,9 +21,12 @@ activeSession.subscribe(async (session) => {
         try {
             const recipesFromSupabase = await loadRecipesFromSupabase()
             recipes.set(recipesFromSupabase)
+            toast.pop({ target: 'notloggedin' })
         } catch (e) {
             console.log(e)
         }
+    } else {
+        toast.push('You\'re not logged in, nothing will be saved!', { target: 'notloggedin', initial: 0 })
     }
 }
 )
