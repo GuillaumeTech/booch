@@ -17,6 +17,7 @@
 	let showLoginModal = false;
 
 	function addNewRecipe() {
+		if (newRecipeName === '') return; // can't create a no name recipe
 		const id = uuidv4();
 		const newRecipe = {
 			name: newRecipeName,
@@ -57,28 +58,20 @@
 			<li
 				class="add-recipe"
 				on:click={() => {
-					if (addingNewRecipe) {
-						addNewRecipe();
-						addingNewRecipe = false;
-					} else {
-						addingNewRecipe = true;
-					}
+					addingNewRecipe = true;
 				}}
 			>
-				{addingNewRecipe ? 'add' : ' + new recipe'}
+				+ new recipe
 			</li>
 		{:else}
 			<li class="add-recipe">
 				<input type="text" bind:value={newRecipeName} />
 				<button
 					on:click={() => {
-						if (addingNewRecipe) {
-							addNewRecipe();
-							addingNewRecipe = false;
-						} else {
-							addingNewRecipe = true;
-						}
-					}}>{addingNewRecipe ? 'add' : 'new recipe'}</button
+						addNewRecipe();
+						addingNewRecipe = false;
+						newRecipeName = '';
+					}}>add</button
 				>
 			</li>
 		{/if}
