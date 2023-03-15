@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { toast } from '@zerodevx/svelte-toast';
 	import { supabase } from '../supabaseClient';
 
 	export let showModal: Boolean, onCancel: Function;
@@ -12,8 +13,7 @@
 		PICK_KIND = 'PICK_KIND',
 		ENTER_ACCOUNT_INFO = 'ENTER_ACCOUNT_INFO',
 		ERROR = 'ERROR',
-		CHECK_EMAIL = 'CHECK_EMAIL',
-		LOGGED_IN = 'LOGGED_IN'
+		CHECK_EMAIL = 'CHECK_EMAIL'
 	}
 	let dialog: HTMLDialogElement;
 	let hasAccount = false;
@@ -31,7 +31,8 @@
 		});
 
 		if (!error) {
-			loginStep = LoginStep.LOGGED_IN;
+			toast.push('You succesfully logged in !', { target: 'loggedin' });
+			dialog.close();
 		}
 	}
 
@@ -129,8 +130,6 @@
 		</form>
 	{:else if loginStep == LoginStep.CHECK_EMAIL}
 		<p>Check your email for the verification link</p>
-	{:else if loginStep == LoginStep.LOGGED_IN}
-		<p>You succesfully logged in !</p>
 	{:else if loginStep == LoginStep.ERROR}
 		<p>There was an error when login in</p>
 	{/if}
