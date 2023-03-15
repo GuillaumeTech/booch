@@ -14,6 +14,7 @@
 	import { recipes, activeRecipe } from '../stores/recipe';
 
 	import { page } from '$app/stores';
+	import { activeSession } from '../stores/supabase';
 
 	export let width: number,
 		height: number,
@@ -75,16 +76,18 @@
 </script>
 
 <div>
-	<button
-		on:click={() => {
-			recipes.update({ id: $activeRecipe, public: !isPublic });
-		}}
-		class="public-button"
-	>
-		{isPublic ? 'Make private' : 'Make public'}</button
-	>
-	{#if isPublic}
-		<span>{$page.url}recipe/{$activeRecipe}</span>
+	{#if $activeSession}
+		<button
+			on:click={() => {
+				recipes.update({ id: $activeRecipe, public: !isPublic });
+			}}
+			class="public-button"
+		>
+			{isPublic ? 'Make private' : 'Make public'}</button
+		>
+		{#if isPublic}
+			<span>{$page.url}recipe/{$activeRecipe}</span>
+		{/if}
 	{/if}
 </div>
 
