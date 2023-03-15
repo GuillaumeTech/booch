@@ -111,7 +111,7 @@
 			}}
 		>
 			<label>E-mail</label>
-			<input type="email" bind:value={email} />
+			<input autocomplete="email" type="email" bind:value={email} />
 			{#if emailError}
 				<b>The password do not match</b>
 			{/if}
