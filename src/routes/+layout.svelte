@@ -3,7 +3,7 @@
 </script>
 
 <header>
-	<h1>Fermentation Notes</h1>
+	<h1><a href="/">Fermentation Notes</a></h1>
 	{#if $syncing.size !== 0}
 		<div class="loader"><span>&#9632;</span> syncing</div>
 	{/if}
@@ -11,7 +11,7 @@
 
 <slot />
 
-<style>
+<style lang="less">
 	header {
 		background: salmon;
 		color: white;
@@ -20,6 +20,21 @@
 		flex-direction: row;
 		align-items: center;
 		justify-content: space-between;
+		h1 > a {
+			color: white;
+			text-decoration: none;
+		}
+	}
+	h1 {
+		font-size: 2em;
+		padding: 0;
+		margin: 0;
+		font-weight: normal;
+		width: fit-content;
+		transform: rotate(-1deg);
+		:hover {
+			color: midnightblue;
+		}
 	}
 	span {
 		font-size: 1.2rem;
