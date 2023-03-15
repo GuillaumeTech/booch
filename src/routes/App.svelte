@@ -15,7 +15,7 @@
 
 <div class="app">
 	<Sidebar />
-	{#if Object.keys($recipes).includes($activeRecipe)}
+	{#if $recipes && Object.keys($recipes).includes($activeRecipe)}
 		<div class="recipe">
 			<!-- Can't render it as long as we don't have width height -->
 			<!-- fix ssr issue logically and seems on very first render  -->

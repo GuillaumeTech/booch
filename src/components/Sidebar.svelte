@@ -44,11 +44,13 @@
 	}
 
 	// order by created at date
-	$: recipesOrdered = Object.entries($recipes)
-		.sort(([_, RecipeA], [__, RecipeB]) => {
-			return RecipeA.created_at.valueOf() - RecipeB.created_at.valueOf();
-		})
-		.map(([_, recipe]) => recipe); // easier to render straight from the array
+	$: recipesOrdered = $recipes
+		? Object.entries($recipes)
+				.sort(([_, RecipeA], [__, RecipeB]) => {
+					return RecipeA.created_at.valueOf() - RecipeB.created_at.valueOf();
+				})
+				.map(([_, recipe]) => recipe) // easier to render straight from the array
+		: [];
 </script>
 
 <div class="side-bar">
