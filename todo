@@ -71,7 +71,7 @@
 [x] keep point creation date
 [x] not logged mode
   [x] no save if not logged in
-[] grades as row
+[x] grades as row
 [x] share a page to someone else as readonly 
       [x] share button 
       [x] readonly compoment
