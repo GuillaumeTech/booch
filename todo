@@ -85,12 +85,15 @@
 [] alerts
   [x] when not logged
   [] when error
+  [x] alerts are centerer
+  [x] alerts styling
 [] console.log cleanup
 [x] click on header bring to home
 [x] share only available if logged in
 
 [] DEPLOY
 ---------- PROD
+[] login modal navigation
 [] google sign in
 - [] CI/CI 
     [] tests

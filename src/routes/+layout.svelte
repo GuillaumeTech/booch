@@ -13,8 +13,10 @@
 <!-- limit this to client side rendering, behave a bit weirdly with ssr -->
 <!-- Also not even sure SSRing this make sense -->
 {#if browser}
-	<SvelteToast target="loggedin" />
-	<SvelteToast target="notloggedin" />
+	<div class="toasters">
+		<SvelteToast target="loggedin" />
+		<SvelteToast target="notloggedin" />
+	</div>
 {/if}
 
 <slot />
@@ -55,6 +57,24 @@
 		}
 		100% {
 			opacity: 0;
+		}
+	}
+
+	.toasters {
+		--toastContainerTop: 0.5rem;
+		--toastContainerRight: 0.5rem;
+		--toastContainerBottom: auto;
+		--toastContainerLeft: 0.5rem;
+		--toastWidth: 100%;
+		--toastMinHeight: 2rem;
+		--toastPadding: 0 0.5rem;
+		font-size: 0.875rem;
+	}
+	@media (min-width: 40rem) {
+		.toasters {
+			--toastContainerRight: auto;
+			--toastContainerLeft: calc(50vw - 20rem);
+			--toastWidth: 40rem;
 		}
 	}
 </style>

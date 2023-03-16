@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { toast } from '@zerodevx/svelte-toast';
+	import { success } from '../lib/toasters';
 	import { supabase } from '../supabaseClient';
 
 	export let showModal: Boolean, onCancel: Function;
@@ -31,7 +31,7 @@
 		});
 
 		if (!error) {
-			toast.push('You succesfully logged in !', { target: 'loggedin' });
+			success('You succesfully logged in !', { target: 'loggedin' });
 			dialog.close();
 		}
 	}

@@ -4,6 +4,7 @@ import type { Point, PointUpdate, Recipe, RecipeUpdate } from '../types/recipe';
 import { activeSession, syncing } from './supabase'
 import { supabase } from '../supabaseClient';
 import { toast } from '@zerodevx/svelte-toast'
+import { info } from '../lib/toasters';
 const initActiveRecipe = browser && localStorage.activeRecipe && JSON.parse(localStorage.activeRecipe);
 
 export const activeRecipe = writable<string>(initActiveRecipe ?? 'kom');
@@ -26,7 +27,7 @@ activeSession.subscribe(async (session) => {
             console.log(e)
         }
     } else {
-        toast.push('You\'re not logged in, nothing will be saved!', { target: 'notloggedin', initial: 0 })
+        info('You\'re not logged in, nothing will be saved!', { target: 'notloggedin', initial: 0 })
     }
 }
 )
