@@ -129,8 +129,7 @@
 						<b>The passwords do not match</b>
 					{/if}
 				{/if}
-
-				<input type="submit" value={hasAccount ? 'Login' : 'Create'} />
+				<button type="submit"> {hasAccount ? 'Login' : 'Create'}</button>
 			</form>
 		{:else if loginStep == LoginStep.CHECK_EMAIL}
 			<p>Check your email for the verification link</p>
@@ -146,6 +145,7 @@
 		border-radius: 0.2em;
 		border: none;
 		padding: 0;
+		width: 30%;
 	}
 	dialog::backdrop {
 		background: rgba(0, 0, 0, 0.3);
@@ -187,5 +187,9 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;
+	}
+	form {
+		display: flex;
+		flex-direction: column;
 	}
 </style>
