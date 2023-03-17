@@ -130,7 +130,12 @@
 				/>
 				{#if !hasAccount}
 					<label for="password-confirm">Confirm Password</label>
-					<input id="password-confirm" type="password" bind:value={passwordConfirm} />
+					<input
+						id="password-confirm"
+						autocomplete="new-password"
+						type="password"
+						bind:value={passwordConfirm}
+					/>
 					{#if !passwordMatch}
 						<b>The passwords do not match</b>
 					{/if}
