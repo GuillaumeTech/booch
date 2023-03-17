@@ -90,7 +90,7 @@
 [] console.log cleanup
 [x] click on header bring to home
 [x] share only available if logged in
-
+[x] login signup auto complete
 [] DEPLOY
 ---------- PROD
 [] login modal navigation
