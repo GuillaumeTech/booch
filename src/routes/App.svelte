@@ -36,7 +36,7 @@
 		</div>
 	{:else}
 		<div class="no-recipe">
-			<h2>Select a recipe using the side bar</h2>
+			<h2>Select or create a recipe using the side bar</h2>
 		</div>
 	{/if}
 </div>
