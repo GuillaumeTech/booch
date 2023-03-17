@@ -91,7 +91,8 @@
 [x] click on header bring to home
 [x] share only available if logged in
 [x] login signup auto complete
-[] DEPLOY
+[x] DEPLOY
+
 ---------- PROD
 [] login modal navigation
 [] google sign in
