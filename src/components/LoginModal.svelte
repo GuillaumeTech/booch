@@ -19,9 +19,9 @@
 	let hasAccount = false;
 	let loginStep: LoginStep = LoginStep.DOES_ACCOUNT_EXIST;
 	let loginKind: LoginKind | undefined;
-	let email = '';
-	let password = '';
-	let passwordConfirm = '';
+	let email: string;
+	let password: string;
+	let passwordConfirm: string;
 	let emailError = false;
 
 	async function login() {
@@ -114,17 +114,23 @@
 						createAccount();
 					}
 				}}
+				autocomplete="on"
 			>
-				<label>E-mail</label>
-				<input autocomplete="email" type="email" bind:value={email} />
+				<label for="email">E-mail</label>
+				<input autocomplete="email" id="email" type="email" bind:value={email} />
 				{#if emailError}
 					<b>The password do not match</b>
 				{/if}
-				<label> Password</label>
-				<input type="password" bind:value={password} />
+				<label for="password"> Password</label>
+				<input
+					id="password"
+					type="password"
+					autocomplete={hasAccount ? 'current-password' : 'new-password'}
+					bind:value={password}
+				/>
 				{#if !hasAccount}
-					<label>Confirm Password</label>
-					<input type="password" bind:value={passwordConfirm} />
+					<label for="password-confirm">Confirm Password</label>
+					<input id="password-confirm" type="password" bind:value={passwordConfirm} />
 					{#if !passwordMatch}
 						<b>The passwords do not match</b>
 					{/if}
