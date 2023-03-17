@@ -27,7 +27,7 @@ export function error(message: string, params: SvelteToastOptions) {
     toast.push(message, {
         theme: {
             '--toastBackground': 'firebrick',
-            '--toastColor': 'black',
+            '--toastColor': 'white',
             '--toastBarBackground': 'red'
         },
         ...params

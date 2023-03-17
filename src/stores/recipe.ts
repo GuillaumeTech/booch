@@ -4,7 +4,7 @@ import type { Point, PointUpdate, Recipe, RecipeUpdate } from '../types/recipe';
 import { activeSession, syncing } from './supabase'
 import { supabase } from '../supabaseClient';
 import { toast } from '@zerodevx/svelte-toast'
-import { info } from '../lib/toasters';
+import { error, info } from '../lib/toasters';
 const initActiveRecipe = browser && localStorage.activeRecipe && JSON.parse(localStorage.activeRecipe);
 
 export const activeRecipe = writable<string>(initActiveRecipe ?? 'kom');
@@ -75,6 +75,7 @@ export const recipes = (() => {
                 await operation()
             } finally { // whatever happens this one isn't syncing anymore
                 syncing.remove(onId)
+                error('Sorry, the changes could not be saved', { target: 'loggedin' })
             }
         }
 
