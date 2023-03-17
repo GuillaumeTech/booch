@@ -57,7 +57,7 @@ async function loadRecipesFromSupabase(): Promise<Record<string, Recipe>> {
 
 
 export const recipes = (() => {
-    const { subscribe, set, update } = writable<Record<string, Recipe>>(initRecipes);
+    const { subscribe, set, update } = writable<Record<string, Recipe>>(initRecipes || {});
 
 
     function defaultUpdate(props: RecipeUpdate) {
