@@ -82,9 +82,9 @@
 [] check XSS 
 [] add analytics
 [] help page
-[] alerts
+[x] alerts
   [x] when not logged
-  [] when error
+  [x] when error
   [x] alerts are centerer
   [x] alerts styling
 [] console.log cleanup
