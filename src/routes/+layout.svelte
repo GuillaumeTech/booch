@@ -2,10 +2,6 @@
 	import { syncing } from '../stores/supabase';
 	import { SvelteToast } from '@zerodevx/svelte-toast';
 	import { browser } from '$app/environment';
-	import { dev } from '$app/environment';
-	import { inject } from '@vercel/analytics';
-
-	inject({ mode: dev ? 'development' : 'production' });
 </script>
 
 <header>
