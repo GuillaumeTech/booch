@@ -57,6 +57,7 @@
       [x] login logic
       [x] logout logic
       [-] login flow css
+      [x] improve modal behavior
 
       [-] store
       [x] create recipe
