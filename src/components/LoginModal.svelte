@@ -63,7 +63,10 @@
 		passwordConfirm = '';
 		onCancel();
 	}}
-	on:click|self={() => dialog.close()}
+	on:click={(e) => {
+		e.preventDefault();
+		e.stopPropagation();
+	}}
 >
 	<div class="login">
 		{#if loginStep == LoginStep.DOES_ACCOUNT_EXIST}
