@@ -46,6 +46,10 @@
       [-] csss general style
       [] validate on enter
       [] better modal
+            [] responsive
+            [] better button
+            [] unified
+      [] text areas
 - [-] suppabase
       [x] some order in compoments
             [x] app compoment
