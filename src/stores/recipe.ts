@@ -73,9 +73,10 @@ export const recipes = (() => {
             syncing.add(onId)
             try {
                 await operation()
+            } catch {
+                error('Sorry, the changes could not be saved', { target: 'loggedin' })
             } finally { // whatever happens this one isn't syncing anymore
                 syncing.remove(onId)
-                error('Sorry, the changes could not be saved', { target: 'loggedin' })
             }
         }
 
