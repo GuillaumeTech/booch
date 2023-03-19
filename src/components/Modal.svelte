@@ -13,36 +13,43 @@
 		dialog.close();
 		onCancel();
 	}}
-	on:click|self={() => dialog.close()}
+	on:mousedown|self={() => dialog.close()}
 >
-	<div on:click|stopPropagation>
+	<div class="modal-content" on:click|stopPropagation>
 		<slot name="header" />
-		<hr />
 		<slot />
 		<hr />
-		<button
-			on:click={() => {
-				onCancel();
-				dialog.close();
-			}}>Cancel</button
-		>
-		<!-- svelte-ignore a11y-autofocus -->
-		<button
-			autofocus
-			on:click={() => {
-				onOk();
-				dialog.close();
-			}}>OK</button
+		<span
+			><button
+				on:click={() => {
+					onCancel();
+					dialog.close();
+				}}>Cancel</button
+			>
+			<!-- svelte-ignore a11y-autofocus -->
+			<button
+				autofocus
+				on:click={() => {
+					onOk();
+					dialog.close();
+				}}>OK</button
+			></span
 		>
 	</div>
 </dialog>
 
 <style>
 	dialog {
-		max-width: 32em;
+		max-width: 35rem;
 		border-radius: 0.2em;
 		border: none;
 		padding: 0;
+		width: 35rem;
+	}
+	@media (max-width: 40rem) {
+		dialog {
+			width: 90%;
+		}
 	}
 	dialog::backdrop {
 		background: rgba(0, 0, 0, 0.3);
@@ -74,5 +81,13 @@
 	}
 	button {
 		display: block;
+	}
+	span {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	.modal-content {
+		margin: 0.5rem;
 	}
 </style>

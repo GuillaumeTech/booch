@@ -157,11 +157,16 @@ thus triggerig onclick when releasing the mouse, mouse down prevent this -->
 
 <style>
 	dialog {
-		max-width: 32em;
+		max-width: 35rem;
 		border-radius: 0.2em;
 		border: none;
 		padding: 0;
-		width: 30%;
+		width: 35rem;
+	}
+	@media (max-width: 40rem) {
+		dialog {
+			width: 90%;
+		}
 	}
 	dialog::backdrop {
 		background: rgba(0, 0, 0, 0.3);

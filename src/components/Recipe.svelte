@@ -135,10 +135,10 @@
 	}}
 >
 	<form class="content">
-		<label>Title</label>
-		<input type="text" bind:value={$newPoint.title} />
-		<label>Details</label>
-		<textarea bind:value={$newPoint.details} />
+		<label for="title">Title</label>
+		<input id="title" type="text" bind:value={$newPoint.title} />
+		<label for="detail">Details</label>
+		<textarea id="detail" rows="7" bind:value={$newPoint.details} />
 	</form>
 </Modal>
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
@@ -247,6 +247,16 @@
 
 		&:hover {
 			border: 2px solid salmon;
+		}
+	}
+	.content {
+		display: flex;
+		flex-direction: column;
+		label {
+			margin-top: 0.5rem;
+		}
+		textarea {
+			resize: none;
 		}
 	}
 </style>

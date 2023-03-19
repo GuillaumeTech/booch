@@ -160,6 +160,7 @@
 		resetDeletingInfo();
 	}}
 >
+	<b slot="header">Confirm</b>
 	<p>Are you sure about deleting <b>{deletingName}</b> ? This can't be undone</p>
 </Modal>
 <LoginModal
