@@ -53,6 +53,9 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- on:mousedown is better that on:click here
+as when selecting something we might end out side the dialog 
+thus triggerig onclick when releasing the mouse, mouse down prevent this -->
 <dialog
 	bind:this={dialog}
 	on:close={() => {
@@ -65,7 +68,7 @@
 		passwordConfirm = '';
 		onCancel();
 	}}
-	on:click|self={() => dialog.close()}
+	on:mousedown|self={() => dialog.close()}
 >
 	<div class="login">
 		{#if loginStep == LoginStep.DOES_ACCOUNT_EXIST}
