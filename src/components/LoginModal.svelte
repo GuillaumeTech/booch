@@ -41,6 +41,8 @@
 			email,
 			password
 		});
+		console.log(error);
+
 		if (!error) {
 			loginStep = LoginStep.CHECK_EMAIL;
 		}
@@ -63,10 +65,7 @@
 		passwordConfirm = '';
 		onCancel();
 	}}
-	on:click={(e) => {
-		e.preventDefault();
-		e.stopPropagation();
-	}}
+	on:click|self={() => dialog.close()}
 >
 	<div class="login">
 		{#if loginStep == LoginStep.DOES_ACCOUNT_EXIST}
