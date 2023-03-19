@@ -45,11 +45,11 @@
       [] css icons
       [-] csss general style
       [] validate on enter
-      [] better modal
-            [] responsive
+      [-] better modal
+            [x] responsive
             [] better button
             [] unified
-      [] text areas
+      [-] text areas
 - [-] suppabase
       [x] some order in compoments
             [x] app compoment
