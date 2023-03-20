@@ -91,6 +91,8 @@
       [x] recipe CRUD
       [] points CRUD
       [] CI
+            [] make playwright work in github action
+            [] block deploy depending on tests
 [x] alerts
   [x] when not logged
   [x] when error
