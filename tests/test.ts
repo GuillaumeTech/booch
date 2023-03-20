@@ -29,15 +29,13 @@ test('Can create,edit and delete a Recipe', async ({ page }) => {
 	await createRecipe(page, 'test')
 	await editRecipeName(page, 'test', 'new-test')
 	await deleteRecipe(page, 'new-test')
-	await page.getByTestId(`recipe-new-test`).isHidden()
-
+	await expect(page.getByTestId(`recipe-new-test`)).toBeHidden();
 });
 
-test('Show select recipe when current recipe is delete', async ({ page }) => {
+test('Show select recipe when current recipe is deleted', async ({ page }) => {
 	await page.goto('/');
 	await createRecipe(page, 'test')
 	await deleteRecipe(page, 'test')
-	await page.getByRole('heading', { name: 'babababababa' }).isVisible();
-
+	await expect(page.getByTestId(`pick-a-recipe`)).toBeVisible();
 });
 
