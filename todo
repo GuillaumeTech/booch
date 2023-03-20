@@ -87,7 +87,10 @@
 [] check XSS 
 [] add analytics
 [] help page
-[] cypress
+[-] playwright
+      [x] recipe CRUD
+      [] points CRUD
+      [] CI
 [x] alerts
   [x] when not logged
   [x] when error
