@@ -36,6 +36,6 @@ test('Show select recipe when current recipe is deleted', async ({ page }) => {
 	await page.goto('/');
 	await createRecipe(page, 'test')
 	await deleteRecipe(page, 'test')
-	await expect(page.getByTestId(`pick-a-recipe`)).toBeVisible();
+	await expect(page.getByTestId(`pick-a-rescipe`)).toBeVisible();
 });
 
