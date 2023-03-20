@@ -37,7 +37,7 @@ test('Show select recipe when current recipe is delete', async ({ page }) => {
 	await page.goto('/');
 	await createRecipe(page, 'test')
 	await deleteRecipe(page, 'test')
-	await page.getByRole('heading', { name: 'Select or create a recipe using the side bar' }).isVisible();
+	await page.getByRole('heading', { name: 'babababababa' }).isVisible();
 
 });
 
