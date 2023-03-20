@@ -110,7 +110,6 @@ probably better to refactor recipe so readonly is easy but this is quicker, will
 			fill={id === pointPicked?.id ? 'aquamarine' : 'salmon'}
 			r={(id === nearestPoint?.id && !click) || id === pointPicked?.id ? 6 : 4}
 			stroke={id === nearestPoint?.id || id === pointPicked?.id ? '#000' : null}
-			showTooltip={id === nearestPoint?.id}
 			{title}
 		/>
 	{/each}

@@ -6,9 +6,7 @@
 		fill = 'black',
 		stroke: null | string = null,
 		strokeWidth = 1,
-		id: string,
-		title: string = '',
-		showTooltip = false;
+		id: string;
 
 	const radius = spring(r, { stiffness: 0.15, damping: 0.3 });
 	$: radius.set(r);
