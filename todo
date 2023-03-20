@@ -87,6 +87,7 @@
 [] check XSS 
 [] add analytics
 [] help page
+[] cypress
 [x] alerts
   [x] when not logged
   [x] when error
@@ -109,4 +110,5 @@
 [-] proper ssr -> see feat/ssr
 [] more axis
 [] download you data
+[] currently fermenting
 [] collaborative ??
