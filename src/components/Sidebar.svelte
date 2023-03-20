@@ -62,13 +62,15 @@
 				on:click={() => {
 					addingNewRecipe = true;
 				}}
+				data-testid="new-recipe"
 			>
 				+ new recipe
 			</li>
 		{:else}
 			<li class="add-recipe">
-				<input type="text" bind:value={newRecipeName} />
+				<input data-testid="new-recipe-name" type="text" bind:value={newRecipeName} />
 				<button
+					data-testid="add-new-recipe"
 					on:click={() => {
 						addNewRecipe();
 						addingNewRecipe = false;
@@ -81,7 +83,7 @@
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			{#if editingId == id}
 				<li>
-					<input type="text" bind:value={editingName} />
+					<input data-testid={`new-name-${name}`} type="text" bind:value={editingName} />
 					<button
 						on:click={(e) => {
 							e.stopPropagation();
@@ -89,6 +91,7 @@
 							editingId = '';
 							editingName = '';
 						}}
+						data-testid={`change-name-${name}`}
 					>
 						<Icon strokeWidth="4px" name="check" stroke="black" />
 					</button>
@@ -98,6 +101,7 @@
 					on:click={() => {
 						$activeRecipe = id;
 					}}
+					data-testid={`recipe-${name}`}
 				>
 					{name}
 					<span
@@ -107,6 +111,7 @@
 								editingId = id;
 								editingName = name;
 							}}
+							data-testid={`edit-recipe-${name}`}
 						>
 							<Icon name="edit-2" fill="black" stroke="black" />
 						</button>
@@ -117,6 +122,7 @@
 								deletingName = name;
 								showDeleteConfirm = true;
 							}}
+							data-testid={`delete-recipe-${name}`}
 						>
 							<Icon name="trash" fill="black" stroke="black" />
 						</button></span
