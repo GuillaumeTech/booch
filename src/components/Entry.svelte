@@ -6,6 +6,7 @@
 		fill = 'black',
 		stroke: null | string = null,
 		strokeWidth = 1,
+		title: string,
 		id: string;
 
 	const radius = spring(r, { stiffness: 0.15, damping: 0.3 });
@@ -18,4 +19,13 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<circle cx={$_x} cy={$_y} {id} r={$radius} {fill} {stroke} stroke-width={strokeWidth} />
+<circle
+	data-testid={title}
+	cx={$_x}
+	cy={$_y}
+	{id}
+	r={$radius}
+	{fill}
+	{stroke}
+	stroke-width={strokeWidth}
+/>

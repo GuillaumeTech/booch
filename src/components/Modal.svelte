@@ -24,11 +24,13 @@
 				on:click={() => {
 					onCancel();
 					dialog.close();
-				}}>Cancel</button
+				}}
+				data-testid="cancel-modal">Cancel</button
 			>
 			<!-- svelte-ignore a11y-autofocus -->
 			<button
 				autofocus
+				data-testid="ok-modal"
 				on:click={() => {
 					onOk();
 					dialog.close();

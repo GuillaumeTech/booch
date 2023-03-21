@@ -98,6 +98,7 @@
 			addMode = !addMode;
 		}}
 		class="add-entry {addMode ? 'adding' : ''}"
+		data-testid="new-point"
 	>
 		{addMode ? 'Cancel' : 'New entry'}</button
 	>
@@ -134,7 +135,7 @@
 		resetNewPoint();
 	}}
 >
-	<form class="content">
+	<form data-testid="new-point-form" class="content">
 		<label for="title">Title</label>
 		<input id="title" type="text" bind:value={$newPoint.title} />
 		<label for="detail">Details</label>
@@ -146,6 +147,7 @@
 <svg
 	width="100%"
 	height="100%"
+	data-testid="graph"
 	style={(function () {
 		if (nearestPoint && !addMode) {
 			return 'cursor: pointer';
@@ -200,6 +202,7 @@
 		<Entry
 			x={abscissa(x)}
 			y={ordinate(y)}
+			{title}
 			{id}
 			fill={id === pointPicked?.id ? 'aquamarine' : 'salmon'}
 			r={(id === nearestPoint?.id && !click) || id === pointPicked?.id ? 6 : 4}

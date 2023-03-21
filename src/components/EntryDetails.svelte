@@ -15,6 +15,7 @@
 		<div>
 			{#if !readOnly}
 				<button
+					data-testid={`edit-${pointPicked.title}`}
 					on:click={() => {
 						if (editing) {
 							points.update($editablePoint, $activeRecipe);
@@ -23,15 +24,18 @@
 					}}>{editing ? 'Done' : 'Edit'}</button
 				>
 				<button
+					data-testid={`delete-${pointPicked.title}`}
 					on:click={() => {
 						if (pointPicked) {
-							points.remove(pointPicked.id, $activeRecipe); // makes ts happy but if is un-needed really
+							// the if here makes ts happy but if is un-needed really
+							points.remove(pointPicked.id, $activeRecipe);
 							resetPickedPoint();
 						}
 					}}>delete</button
 				>
 			{/if}
 			<button
+				data-testid={`hide-${pointPicked.title}`}
 				on:click={() => {
 					resetPickedPoint();
 				}}>hide</button
@@ -43,13 +47,17 @@
 				<form>
 					<input bind:value={$editablePoint.title} />
 					<h4>Details</h4>
-					<input bind:value={$editablePoint.details} />
+					<input
+						data-testid={`edit-details-${pointPicked.title}`}
+						bind:value={$editablePoint.details}
+					/>
 					<h4>Funk</h4>
 					<input bind:value={$editablePoint.x} />
 					<h4>Dryness</h4>
 					<input bind:value={$editablePoint.y} />
 				</form>
 			{:else}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<div
 					on:click={() => {
 						if (!editing && !readOnly) {
@@ -59,7 +67,7 @@
 				>
 					<h3>{pointPicked.title}</h3>
 					<h4>Details</h4>
-					<p>{pointPicked.details}</p>
+					<p data-testid={`details-${pointPicked.title}`}>{pointPicked.details}</p>
 					<div class="grades">
 						<div class="grade">
 							<h4>Funk</h4>
