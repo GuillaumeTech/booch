@@ -89,8 +89,9 @@
 [] add analytics
 [] help page
 [-] playwright
-      [x] recipe CRUD
-      [] points CRUD
+      [x] testrecipe CRUD
+      [x] test points CRUD
+      [] custom axis test
       [-] CI
             [x] make playwright work in github action
             [] block deploy depending on tests
