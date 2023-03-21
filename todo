@@ -106,6 +106,7 @@
 [x] share only available if logged in
 [x] login signup auto complete
 [x] DEPLOY
+[] delete point confirm modal
 [] better modal compoment
 -------- [] PROD
 [] login modal navigation
