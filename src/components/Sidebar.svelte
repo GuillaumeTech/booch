@@ -102,6 +102,7 @@
 						$activeRecipe = id;
 					}}
 					data-testid={`recipe-${name}`}
+					class={$activeRecipe === id ? 'underline' : ''}
 				>
 					{name}
 					<span
@@ -201,6 +202,10 @@
 				button {
 					filter: invert(1);
 				}
+			}
+			&.underline {
+				text-decoration: underline black;
+				text-underline-offset: 0.15rem;
 			}
 			button {
 				margin: 0;
