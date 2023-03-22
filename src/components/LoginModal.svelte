@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { success } from '../lib/toasters';
 	import { supabase } from '../supabaseClient';
-
+	import { recipes } from '../stores/recipe';
+	import { firstLogin } from '../stores/supabase';
 	export let showModal: Boolean, onCancel: Function;
 	enum LoginKind {
 		GOOGLE = 'GOOGLE',
@@ -12,8 +13,7 @@
 		DOES_ACCOUNT_EXIST = 'DOES_ACCOUNT_EXIST',
 		PICK_KIND = 'PICK_KIND',
 		ENTER_ACCOUNT_INFO = 'ENTER_ACCOUNT_INFO',
-		ERROR = 'ERROR',
-		CHECK_EMAIL = 'CHECK_EMAIL'
+		ERROR = 'ERROR'
 	}
 	let dialog: HTMLDialogElement;
 	let hasAccount = false;
@@ -37,14 +37,17 @@
 	}
 
 	async function createAccount() {
+		firstLogin.set(true);
 		const { data, error } = await supabase.auth.signUp({
 			email,
-			password
+			password,
+			options: {
+				emailRedirectTo: window.location.origin
+			}
 		});
-		console.log(error);
 
 		if (!error) {
-			loginStep = LoginStep.CHECK_EMAIL;
+			recipes.sendLocalStorageToSupabase();
 		}
 	}
 
@@ -147,8 +150,6 @@ thus triggerig onclick when releasing the mouse, mouse down prevent this -->
 				{/if}
 				<button type="submit"> {hasAccount ? 'Login' : 'Create'}</button>
 			</form>
-		{:else if loginStep == LoginStep.CHECK_EMAIL}
-			<p>Check your email for the verification link</p>
 		{:else if loginStep == LoginStep.ERROR}
 			<p>There was an error when login in</p>
 		{/if}

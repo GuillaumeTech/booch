@@ -1,7 +1,7 @@
 import { browser } from '$app/environment';
 import { get, writable } from 'svelte/store';
 import type { Point, PointUpdate, Recipe, RecipeUpdate } from '../types/recipe';
-import { activeSession, syncing } from './supabase'
+import { activeSession, firstLogin, syncing } from './supabase'
 import { supabase } from '../supabaseClient';
 import { toast } from '@zerodevx/svelte-toast'
 import { error, info } from '../lib/toasters';
@@ -20,8 +20,15 @@ const initRecipes = browser && localStorage.recipes && JSON.parse(localStorage.r
 activeSession.subscribe(async (session) => {
     if (session && session.user) {
         try {
-            const recipesFromSupabase = await loadRecipesFromSupabase()
-            recipes.set(recipesFromSupabase)
+            // there is no clear way to know when first login happen from supabase so we use a store
+            // it's a bit hackish
+            const isFirstLogin = get(firstLogin);
+            if (!isFirstLogin) { // on first login we send what was in local storage to supabase so we don't want this sync
+                const recipesFromSupabase = await loadRecipesFromSupabase()
+                recipes.set(recipesFromSupabase)
+            } else {
+                firstLogin.set(false);
+            }
             toast.pop({ target: 'notloggedin' })
         } catch (e) {
             console.log(e)
@@ -32,12 +39,22 @@ activeSession.subscribe(async (session) => {
 }
 )
 
-function reshapeFromSupabase(recipes: Array<Recipe>) {
+function ArrayFromObject(recipes: Array<Recipe>) {
 
     const reshaped = recipes.reduce((accumulator: Record<string, Recipe>, current: Recipe) => {
 
         return { ...accumulator, [current.id]: current }
     }, {})
+    return reshaped
+}
+
+
+function objectToArray(recipes: Record<string, Recipe>) {
+
+    const reshaped = Object.values(recipes).reduce((accumulator: Array<Recipe>, current: Recipe) => {
+
+        return [...accumulator, current]
+    }, [])
     return reshaped
 }
 
@@ -49,7 +66,7 @@ async function loadRecipesFromSupabase(): Promise<Record<string, Recipe>> {
         throw new Error(error.message)
     }
 
-    return reshapeFromSupabase(data)
+    return ArrayFromObject(data)
 
 }
 
@@ -96,6 +113,19 @@ export const recipes = (() => {
         }, recipeId)
 
     }
+    // this is only used at account create so there is no change to cancel locally
+    async function bulkInsertOnSupabase(recipes: Recipe[]) {
+        supabaseOperation(async () => {
+            const { error } = await supabase
+                .from('recipes')
+                .insert(
+                    recipes
+                )
+            console.log('err', error)
+        }, 'multiple') // this is supposed to be a recipe id for the syning indicator, 
+        // we use multiple instead here, as we're syncing multiples recipes
+
+    }
 
     async function updateOnSupabase(recipeId: string, recipe: Recipe, orignalRecipe: Recipe) {
         supabaseOperation(async () => {
@@ -130,8 +160,7 @@ export const recipes = (() => {
 
 
     subscribe((recipes) => {
-        const session = get(activeSession);
-        if (browser && recipes && session) {
+        if (browser && recipes) {
             localStorage.recipesLastUpdate = JSON.stringify(new Date())
             localStorage.recipes = JSON.stringify(recipes)
         }
@@ -175,6 +204,12 @@ export const recipes = (() => {
         updateName: (recipeId: string, newName: string) => {
             reusableUpdate({ id: recipeId, name: newName })
         },
+        sendLocalStorageToSupabase: () => {
+            if (browser && localStorage.recipes) {
+                const recipesToInsert = objectToArray(JSON.parse(localStorage.recipes))
+                bulkInsertOnSupabase(recipesToInsert)
+            }
+        }
     };
 })();
 

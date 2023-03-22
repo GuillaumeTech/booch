@@ -5,7 +5,7 @@ import { writable } from 'svelte/store';
 
 export const activeSession = writable<AuthSession | null>(null);
 
-
+export const firstLogin = writable(false);
 
 
 export const syncing = (() => {
