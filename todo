@@ -83,7 +83,6 @@
       [x] access recipe by id
       [x] fix styling of readonly
       [x] display link to be shared
-[] 
 [] solve a11y
 [] check XSS 
 [] add analytics
@@ -110,6 +109,7 @@
 [] delete point confirm modal
 [] better modal compoment
 [] currently fermenting part ???
+[] forgot password
 -------- [] POST ABOUT IT / PROD
       [] help page
       [] proper domain
