@@ -106,7 +106,7 @@
 [x] share only available if logged in
 [x] login signup auto complete
 [x] DEPLOY
-[] send localstorage to suppabase on account creation
+[x] send localstorage to suppabase on account creation
 [] delete point confirm modal
 [] better modal compoment
 [] currently fermenting part ???
