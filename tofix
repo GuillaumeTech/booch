@@ -1,2 +1,2 @@
 [x] sharing link takes the # if in the url
-[] redirect link from emails points to localhost
+[x] redirect link from emails points to localhost
