@@ -86,7 +86,7 @@
 			{isPublic ? 'Make private' : 'Make public'}</button
 		>
 		{#if isPublic}
-			<span>{$page.url}recipe/{$activeRecipe}</span>
+			<span>{window.location.origin}/recipe/{$activeRecipe}</span>
 		{/if}
 	{/if}
 </div>
