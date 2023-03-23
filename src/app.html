@@ -5,76 +5,133 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;800&family=Mynerve&display=swap" rel="stylesheet">
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@500;800&family=Mynerve&display=swap"
+			rel="stylesheet"
+		/>
 
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
-
-		<div  style="display: contents">%sveltekit.body%</div>
+		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>
 
 <style type="text/css">
-	html, body {
-		height:calc(100% - 1.2rem);
+	html,
+	body {
+		height: calc(100% - 1.2rem);
 		margin: 0;
 	}
 
 	body {
 		overflow: hidden;
 	}
-	
+
 	html {
-		background-image: url("/bg-texture.png");
-	}
-	
-	
-
-    body, button{
-        font-family: 'Inter', sans-serif;
-		
-    }
-	h1,h2 {
-		font-family:  'Mynerve', cursive;
+		background-image: url('/bg-texture.png');
 	}
 
-	h2{
+	input {
+		background-color: whitesmoke;
+		border: none;
+		border-bottom: 2px solid black;
+		padding: 0.5rem;
+		font-size: 1rem;
+	}
+
+	input:focus {
+		outline: none;
+		background-color: papayawhip;
+	}
+
+	body,
+	button,
+	textarea {
+		font-family: 'Inter', sans-serif;
+	}
+	h1,
+	h2 {
+		font-family: 'Mynerve', cursive;
+	}
+
+	h2 {
 		font-size: 1.8em;
-		
+
 		font-weight: normal;
-		
 	}
 
-	body {    border:  salmon;
-		
+	body {
+		border: salmon;
+
 		margin: auto;
 		margin-top: 1rem;
-		margin-bottom:0;
+		margin-bottom: 0;
 		width: calc(1500px - 1rem);
 		border-style: solid;
-		border-width: 3px;}
+		border-width: 3px;
+	}
 
-	
-@media screen and (max-width: 1500px) {
-  body {
-	width:auto;
-	margin: 1rem;
+	@media screen and (max-width: 1500px) {
+		body {
+			width: auto;
+			margin: 1rem;
+		}
+	}
 
-  }
-}
-
-
-
-	button{
+	button {
 		border: none;
 		border-radius: 0.1rem;
-    background: salmon;
-	border: 2px salmon solid;
-}
-button:hover{
-	border: 2px black solid;
-}
+		background: salmon;
+		border: 2px salmon solid;
+	}
+	button:hover {
+		border: 2px black solid;
+	}
+	button:disabled,
+	button[disabled] {
+		background: whitesmoke;
+		border: 2px whitesmoke solid;
+	}
+
+	textarea {
+		background-attachment: local;
+		background-image: linear-gradient(to right, whitesmoke 10px, transparent 10px),
+			linear-gradient(to left, whitesmoke 10px, transparent 10px),
+			repeating-linear-gradient(
+				whitesmoke,
+				whitesmoke 1.7rem,
+				black 1.7rem,
+				black calc(1.7rem + 1px),
+				whitesmoke calc(1.7rem + 1px)
+			);
+		padding: 0 10px;
+		padding-top: 0.1rem;
+		padding-bottom: 1rem;
+		font-size: 1rem;
+		line-height: calc(1.7rem + 1px);
+		border: none;
+		font-size: 1rem;
+	}
+
+	textarea:focus {
+		outline: none;
+		background-attachment: local;
+		background-image: linear-gradient(to right, papayawhip 10px, transparent 10px),
+			linear-gradient(to left, papayawhip 10px, transparent 10px),
+			repeating-linear-gradient(
+				papayawhip,
+				papayawhip 1.7rem,
+				black 1.7rem,
+				black calc(1.7rem + 1px),
+				papayawhip calc(1.7rem + 1px)
+			);
+
+		font-size: 1rem;
+		line-height: calc(1.7rem + 1px);
+		border: none;
+		font-size: 1rem;
+	}
 </style>
