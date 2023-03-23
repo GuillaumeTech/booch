@@ -111,6 +111,11 @@
 [] delete point confirm modal
 [] better modal compoment
 [] currently fermenting part ???
+      [x] section
+      [x] drag and drop
+      [] icons and basic laout
+      [] popup
+      [] editable
 [] forgot password
 [] login fail
 [x] use a form library
