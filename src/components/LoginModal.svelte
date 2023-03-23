@@ -3,6 +3,10 @@
 	import { supabase } from '../supabaseClient';
 	import { recipes } from '../stores/recipe';
 	import { firstLogin } from '../stores/supabase';
+	import { field, form, style } from 'svelte-forms';
+	import { required, matchField, email as emailValid, min } from 'svelte-forms/validators';
+	import { errorsToText } from '$lib/forms';
+	import { isEmpty } from 'lodash';
 	export let showModal: Boolean, onCancel: Function;
 	enum LoginKind {
 		GOOGLE = 'GOOGLE',
@@ -19,15 +23,17 @@
 	let hasAccount = false;
 	let loginStep: LoginStep = LoginStep.DOES_ACCOUNT_EXIST;
 	let loginKind: LoginKind | undefined;
-	let email: string;
-	let password: string;
-	let passwordConfirm: string;
-	let emailError = false;
 
+	let serverError = false;
+
+	const email = field('email', '', [required(), emailValid()]);
+	const password = field('password', '', [required(), min(6)]);
+	const passwordConfirm = field('passwordConfirm', '', [matchField(password)]);
+	const loginForm = form(email, password, passwordConfirm);
 	async function login() {
 		const { data, error } = await supabase.auth.signInWithPassword({
-			email,
-			password
+			email: $email.value,
+			password: $password.value
 		});
 
 		if (!error) {
@@ -39,8 +45,8 @@
 	async function createAccount() {
 		firstLogin.set(true);
 		const { data, error } = await supabase.auth.signUp({
-			email,
-			password,
+			email: $email.value,
+			password: $password.value,
 			options: {
 				emailRedirectTo: window.location.origin
 			}
@@ -48,11 +54,11 @@
 
 		if (!error) {
 			recipes.sendLocalStorageToSupabase();
+			dialog.close();
 		}
 	}
-
+	$: formEmtpy = !($email.value || $password.value || $passwordConfirm.value);
 	$: if (dialog && showModal) dialog.showModal();
-	$: passwordMatch = passwordConfirm === password;
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -66,9 +72,9 @@ thus triggerig onclick when releasing the mouse, mouse down prevent this -->
 		hasAccount = false;
 		loginStep = LoginStep.DOES_ACCOUNT_EXIST;
 		loginKind = undefined;
-		email = '';
-		password = '';
-		passwordConfirm = '';
+		email.reset();
+		password.reset();
+		passwordConfirm.reset();
 		onCancel();
 	}}
 	on:mousedown|self={() => dialog.close()}
@@ -97,7 +103,7 @@ thus triggerig onclick when releasing the mouse, mouse down prevent this -->
 					I have an account already
 				</button>
 			</div>
-		{:else if loginStep == LoginStep.PICK_KIND}
+			<!-- {:else if loginStep == LoginStep.PICK_KIND}
 			<p>{hasAccount ? 'Login in using' : 'Create an account using'}</p>
 			<button
 				on:click={() => {
@@ -112,7 +118,7 @@ thus triggerig onclick when releasing the mouse, mouse down prevent this -->
 					loginStep = LoginStep.ENTER_ACCOUNT_INFO;
 				}}
 				>Google
-			</button>
+			</button> -->
 		{:else if loginStep == LoginStep.ENTER_ACCOUNT_INFO && loginKind == LoginKind.EMAIL}
 			<form
 				on:submit={() => {
@@ -125,30 +131,46 @@ thus triggerig onclick when releasing the mouse, mouse down prevent this -->
 				autocomplete="on"
 			>
 				<label for="email">E-mail</label>
-				<input autocomplete="email" id="email" type="email" bind:value={email} />
-				{#if emailError}
-					<b>The password do not match</b>
-				{/if}
+				<input
+					use:style={{ field: email, valid: 'valid', invalid: 'invalid' }}
+					autocomplete="email"
+					id="email"
+					type="email"
+					bind:value={$email.value}
+				/>
+
+				<small use:style={{ field: email, valid: 'valid-text', invalid: 'invalid-text' }}>
+					{errorsToText($email.errors)}</small
+				>
 				<label for="password"> Password</label>
 				<input
+					required
 					id="password"
 					type="password"
 					autocomplete={hasAccount ? 'current-password' : 'new-password'}
-					bind:value={password}
+					bind:value={$password.value}
 				/>
+				<small use:style={{ field: password, valid: 'valid-text', invalid: 'invalid-text' }}>
+					{errorsToText($password.errors, { min: 6 })}</small
+				>
 				{#if !hasAccount}
 					<label for="password-confirm">Confirm Password</label>
 					<input
+						required
 						id="password-confirm"
 						autocomplete="new-password"
 						type="password"
-						bind:value={passwordConfirm}
+						bind:value={$passwordConfirm.value}
 					/>
-					{#if !passwordMatch}
-						<b>The passwords do not match</b>
-					{/if}
+					<small
+						use:style={{ field: passwordConfirm, valid: 'valid-text', invalid: 'invalid-text' }}
+					>
+						{errorsToText($passwordConfirm.errors, { min: 6 })}</small
+					>
 				{/if}
-				<button type="submit"> {hasAccount ? 'Login' : 'Create'}</button>
+				<button disabled={!$loginForm.valid || formEmtpy} type="submit">
+					{hasAccount ? 'Login' : 'Create'}</button
+				>
 			</form>
 		{:else if loginStep == LoginStep.ERROR}
 			<p>There was an error when login in</p>
@@ -209,6 +231,12 @@ thus triggerig onclick when releasing the mouse, mouse down prevent this -->
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;
+	}
+	label {
+		margin-bottom: 0.2rem;
+	}
+	small {
+		height: 1.2rem;
 	}
 	form {
 		display: flex;
