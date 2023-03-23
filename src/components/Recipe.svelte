@@ -11,9 +11,11 @@
 	import { quadOut } from 'svelte/easing';
 	import EntryDetails from './EntryDetails.svelte';
 	import type { Margin } from '../types/layout';
-	import { recipes, activeRecipe } from '../stores/recipe';
+	import { recipes, activeRecipe, points as pointsStore } from '../stores/recipe';
 	import { flip } from 'svelte/animate';
 	import { activeSession } from '../stores/supabase';
+	import { required } from 'svelte-forms/validators';
+	import { field, form } from 'svelte-forms';
 
 	export let width: number,
 		height: number,
@@ -28,10 +30,10 @@
 
 	const margin: Margin = { top: 50, right: 25, bottom: 50, left: 30 };
 
-	const emptyNewPoint: NewPoint = { title: '', details: '' };
-	let newPoint = writable(emptyNewPoint);
-	let fermenting = ['test', 'truc'];
-	let addMode = false;
+	const title = field('title', '', [required()]);
+	const details = field('details', '');
+	const newPoint = form(title, details);
+
 	let editingAxes = false;
 	$: editableAxisNames = writable(axisNames);
 
@@ -45,7 +47,8 @@
 	}
 
 	function resetNewPoint() {
-		newPoint.set(emptyNewPoint);
+		title.reset();
+		details.reset();
 	}
 
 	function PixelsToDomain(valuePix: number, scale: ScaleLinear<any, any>): number {
@@ -56,20 +59,29 @@
 		pointPicked = undefined;
 	}
 
-	function dragStart(event) {
+	function dragStart(event: DragEvent, id: string) {
 		// The data we want to make available when the element is dropped
 		// is the index of the item being dragged and
 		// the index of the basket from which it is leaving.
-		const data = { test: 'tututu' };
-		event.dataTransfer.setData('text/plain', JSON.stringify(data));
+		event?.dataTransfer?.setData('text/plain', id);
 	}
 
-	function drop(event) {
+	function drop(event: DragEvent) {
 		event.preventDefault();
-		const json = event.dataTransfer.getData('text/plain');
-		console.log(json);
-		console.log('hehe', event);
+		const { offsetX, offsetY } = event;
+		const id = event?.dataTransfer?.getData('text/plain');
+		const x = PixelsToDomain(offsetX, abscissa).toFixed(2);
+		const y = PixelsToDomain(offsetY, ordinate).toFixed(2);
+		if (id && x && y) {
+			pointsStore.update({ id, x, y, isFermenting: false }, $activeRecipe);
+		}
 	}
+
+	$: pointsFermenting = points.filter(({ isFermenting }) => isFermenting);
+	$: pointsFermented = points.filter(
+		({ isFermenting, x, y }) => !isFermenting || (typeof x === 'number' && typeof y === 'number')
+		// the check on x and y is for retro compatibility
+	);
 
 	$: abscissa = scaleLinear()
 		.domain([0, 10])
@@ -83,7 +95,7 @@
 		.nice();
 
 	$: delaunay = Delaunay.from(
-		points,
+		pointsFermented,
 		(d: Point) => abscissa(d.x),
 		(d: Point) => ordinate(d.y)
 	);
@@ -107,15 +119,6 @@
 
 <div class="recipe-header">
 	<h2>{name}</h2>
-	<button
-		on:click={() => {
-			addMode = !addMode;
-		}}
-		class="add-entry {addMode ? 'adding' : ''}"
-		data-testid="new-point"
-	>
-		{addMode ? 'Cancel' : 'New entry'}</button
-	>
 </div>
 
 <Modal
@@ -126,28 +129,42 @@
 	}}
 	onOk={() => {
 		showModal = false;
-		onAddPoint($newPoint);
+		const id = uuidv4();
+		const newPoint = {
+			details: $details.value,
+			title: $title.value,
+			isFermenting: true,
+			id
+		};
+		onAddPoint(newPoint);
 		resetNewPoint();
 	}}
 >
 	<form data-testid="new-point-form" class="content">
 		<label for="title">Title</label>
-		<input id="title" type="text" bind:value={$newPoint.title} />
+		<input id="title" type="text" bind:value={$title.value} />
 		<label for="detail">Details</label>
-		<textarea id="detail" rows="7" bind:value={$newPoint.details} />
+		<textarea id="detail" rows="7" bind:value={$details.value} />
 	</form>
 </Modal>
 
 <div>
 	<h3>Currently fermenting</h3>
 	<ul>
-		{#each fermenting as item (item)}
+		{#each pointsFermenting as { title, id } (id)}
 			<div class="item" animate:flip>
-				<li draggable={true} on:dragstart={(event) => dragStart(event)}>
-					{item}
+				<li draggable={true} on:dragstart={(event) => dragStart(event, id)}>
+					{title}
 				</li>
 			</div>
 		{/each}
+		<div class="item">
+			<button
+				on:click={() => {
+					showModal = true;
+				}}>Add</button
+			>
+		</div>
 	</ul>
 </div>
 
@@ -177,11 +194,8 @@
 	height="100%"
 	data-testid="graph"
 	style={(function () {
-		if (nearestPoint && !addMode) {
+		if (nearestPoint) {
 			return 'cursor: pointer';
-		}
-		if (addMode) {
-			return 'cursor: crosshair';
 		}
 		return '';
 	})()}
@@ -189,8 +203,8 @@
 	on:drop={(event) => drop(event)}
 	on:mousemove={({ offsetX, offsetY }) => {
 		const index = delaunay.find(offsetX, offsetY);
-		if (Number.isInteger(index) && index >= 0 && !addMode) {
-			const point = points[index];
+		if (Number.isInteger(index) && index >= 0) {
+			const point = pointsFermented[index];
 			const distance = computeDistance(
 				PixelsToDomain(offsetX, abscissa),
 				PixelsToDomain(offsetY, ordinate),
@@ -207,19 +221,9 @@
 	on:mouseout={() => (nearestPoint = null)}
 	on:mousedown={() => (click = true)}
 	on:mouseup={(e) => (click = false)}
-	on:click={({ offsetX, offsetY }) => {
-		if (nearestPoint && !addMode) {
-			const elementPicked = document.getElementById(nearestPoint.id);
-			pointPicked = points.find((point) => point.id === nearestPoint.id);
-			elementPicked?.dispatchEvent(new Event('mouseenter')); //trigger the popup
-		} else if (addMode) {
-			const x = PixelsToDomain(offsetX, abscissa).toFixed(2);
-			const y = PixelsToDomain(offsetY, ordinate).toFixed(2);
-			const id = uuidv4();
-
-			showModal = true;
-			newPoint.set({ x, y, id });
-			addMode = false;
+	on:click={() => {
+		if (nearestPoint) {
+			pointPicked = pointsFermented.find((point) => point.id === nearestPoint.id);
 		} else if (!nearestPoint) {
 			pointPicked = undefined;
 		}
@@ -228,7 +232,7 @@
 	<Axis {width} {height} type="x" name={axisNames.x} scale={abscissa} tickNumber={10} {margin} />
 	<Axis {width} {height} type="y" name={axisNames.y} scale={ordinate} tickNumber={10} {margin} />
 	<!-- <Bg /> -->
-	{#each points as { x, y, id, title } (id)}
+	{#each pointsFermented as { x, y, id, title } (id)}
 		<Entry
 			x={abscissa(x)}
 			y={ordinate(y)}

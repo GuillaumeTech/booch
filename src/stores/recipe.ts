@@ -245,7 +245,7 @@ function removePointFromRecipe(pointId: string) {
 
 function updatePointFromRecipe(pointUpdate: PointUpdate) {
     return (recipe: Recipe) => {
-        recipe.points.map((point) => point.id == pointUpdate.id ? { ...point, ...pointUpdate } : point)
+        recipe.points = recipe.points.map((point) => point.id == pointUpdate.id ? { ...point, ...pointUpdate } : point)
         return recipe;
     };
 }
