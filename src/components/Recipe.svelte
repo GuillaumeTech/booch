@@ -220,7 +220,7 @@
 </svg>
 
 {#if pointPicked}
-	<EntryDetails {pointPicked} {resetPickedPoint} />
+	<EntryDetails readOnly={false} {pointPicked} {resetPickedPoint} />
 {/if}
 
 <style lang="less">
