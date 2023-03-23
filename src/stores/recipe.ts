@@ -33,8 +33,6 @@ activeSession.subscribe(async (session) => {
         } catch (e) {
             console.log(e)
         }
-    } else {
-        info('You\'re not logged in, nothing will be saved!', { target: 'notloggedin', initial: 0 })
     }
 }
 )
