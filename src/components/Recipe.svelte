@@ -12,8 +12,7 @@
 	import EntryDetails from './EntryDetails.svelte';
 	import type { Margin } from '../types/layout';
 	import { recipes, activeRecipe } from '../stores/recipe';
-
-	import { page } from '$app/stores';
+	import { flip } from 'svelte/animate';
 	import { activeSession } from '../stores/supabase';
 
 	export let width: number,
@@ -31,7 +30,7 @@
 
 	const emptyNewPoint: NewPoint = { title: '', details: '' };
 	let newPoint = writable(emptyNewPoint);
-
+	let fermenting = ['test', 'truc'];
 	let addMode = false;
 	let editingAxes = false;
 	$: editableAxisNames = writable(axisNames);
@@ -55,6 +54,21 @@
 
 	function resetPickedPoint() {
 		pointPicked = undefined;
+	}
+
+	function dragStart(event) {
+		// The data we want to make available when the element is dropped
+		// is the index of the item being dragged and
+		// the index of the basket from which it is leaving.
+		const data = { test: 'tututu' };
+		event.dataTransfer.setData('text/plain', JSON.stringify(data));
+	}
+
+	function drop(event) {
+		event.preventDefault();
+		const json = event.dataTransfer.getData('text/plain');
+		console.log(json);
+		console.log('hehe', event);
 	}
 
 	$: abscissa = scaleLinear()
@@ -104,25 +118,6 @@
 	>
 </div>
 
-{#if editingAxes}
-	<span><b>X-Axis:</b> <input bind:value={$editableAxisNames.x} /></span>
-	<span><b>Y-Axis:</b> <input bind:value={$editableAxisNames.y} /></span>
-	<button
-		on:click={() => {
-			editingAxes = !editingAxes;
-			recipes.update({ id: $activeRecipe, axisNames: $editableAxisNames });
-		}}>Done</button
-	>
-{:else}
-	<span><b>X-Axis:</b> {axisNames.x}</span>
-	<span><b>Y-Axis:</b> {axisNames.y}</span>
-	<button
-		on:click={() => {
-			editingAxes = !editingAxes;
-		}}>Edit</button
-	>
-{/if}
-
 <Modal
 	{showModal}
 	onCancel={() => {
@@ -142,6 +137,39 @@
 		<textarea id="detail" rows="7" bind:value={$newPoint.details} />
 	</form>
 </Modal>
+
+<div>
+	<h3>Currently fermenting</h3>
+	<ul>
+		{#each fermenting as item (item)}
+			<div class="item" animate:flip>
+				<li draggable={true} on:dragstart={(event) => dragStart(event)}>
+					{item}
+				</li>
+			</div>
+		{/each}
+	</ul>
+</div>
+
+<h3>Grading</h3>
+{#if editingAxes}
+	<span>X-Axis: <input bind:value={$editableAxisNames.x} /></span>
+	<span>Y-Axis: <input bind:value={$editableAxisNames.y} /></span>
+	<button
+		on:click={() => {
+			editingAxes = !editingAxes;
+			recipes.update({ id: $activeRecipe, axisNames: $editableAxisNames });
+		}}>Done</button
+	>
+{:else}
+	<span>X-Axis: {axisNames.x}</span>
+	<span>Y-Axis: {axisNames.y}</span>
+	<button
+		on:click={() => {
+			editingAxes = !editingAxes;
+		}}>Edit</button
+	>
+{/if}
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <svg
@@ -157,6 +185,8 @@
 		}
 		return '';
 	})()}
+	ondragover="return false"
+	on:drop={(event) => drop(event)}
 	on:mousemove={({ offsetX, offsetY }) => {
 		const index = delaunay.find(offsetX, offsetY);
 		if (Number.isInteger(index) && index >= 0 && !addMode) {
