@@ -24,8 +24,6 @@
 	let loginStep: LoginStep = LoginStep.DOES_ACCOUNT_EXIST;
 	let loginKind: LoginKind | undefined;
 
-	let serverError = false;
-
 	const email = field('email', '', [required(), emailValid()]);
 	const password = field('password', '', [required(), min(6)]);
 	const passwordConfirm = field('passwordConfirm', '', [matchField(password)]);
