@@ -41,7 +41,8 @@
       [x] side panel for point detail
       --> became a detail box
       [x] font
-      [-] css buttons
+      [x] generic input
+      [x] css buttons
       [] css icons
       [-] csss general style
       [] validate on enter
@@ -49,7 +50,7 @@
             [x] responsive
             [] better button
             [] unified
-      [-] text areas
+      [x] text areas
 - [-] suppabase
       [x] some order in compoments
             [x] app compoment
@@ -60,7 +61,7 @@
       [x] signin logic
       [x] login logic
       [x] logout logic
-      [-] login flow css
+      [x] login flow css
       [x] improve modal behavior
 
       [-] store
@@ -112,7 +113,7 @@
 [] currently fermenting part ???
 [] forgot password
 [] login fail
-[] use a form library
+[x] use a form library
 -------- [] POST ABOUT IT / PROD
       [] help page
       [] proper domain
