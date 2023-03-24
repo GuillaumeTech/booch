@@ -6,7 +6,7 @@
 	import Axis from './Axis.svelte';
 	import Modal from './Modal.svelte';
 	import { writable } from 'svelte/store';
-	import type { NewPoint, Point } from '../types/recipe';
+	import type { NewPoint, Point, StepDate } from '../types/recipe';
 	import { fade } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
 	import EntryDetails from './EntryDetails.svelte';
@@ -16,6 +16,7 @@
 	import { activeSession } from '../stores/supabase';
 	import { required } from 'svelte-forms/validators';
 	import { field, form } from 'svelte-forms';
+	import { removeAtIndex } from '$lib/utils';
 
 	export let width: number,
 		height: number,
@@ -31,6 +32,8 @@
 	const margin: Margin = { top: 50, right: 25, bottom: 50, left: 30 };
 
 	const title = field('title', '', [required()]);
+	let chronology: StepDate[] = [];
+
 	const details = field('details', '');
 	const newPoint = form(title, details);
 
@@ -75,6 +78,18 @@
 		if (id && x && y) {
 			pointsStore.update({ id, x, y, isFermenting: false }, $activeRecipe);
 		}
+	}
+	function createNewPoint() {
+		showModal = false;
+		const id = uuidv4();
+		const newPoint: NewPoint = {
+			details: $details.value,
+			title: $title.value,
+			isFermenting: true,
+			chronology,
+			id
+		};
+		onAddPoint(newPoint);
 	}
 
 	$: pointsFermenting = points.filter(({ isFermenting }) => isFermenting);
@@ -128,15 +143,8 @@
 		resetNewPoint();
 	}}
 	onOk={() => {
-		showModal = false;
-		const id = uuidv4();
-		const newPoint = {
-			details: $details.value,
-			title: $title.value,
-			isFermenting: true,
-			id
-		};
-		onAddPoint(newPoint);
+		createNewPoint();
+
 		resetNewPoint();
 	}}
 >
@@ -145,6 +153,25 @@
 		<input id="title" type="text" bind:value={$title.value} />
 		<label for="detail">Details</label>
 		<textarea id="detail" rows="7" bind:value={$details.value} />
+		<label for="detail">Chronology</label>
+		{#each chronology as chronoEntry, index (index)}
+			<div class="chrono">
+				<input type="text" bind:value={chronoEntry.title} />
+				<input type="date" bind:value={chronoEntry.date} />
+				<button
+					on:click={() => {
+						chronology = removeAtIndex(chronology, index);
+					}}>X</button
+				>
+			</div>
+		{/each}
+		<button
+			on:click={() => {
+				chronology = [...chronology, { title: '', date: new Date() }];
+			}}
+		>
+			Add date</button
+		>
 	</form>
 </Modal>
 
@@ -293,6 +320,19 @@
 		}
 		textarea {
 			resize: none;
+		}
+	}
+	div.chrono {
+		display: flex;
+		flex-direction: row;
+		margin-bottom: 0.5rem;
+		input[type='text'] {
+			flex-grow: 1;
+			min-width: 1rem;
+		}
+
+		input[type='date'] {
+			min-width: 8rem;
 		}
 	}
 </style>

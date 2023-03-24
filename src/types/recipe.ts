@@ -1,7 +1,7 @@
 type AtLeast<T, K extends keyof T> = Partial<T> & Pick<T, K>
 
 
-type FermentationDate = { title: string, date: Date }
+export type StepDate = { title: string, date: Date }
 
 export type Point = {
     x: number;
@@ -9,7 +9,7 @@ export type Point = {
     id: string;
     title: string;
     details?: string;
-    chornology?: FermentationDate[]
+    chronology?: StepDate[]
     tasted_at?: Date;
     isFermenting: boolean
 };
