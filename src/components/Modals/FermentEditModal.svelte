@@ -64,9 +64,9 @@
 		>
 		{#if !point?.isFermenting}
 			<label for="xAxis">{axisNames.x}</label>
-			<input id="xAxis" type="text" bind:value={$xAxis.value} />
+			<input id="xAxis" type="number" min="0" max="10" bind:value={$xAxis.value} />
 			<label for="yAxis{axisNames.x}">{axisNames.y}</label>
-			<input id="yAxis" type="text" bind:value={$yAxis.value} />
+			<input id="yAxis" type="number" min="0" max="10" bind:value={$yAxis.value} />
 		{/if}
 	</form>
 </Modal>

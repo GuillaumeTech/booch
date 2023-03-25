@@ -1,10 +1,14 @@
 <script lang="ts">
-	import type { Point } from '../types/recipe';
+	import type { AxisNames, Point } from '../types/recipe';
 	import { points, activeRecipe } from '../stores/recipe';
 	import { fade, fly } from 'svelte/transition';
 	import { writable } from 'svelte/store';
+	import FermentEditModal from './Modals/FermentEditModal.svelte';
 
-	export let pointPicked: Point, resetPickedPoint: Function, readOnly: Boolean;
+	export let pointPicked: Point,
+		resetPickedPoint: Function,
+		readOnly: Boolean,
+		axisNames: AxisNames;
 
 	$: editablePoint = writable(pointPicked);
 	let editing = false;
@@ -12,6 +16,19 @@
 
 <div in:fly={{ y: 10, duration: 500 }} out:fade>
 	{#key pointPicked.id}
+		<FermentEditModal
+			{axisNames}
+			showModal={editing}
+			point={pointPicked}
+			onCancel={() => {
+				editing = false;
+			}}
+			onOk={(point) => {
+				points.update(point, $activeRecipe);
+				editing = false;
+			}}
+		/>
+
 		<div>
 			{#if !readOnly}
 				<button
@@ -41,45 +58,29 @@
 				}}>hide</button
 			>
 		</div>
-
 		<div>
-			{#if editing && !readOnly}
-				<form>
-					<input bind:value={$editablePoint.title} />
-					<h4>Details</h4>
-					<input
-						data-testid={`edit-details-${pointPicked.title}`}
-						bind:value={$editablePoint.details}
-					/>
-					<h4>Funk</h4>
-					<input bind:value={$editablePoint.x} />
-					<h4>Dryness</h4>
-					<input bind:value={$editablePoint.y} />
-				</form>
-			{:else}
-				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<div
-					on:click={() => {
-						if (!editing && !readOnly) {
-							editing = true;
-						}
-					}}
-				>
-					<h3>{pointPicked.title}</h3>
-					<h4>Details</h4>
-					<p data-testid={`details-${pointPicked.title}`}>{pointPicked.details}</p>
-					<div class="grades">
-						<div class="grade">
-							<h4>Funk</h4>
-							<p>{pointPicked.x}</p>
-						</div>
-						<div class="grade">
-							<h4>Dryness</h4>
-							<p>{pointPicked.y}</p>
-						</div>
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<div
+				on:click={() => {
+					if (!editing && !readOnly) {
+						editing = true;
+					}
+				}}
+			>
+				<h3>{pointPicked.title}</h3>
+				<h4>Details</h4>
+				<p data-testid={`details-${pointPicked.title}`}>{pointPicked.details}</p>
+				<div class="grades">
+					<div class="grade">
+						<h4>{axisNames.x}</h4>
+						<p>{pointPicked.x}</p>
+					</div>
+					<div class="grade">
+						<h4>{axisNames.y}</h4>
+						<p>{pointPicked.y}</p>
 					</div>
 				</div>
-			{/if}
+			</div>
 		</div>
 	{/key}
 </div>

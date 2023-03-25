@@ -88,13 +88,12 @@
 	$: abscissa = scaleLinear()
 		.domain([0, 10])
 		.range([margin.left, width - margin.right])
-		.clamp(true)
-		.nice();
+		.clamp(true);
+
 	$: ordinate = scaleLinear()
 		.domain([0, 10])
 		.range([height - margin.bottom, margin.top])
-		.clamp(true)
-		.nice();
+		.clamp(true);
 
 	$: delaunay = Delaunay.from(
 		pointsFermented,
@@ -267,7 +266,7 @@ it could also be done with reactive statements but seems the point.chornoly does
 </svg>
 
 {#if pointPicked}
-	<EntryDetails {pointPicked} {resetPickedPoint} />
+	<EntryDetails {axisNames} {pointPicked} {resetPickedPoint} />
 {/if}
 
 <style lang="less">
