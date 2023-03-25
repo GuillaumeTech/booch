@@ -44,8 +44,14 @@
 
 	$: pointsFermenting = points.filter(({ isFermenting }) => isFermenting);
 	$: pointsFermented = points.filter(
-		({ isFermenting, x, y }) => !isFermenting || (typeof x === 'number' && typeof y === 'number')
-		// the check on x and y is for retro compatibility
+		({ isFermenting, x, y }) => {
+			if (isFermenting !== undefined) {
+				return !isFermenting && x !== 'NaN' && y !== 'NaN';
+			} else {
+				return x !== 'NaN' && y !== 'NaN';
+			}
+		}
+		// the check on x and y is for retro compatibility nad also prevent freeze when x & y would be Nan
 	);
 </script>
 
@@ -103,7 +109,6 @@ it could also be done with reactive statements but seems the point.chornoly does
 				<li
 					on:click={() => {
 						pointData = point;
-						console.log(pointData);
 						showModal = true;
 					}}
 					draggable={true}
@@ -148,6 +153,7 @@ it could also be done with reactive statements but seems the point.chornoly does
 {/if}
 <!-- Can't render it as long as we don't have width height -->
 <!-- fix ssr issue logically, and seems on very first render  width height are undefined as well -->
+
 <div class="chart" bind:clientWidth={width} bind:clientHeight={height}>
 	{#if width && height}
 		<RecipeChart {width} {height} {axisNames} points={pointsFermented} />
@@ -199,7 +205,7 @@ it could also be done with reactive statements but seems the point.chornoly does
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			width: 4rem;
+			width: 4.5rem;
 			text-align: center;
 		}
 	}

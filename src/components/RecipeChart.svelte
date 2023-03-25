@@ -19,7 +19,8 @@
 		axisNames: {
 			x: string;
 			y: string;
-		};
+		},
+		readOnly: boolean = false;
 
 	const margin: Margin = { top: 50, right: 25, bottom: 50, left: 30 };
 
@@ -108,7 +109,7 @@
 				nearestPoint = null;
 			}
 		}
-		if (pointPicked && click) {
+		if (pointPicked && click && !readOnly) {
 			points[index] = {
 				...points[index],
 				x: PixelsToDomain(offsetX, abscissa),
@@ -162,5 +163,5 @@
 </svg>
 
 {#if pointPicked}
-	<EntryDetails {axisNames} {pointPicked} {resetPickedPoint} />
+	<EntryDetails {readOnly} {axisNames} {pointPicked} {resetPickedPoint} />
 {/if}
