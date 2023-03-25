@@ -114,8 +114,7 @@
       [x] section
       [x] drag and drop
       [x] chronology
-      [] icons and basic laout
-      [] popup
+      [x] icons and basic laout
       [] editable
 [] forgot password
 [] login fail
