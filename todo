@@ -110,12 +110,15 @@
 [x] send localstorage to suppabase on account creation
 [] delete point confirm modal
 [] better modal compoment
-[] currently fermenting part ???
+[-] currently fermenting part ???
       [x] section
       [x] drag and drop
       [x] chronology
       [x] icons and basic laout
-      [] editable
+      [x] editable
+      [x] use edit popup for fermented
+      [] simplify recipe compoment
+      [] fix readonlymode
 [] forgot password
 [] login fail
 [x] use a form library
