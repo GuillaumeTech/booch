@@ -117,8 +117,8 @@
       [x] icons and basic laout
       [x] editable
       [x] use edit popup for fermented
-      [] simplify recipe compoment
-      [] fix readonlymode
+      [x] simplify recipe compoment
+      [x] fix readonlymode
 [x] DRAG AND DROP POINTS BB
 [] forgot password
 [] login fail
