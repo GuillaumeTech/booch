@@ -5,12 +5,6 @@
 	import Sidebar from '../components/Sidebar.svelte';
 
 	let width: number, height: number;
-
-	function getAddToPoints(recipeId: string) {
-		return function (point: Point): void {
-			points.add(point, recipeId);
-		};
-	}
 </script>
 
 <div class="app">
@@ -25,7 +19,6 @@
 					<RecipeChart
 						{width}
 						{height}
-						onAddPoint={getAddToPoints($activeRecipe)}
 						name={$recipes[$activeRecipe]?.name}
 						points={$recipes[$activeRecipe]?.points}
 						axisNames={$recipes[$activeRecipe]?.axisNames}

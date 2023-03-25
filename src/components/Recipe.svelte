@@ -6,7 +6,7 @@
 	import Axis from './Axis.svelte';
 	import Modal from './Modal.svelte';
 	import { writable } from 'svelte/store';
-	import type { NewPoint, Point, StepDate } from '../types/recipe';
+	import type { NewPoint, Point, PointUpdate, StepDate } from '../types/recipe';
 	import { fade } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
 	import EntryDetails from './EntryDetails.svelte';
@@ -18,10 +18,10 @@
 	import { field, form } from 'svelte-forms';
 	import { removeAtIndex } from '$lib/utils';
 	import Jar from './Jar.svelte';
+	import FermentEditModal from './Modals/FermentEditModal.svelte';
 
 	export let width: number,
 		height: number,
-		onAddPoint: Function,
 		name: string,
 		points: Point[] = [],
 		isPublic: Boolean = false,
@@ -31,13 +31,7 @@
 		};
 
 	const margin: Margin = { top: 50, right: 25, bottom: 50, left: 30 };
-
-	const title = field('title', '', [required()]);
-	let chronology: StepDate[] = [];
-
-	const details = field('details', '');
-	const newPoint = form(title, details);
-
+	let pointData: NewPoint;
 	let editingAxes = false;
 	$: editableAxisNames = writable(axisNames);
 
@@ -48,11 +42,6 @@
 
 	function computeDistance(xa: number, ya: number, xb: number, yb: number): number {
 		return Math.sqrt((xa - xb) ** 2 + (ya - yb) ** 2);
-	}
-
-	function resetNewPoint() {
-		title.reset();
-		details.reset();
 	}
 
 	function PixelsToDomain(valuePix: number, scale: ScaleLinear<any, any>): number {
@@ -80,17 +69,14 @@
 			pointsStore.update({ id, x, y, isFermenting: false }, $activeRecipe);
 		}
 	}
-	function createNewPoint() {
-		showModal = false;
+
+	function createNewPoint(point: NewPoint) {
 		const id = uuidv4();
-		const newPoint: NewPoint = {
-			details: $details.value,
-			title: $title.value,
-			isFermenting: true,
-			chronology,
+		const newPoint: Point = {
+			...point,
 			id
 		};
-		onAddPoint(newPoint);
+		pointsStore.add(newPoint, $activeRecipe);
 	}
 
 	$: pointsFermenting = points.filter(({ isFermenting }) => isFermenting);
@@ -137,54 +123,48 @@
 	<h2>{name}</h2>
 </div>
 
-<Modal
-	{showModal}
-	onCancel={() => {
-		showModal = false;
-		resetNewPoint();
-	}}
-	onOk={() => {
-		createNewPoint();
-
-		resetNewPoint();
-	}}
->
-	<form data-testid="new-point-form" class="content">
-		<label for="title">Title</label>
-		<input id="title" type="text" bind:value={$title.value} />
-		<label for="detail">Details</label>
-		<textarea id="detail" rows="7" bind:value={$details.value} />
-		<label for="detail">Chronology</label>
-		{#each chronology as chronoEntry, index (index)}
-			<div class="chrono">
-				<input type="text" bind:value={chronoEntry.title} />
-				<input type="date" bind:value={chronoEntry.date} />
-				<button
-					on:click={() => {
-						chronology = removeAtIndex(chronology, index);
-					}}>X</button
-				>
-			</div>
-		{/each}
-		<button
-			on:click={() => {
-				chronology = [...chronology, { title: '', date: new Date() }];
-			}}
-		>
-			Add date</button
-		>
-	</form>
-</Modal>
+<!-- using key here reset the field everytime point data change
+it could also be done with reactive statements but seems the point.chornoly does not ejoy it
++ it's is shorter -->
+{#key pointData}
+	<FermentEditModal
+		{showModal}
+		{axisNames}
+		point={pointData}
+		onCancel={() => {
+			showModal = false;
+		}}
+		onOk={(point) => {
+			if (point.id !== undefined) {
+				// type script complains but it's actually fine here
+				// as we just checked that .id exist,
+				// note to self: make it work with a better typedef ??
+				pointsStore.update(point, $activeRecipe);
+			} else {
+				createNewPoint(point);
+			}
+		}}
+	/>
+{/key}
 
 <div>
 	<h3>Currently fermenting</h3>
 
 	<ul>
-		{#each pointsFermenting as { title, id } (id)}
+		{#each pointsFermenting as point (point.id)}
 			<div class="item" animate:flip>
-				<li draggable={true} on:dragstart={(event) => dragStart(event, id)}>
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<li
+					on:click={() => {
+						pointData = point;
+						console.log(pointData);
+						showModal = true;
+					}}
+					draggable={true}
+					on:dragstart={(event) => dragStart(event, point.id)}
+				>
 					<Jar />
-					<small>{title}</small>
+					<small>{point.title}</small>
 				</li>
 			</div>
 		{/each}
@@ -192,6 +172,7 @@
 			<button
 				class="add-kombucha"
 				on:click={() => {
+					pointData = { isFermenting: true };
 					showModal = true;
 				}}
 				><Jar displayLiquid={false} displayPlus />
@@ -320,30 +301,7 @@
 			border: 2px solid salmon;
 		}
 	}
-	.content {
-		display: flex;
-		flex-direction: column;
-		label {
-			margin-top: 0.7rem;
-			margin-bottom: 0.5rem;
-		}
-		textarea {
-			resize: none;
-		}
-	}
-	div.chrono {
-		display: flex;
-		flex-direction: row;
-		margin-bottom: 0.5rem;
-		input[type='text'] {
-			flex-grow: 1;
-			min-width: 1rem;
-		}
 
-		input[type='date'] {
-			min-width: 8rem;
-		}
-	}
 	ul {
 		display: flex;
 		flex-direction: row;
