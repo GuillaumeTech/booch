@@ -19,6 +19,7 @@
 	import { removeAtIndex } from '$lib/utils';
 	import Jar from './Jar.svelte';
 	import FermentEditModal from './Modals/FermentEditModal.svelte';
+	import { clamp } from 'lodash';
 
 	export let width: number,
 		height: number,
@@ -34,7 +35,7 @@
 	let pointData: NewPoint;
 	let editingAxes = false;
 	$: editableAxisNames = writable(axisNames);
-
+	let pointMoved: Point | undefined;
 	let showModal = false;
 	let pointPicked: Point | undefined;
 	let nearestPoint: Point | null = null,
@@ -206,6 +207,13 @@ it could also be done with reactive statements but seems the point.chornoly does
 	height="100%"
 	data-testid="graph"
 	style={(function () {
+		if (nearestPoint && nearestPoint == pointPicked && click) {
+			return 'cursor: grabbing;';
+		}
+		if (nearestPoint && nearestPoint == pointPicked) {
+			return 'cursor: grab;';
+		}
+
 		if (nearestPoint) {
 			return 'cursor: pointer';
 		}
@@ -220,19 +228,39 @@ it could also be done with reactive statements but seems the point.chornoly does
 			const distance = computeDistance(
 				PixelsToDomain(offsetX, abscissa),
 				PixelsToDomain(offsetY, ordinate),
-				point.x,
-				point.y
+				// Clamp so if someone set coordinates out of the domain
+				// the distance comput still works
+				clamp(point.x, 0, 10),
+				clamp(point.y, 0, 10)
 			);
+
 			if (distance < 0.3) {
 				nearestPoint = point;
 			} else {
 				nearestPoint = null;
 			}
 		}
+		if (pointPicked && click) {
+			pointsFermented[index] = {
+				...pointsFermented[index],
+				x: PixelsToDomain(offsetX, abscissa),
+				y: PixelsToDomain(offsetY, ordinate)
+			};
+			pointMoved = pointsFermented[index];
+		}
 	}}
 	on:mouseout={() => (nearestPoint = null)}
 	on:mousedown={() => (click = true)}
-	on:mouseup={(e) => (click = false)}
+	on:mouseup={(e) => {
+		click = false;
+		if (pointMoved) {
+			pointsStore.update(
+				{ ...pointMoved, x: pointMoved.x.toFixed(2), y: pointMoved.y.toFixed(2) },
+				$activeRecipe
+			);
+		}
+		pointMoved = undefined;
+	}}
 	on:click={() => {
 		if (nearestPoint) {
 			pointPicked = pointsFermented.find((point) => point.id === nearestPoint.id);
