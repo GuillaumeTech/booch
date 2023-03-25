@@ -76,10 +76,10 @@
 	height="100%"
 	data-testid="graph"
 	style={(function () {
-		if (nearestPoint && nearestPoint == pointPicked && click) {
+		if (nearestPoint && nearestPoint == pointPicked && click && !readOnly) {
 			return 'cursor: grabbing;';
 		}
-		if (nearestPoint && nearestPoint == pointPicked) {
+		if (nearestPoint && nearestPoint == pointPicked && !readOnly) {
 			return 'cursor: grab;';
 		}
 
