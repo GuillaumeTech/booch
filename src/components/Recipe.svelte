@@ -17,6 +17,7 @@
 	import { required } from 'svelte-forms/validators';
 	import { field, form } from 'svelte-forms';
 	import { removeAtIndex } from '$lib/utils';
+	import Jar from './Jar.svelte';
 
 	export let width: number,
 		height: number,
@@ -177,20 +178,24 @@
 
 <div>
 	<h3>Currently fermenting</h3>
+
 	<ul>
 		{#each pointsFermenting as { title, id } (id)}
 			<div class="item" animate:flip>
 				<li draggable={true} on:dragstart={(event) => dragStart(event, id)}>
-					{title}
+					<Jar />
+					<small>{title}</small>
 				</li>
 			</div>
 		{/each}
 		<div class="item">
 			<button
+				class="add-kombucha"
 				on:click={() => {
 					showModal = true;
-				}}>Add</button
-			>
+				}}
+				><Jar displayLiquid={false} displayPlus />
+			</button>
 		</div>
 	</ul>
 </div>
@@ -289,6 +294,10 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		h2 {
+			font-family: 'Inter';
+			font-weight: 800;
+		}
 	}
 	.add-entry {
 		float: right;
@@ -334,5 +343,31 @@
 		input[type='date'] {
 			min-width: 8rem;
 		}
+	}
+	ul {
+		display: flex;
+		flex-direction: row;
+		list-style-type: none;
+		padding: 0;
+		li {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			width: 4rem;
+			text-align: center;
+		}
+	}
+
+	button.add-kombucha {
+		background: none;
+		border: none;
+		transition: opacity 200ms ease;
+		opacity: 25%;
+		&:hover {
+			opacity: 100%;
+		}
+	}
+	small {
+		font-size: 0.79rem;
 	}
 </style>
