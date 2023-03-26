@@ -87,7 +87,6 @@
 [] solve a11y
 [] check XSS 
 [] add analytics
-[] help page
 [-] playwright
       [x] testrecipe CRUD
       [x] test points CRUD
