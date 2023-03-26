@@ -163,5 +163,5 @@
 </svg>
 
 {#if pointPicked}
-	<EntryDetails {readOnly} {axisNames} {pointPicked} {resetPickedPoint} />
+	<EntryDetails {readOnly} {axisNames} pointId={pointPicked.id} {resetPickedPoint} />
 {/if}
