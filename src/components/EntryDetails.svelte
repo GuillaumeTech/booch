@@ -60,30 +60,28 @@
 				>
 			</div>
 			<div>
-				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<div
-					on:click={() => {
-						if (!editing && !readOnly) {
-							editing = true;
-						}
-					}}
-				>
-					<h3>{pointPicked.title}</h3>
-					<h4>Details</h4>
-					<p data-testid={`details-${pointPicked.title}`}>{pointPicked.details}</p>
-					<div class="grades">
-						<div class="grade">
-							<h4>{axisNames.x}</h4>
-							<p>{pointPicked.x}</p>
-						</div>
-						<div class="grade">
-							<h4>{axisNames.y}</h4>
-							<p>{pointPicked.y}</p>
+				<h3>{pointPicked.title}</h3>
+
+				<div class="point-info">
+					<div>
+						<h4>Details</h4>
+						<p data-testid={`details-${pointPicked.title}`}>{pointPicked.details}</p>
+						<div class="grades">
+							<div class="grade">
+								<h4>{axisNames.x}</h4>
+								<p>{pointPicked.x}</p>
+							</div>
+							<div class="grade">
+								<h4>{axisNames.y}</h4>
+								<p>{pointPicked.y}</p>
+							</div>
 						</div>
 					</div>
-					<h4>Chronology</h4>
+					<div>
+						<h4>Chronology</h4>
 
-					<Timeline dates={pointPicked.chronology} />
+						<Timeline dates={pointPicked.chronology} />
+					</div>
 				</div>
 			</div>
 		{/key}
@@ -101,6 +99,18 @@
 		}
 		.grade {
 			margin-left: 1rem;
+		}
+	}
+	.point-info {
+		display: flex;
+		flex-direction: row;
+		gap: 5rem;
+	}
+
+	@media screen and (max-width: 600px) {
+		.point-info {
+			flex-direction: column;
+			gap: 0;
 		}
 	}
 </style>
