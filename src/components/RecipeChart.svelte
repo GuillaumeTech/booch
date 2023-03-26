@@ -24,7 +24,7 @@
 
 	const margin: Margin = { top: 50, right: 25, bottom: 50, left: 30 };
 
-	let pointMoved: Point | undefined;
+	let pointMovingIdx: number | undefined;
 	let pointPicked: Point | undefined;
 	let nearestPoint: Point | null = null;
 	let click: boolean = false;
@@ -92,7 +92,7 @@
 	on:drop={(event) => drop(event)}
 	on:mousemove={({ offsetX, offsetY }) => {
 		const index = delaunay.find(offsetX, offsetY);
-		if (Number.isInteger(index) && index >= 0) {
+		if (Number.isInteger(index) && index >= 0 && !pointMovingIdx) {
 			const point = points[index];
 			const distance = computeDistance(
 				PixelsToDomain(offsetX, abscissa),
@@ -110,28 +110,33 @@
 			}
 		}
 		if (pointPicked && click && !readOnly) {
-			points[index] = {
-				...points[index],
+			if (!pointMovingIdx) {
+				// only here when we first start to move
+				pointMovingIdx = index;
+			}
+
+			points[pointMovingIdx] = {
+				...points[pointMovingIdx],
 				x: PixelsToDomain(offsetX, abscissa),
 				y: PixelsToDomain(offsetY, ordinate)
 			};
-			pointMoved = points[index];
 		}
 	}}
 	on:mouseout={() => (nearestPoint = null)}
 	on:mousedown={() => (click = true)}
 	on:mouseup={(e) => {
 		click = false;
-		if (pointMoved) {
+		if (pointMovingIdx) {
+			const pointMoved = points[pointMovingIdx];
 			pointsStore.update(
 				{ ...pointMoved, x: pointMoved.x.toFixed(2), y: pointMoved.y.toFixed(2) },
 				$activeRecipe
 			);
 		}
-		pointMoved = undefined;
+		pointMovingIdx = undefined;
 	}}
 	on:click={() => {
-		if (nearestPoint) {
+		if (nearestPoint && !pointMovingIdx) {
 			pointPicked = points.find((point) => point.id === nearestPoint.id);
 		} else if (!nearestPoint) {
 			pointPicked = undefined;
