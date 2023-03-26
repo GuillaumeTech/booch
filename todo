@@ -119,6 +119,8 @@
       [x] use edit popup for fermented
       [x] simplify recipe compoment
       [x] fix readonlymode
+      [x] display chronology
+      [] fix tests
 [x] DRAG AND DROP POINTS BB
 [] forgot password
 [] login fail
