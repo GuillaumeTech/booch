@@ -110,6 +110,10 @@
 [x] send localstorage to suppabase on account creation
 [] delete point confirm modal
 [] better modal compoment
+      [] separated on for each use
+      [x] ferment edit
+      [] delete
+      [] login
 [-] currently fermenting part ???
       [x] section
       [x] drag and drop
