@@ -123,7 +123,7 @@
       [x] simplify recipe compoment
       [x] fix readonlymode
       [x] display chronology
-      [] fix tests
+      [x] fix tests
 [x] DRAG AND DROP POINTS BB
 [] forgot password
 [] login fail
