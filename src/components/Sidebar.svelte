@@ -3,7 +3,7 @@
 	import Modal from './Modal.svelte';
 	import { recipes, activeRecipe } from '../stores/recipe';
 	import Icon from './Icon.svelte';
-	import LoginModal from './LoginModal.svelte';
+	import LoginModal from './Modals/LoginModal.svelte';
 	import { activeSession } from '../stores/supabase';
 	import { supabase } from '../supabaseClient';
 

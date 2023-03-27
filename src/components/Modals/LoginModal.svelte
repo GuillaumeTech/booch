@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { success } from '../lib/toasters';
-	import { supabase } from '../supabaseClient';
-	import { recipes } from '../stores/recipe';
-	import { firstLogin } from '../stores/supabase';
+	import { success } from '../../lib/toasters';
+	import { supabase } from '../../supabaseClient';
+	import { recipes } from '../../stores/recipe';
+	import { firstLogin } from '../../stores/supabase';
 	import { field, form, style } from 'svelte-forms';
 	import { required, matchField, email as emailValid, min } from 'svelte-forms/validators';
 	import { errorsToText } from '$lib/forms';
@@ -22,6 +22,7 @@
 	let hasAccount = false;
 	let loginStep: LoginStep = LoginStep.DOES_ACCOUNT_EXIST;
 	let loginKind: LoginKind | undefined;
+	let loginFailed: boolean = false;
 
 	const email = field('email', '', [required(), emailValid()]);
 	const password = field('password', '', [required(), min(6)]);
@@ -36,6 +37,8 @@
 		if (!error) {
 			success('You succesfully logged in !', { target: 'loggedin' });
 			dialog.close();
+		} else {
+			loginFailed = true;
 		}
 	}
 
@@ -69,6 +72,7 @@ thus triggerig onclick when releasing the mouse, mouse down prevent this -->
 		hasAccount = false;
 		loginStep = LoginStep.DOES_ACCOUNT_EXIST;
 		loginKind = undefined;
+		loginFailed = false;
 		email.reset();
 		password.reset();
 		passwordConfirm.reset();
@@ -168,6 +172,13 @@ thus triggerig onclick when releasing the mouse, mouse down prevent this -->
 				<button disabled={!$loginForm.valid || formEmtpy} type="submit">
 					{hasAccount ? 'Login' : 'Create'}</button
 				>
+				{#if loginFailed}
+					<small use:style={{ field: password, valid: 'valid-text', invalid: 'invalid-text' }}>
+						Login-in failed, <a class="recover" href={`/recover?email=${$email.value}`}>
+							Recover your password</a
+						></small
+					>
+				{/if}
 			</form>
 		{:else if loginStep == LoginStep.ERROR}
 			<p>There was an error when login in</p>
@@ -175,11 +186,11 @@ thus triggerig onclick when releasing the mouse, mouse down prevent this -->
 	</div>
 </dialog>
 
-<style>
+<style lang="less">
 	dialog {
 		max-width: 35rem;
-		border-radius: 0.2em;
-		border: none;
+		border: 2px solid black;
+		background-image: url('/bg-texture.png');
 		padding: 0;
 		width: 35rem;
 	}
@@ -238,5 +249,19 @@ thus triggerig onclick when releasing the mouse, mouse down prevent this -->
 	form {
 		display: flex;
 		flex-direction: column;
+	}
+	a.recover {
+		display: inline;
+		width: auto;
+		padding: 0;
+		margin: 0;
+		background: none;
+		border: none;
+		font-size: inherit;
+		color: salmon;
+		&:hover {
+			text-decoration: underline;
+			cursor: pointer;
+		}
 	}
 </style>

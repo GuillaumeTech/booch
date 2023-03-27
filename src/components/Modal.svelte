@@ -43,8 +43,8 @@
 <style>
 	dialog {
 		max-width: 35rem;
-		border-radius: 0.2em;
-		border: none;
+		border: 2px solid black;
+		background-image: url('/bg-texture.png');
 		padding: 0;
 		width: 35rem;
 	}
