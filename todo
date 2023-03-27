@@ -139,10 +139,10 @@
 - [] CI/CI 
     [] tests
     [] github actions
-[] show points tasted at date
-[] make tasted at editable
+[x] show points tasted at date
+[x] make tasted at editable
 [-] proper ssr -> see feat/ssr
 [] more axis
 [] download you data
-[] currently fermenting
+[x] currently fermenting
 [] collaborative ??
