@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let showModal: Boolean, onOk: Function, onCancel: Function;
+	export let showModal: Boolean, onOk: Function, onCancel: Function, disableOK: boolean;
 
 	let dialog: HTMLDialogElement;
 
@@ -18,7 +18,6 @@
 	<div class="modal-content" on:click|stopPropagation>
 		<slot name="header" />
 		<slot />
-		<hr />
 		<span
 			><button
 				on:click={() => {
@@ -31,6 +30,7 @@
 			<button
 				autofocus
 				data-testid="ok-modal"
+				disabled={disableOK}
 				on:click={() => {
 					onOk();
 					dialog.close();
@@ -88,6 +88,7 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
+		margin-top: 1rem;
 	}
 	.modal-content {
 		margin: 0.5rem;

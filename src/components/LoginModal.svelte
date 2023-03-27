@@ -6,7 +6,6 @@
 	import { field, form, style } from 'svelte-forms';
 	import { required, matchField, email as emailValid, min } from 'svelte-forms/validators';
 	import { errorsToText } from '$lib/forms';
-	import { isEmpty } from 'lodash';
 	export let showModal: Boolean, onCancel: Function;
 	enum LoginKind {
 		GOOGLE = 'GOOGLE',
