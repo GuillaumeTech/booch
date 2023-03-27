@@ -1,30 +1,33 @@
-<!-- This is really similar to the Recipe.svelte but avoid if(s) everywhere for readonly
-probably better to refactor recipe so readonly is easy but this is quicker, will see later if refactor neeeded-->
 <script lang="ts">
 	import { scaleLinear, type ScaleLinear } from 'd3-scale';
 	import { Delaunay } from 'd3-delaunay';
 	import Entry from './Entry.svelte';
 	import Axis from './Axis.svelte';
-	import type { Point } from '../types/recipe';
+
 	import { fade } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
 	import EntryDetails from './EntryDetails.svelte';
 	import type { Margin } from '../types/layout';
+	import { activeRecipe, points as pointsStore } from '../stores/recipe';
+
+	import { clamp } from 'lodash';
+	import type { Point } from '../types/recipe';
 
 	export let width: number,
 		height: number,
-		name: string,
 		points: Point[] = [],
 		axisNames: {
 			x: string;
 			y: string;
-		};
+		},
+		readOnly: boolean = false;
 
 	const margin: Margin = { top: 50, right: 25, bottom: 50, left: 30 };
 
+	let pointMovingIdx: number | undefined;
 	let pointPicked: Point | undefined;
-	let nearestPoint: Point | null = null,
-		click = false;
+	let nearestPoint: Point | null = null;
+	let click: boolean = false;
 
 	function computeDistance(xa: number, ya: number, xb: number, yb: number): number {
 		return Math.sqrt((xa - xb) ** 2 + (ya - yb) ** 2);
@@ -33,20 +36,31 @@ probably better to refactor recipe so readonly is easy but this is quicker, will
 	function PixelsToDomain(valuePix: number, scale: ScaleLinear<any, any>): number {
 		return scale.invert(valuePix);
 	}
+
 	function resetPickedPoint() {
 		pointPicked = undefined;
+	}
+
+	function drop(event: DragEvent) {
+		event.preventDefault();
+		const { offsetX, offsetY } = event;
+		const id = event?.dataTransfer?.getData('text/plain');
+		const x = PixelsToDomain(offsetX, abscissa).toFixed(2);
+		const y = PixelsToDomain(offsetY, ordinate).toFixed(2);
+		if (id && x && y) {
+			pointsStore.update({ id, x, y, isFermenting: false }, $activeRecipe);
+		}
 	}
 
 	$: abscissa = scaleLinear()
 		.domain([0, 10])
 		.range([margin.left, width - margin.right])
-		.clamp(true)
-		.nice();
+		.clamp(true);
+
 	$: ordinate = scaleLinear()
 		.domain([0, 10])
 		.range([height - margin.bottom, margin.top])
-		.clamp(true)
-		.nice();
+		.clamp(true);
 
 	$: delaunay = Delaunay.from(
 		points,
@@ -55,46 +69,76 @@ probably better to refactor recipe so readonly is easy but this is quicker, will
 	);
 </script>
 
-<div class="recipe-header">
-	<h2>{name}</h2>
-</div>
-
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <svg
 	width="100%"
 	height="100%"
+	data-testid="graph"
 	style={(function () {
+		if (nearestPoint && nearestPoint == pointPicked && click && !readOnly) {
+			return 'cursor: grabbing;';
+		}
+		if (nearestPoint && nearestPoint == pointPicked && !readOnly) {
+			return 'cursor: grab;';
+		}
+
 		if (nearestPoint) {
 			return 'cursor: pointer';
 		}
+		return '';
 	})()}
+	ondragover="return false"
+	on:drop={(event) => drop(event)}
 	on:mousemove={({ offsetX, offsetY }) => {
 		const index = delaunay.find(offsetX, offsetY);
-		if (Number.isInteger(index) && index >= 0) {
+		if (Number.isInteger(index) && index >= 0 && !pointMovingIdx) {
 			const point = points[index];
 			const distance = computeDistance(
 				PixelsToDomain(offsetX, abscissa),
 				PixelsToDomain(offsetY, ordinate),
-				point.x,
-				point.y
+				// Clamp so if someone set coordinates out of the domain
+				// the distance comput still works
+				clamp(point.x, 0, 10),
+				clamp(point.y, 0, 10)
 			);
+
 			if (distance < 0.3) {
 				nearestPoint = point;
 			} else {
 				nearestPoint = null;
 			}
 		}
+		if (pointPicked && click && !readOnly) {
+			if (!pointMovingIdx) {
+				// only here when we first start to move
+				pointMovingIdx = index;
+			}
+
+			points[pointMovingIdx] = {
+				...points[pointMovingIdx],
+				x: PixelsToDomain(offsetX, abscissa),
+				y: PixelsToDomain(offsetY, ordinate)
+			};
+		}
 	}}
 	on:mouseout={() => (nearestPoint = null)}
 	on:mousedown={() => (click = true)}
-	on:mouseup={(e) => (click = false)}
-	on:click={({ offsetX, offsetY }) => {
-		if (nearestPoint) {
-			const elementPicked = document.getElementById(nearestPoint.id);
+	on:mouseup={(e) => {
+		click = false;
+		if (pointMovingIdx) {
+			const pointMoved = points[pointMovingIdx];
+			pointsStore.update(
+				{ ...pointMoved, x: pointMoved.x.toFixed(2), y: pointMoved.y.toFixed(2) },
+				$activeRecipe
+			);
+		}
+		pointMovingIdx = undefined;
+	}}
+	on:click={() => {
+		if (nearestPoint && !pointMovingIdx) {
 			pointPicked = points.find((point) => point.id === nearestPoint.id);
-			elementPicked?.dispatchEvent(new Event('mouseenter')); //trigger the popup
-		} else {
+		} else if (!nearestPoint) {
 			pointPicked = undefined;
 		}
 	}}
@@ -106,11 +150,11 @@ probably better to refactor recipe so readonly is easy but this is quicker, will
 		<Entry
 			x={abscissa(x)}
 			y={ordinate(y)}
+			{title}
 			{id}
 			fill={id === pointPicked?.id ? 'aquamarine' : 'salmon'}
 			r={(id === nearestPoint?.id && !click) || id === pointPicked?.id ? 6 : 4}
 			stroke={id === nearestPoint?.id || id === pointPicked?.id ? '#000' : null}
-			{title}
 		/>
 	{/each}
 	{#if nearestPoint}
@@ -124,34 +168,5 @@ probably better to refactor recipe so readonly is easy but this is quicker, will
 </svg>
 
 {#if pointPicked}
-	<EntryDetails readOnly={true} {pointPicked} {resetPickedPoint} />
+	<EntryDetails {readOnly} {axisNames} pointId={pointPicked.id} {resetPickedPoint} />
 {/if}
-
-<style lang="less">
-	.recipe-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-	.add-entry {
-		float: right;
-		margin-right: 25px;
-		font-size: 1rem;
-		&.adding {
-			color: white;
-			background-color: black;
-			border: 2px solid black;
-			&:hover {
-				border: 2px solid salmon;
-			}
-		}
-	}
-	.public-button {
-		margin-top: 1rem;
-		font-size: 1rem;
-
-		&:hover {
-			border: 2px solid salmon;
-		}
-	}
-</style>

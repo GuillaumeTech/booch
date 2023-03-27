@@ -41,7 +41,7 @@
 		margin: 0;
 		font-weight: normal;
 		width: fit-content;
-		transform: rotate(-1deg);
+		transform: rotate(-0.2deg);
 		:hover {
 			color: midnightblue;
 		}

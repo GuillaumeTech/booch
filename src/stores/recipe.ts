@@ -1,5 +1,5 @@
 import { browser } from '$app/environment';
-import { get, writable } from 'svelte/store';
+import { derived, get, writable } from 'svelte/store';
 import type { Point, PointUpdate, Recipe, RecipeUpdate } from '../types/recipe';
 import { activeSession, firstLogin, syncing } from './supabase'
 import { supabase } from '../supabaseClient';
@@ -215,6 +215,7 @@ export const recipes = (() => {
 
 
 export const points = {
+
     add: (point: Point, recipeId: string) => {
         recipes.update({ id: recipeId }, addPointToRecipe(point));
     },
@@ -225,6 +226,11 @@ export const points = {
         recipes.update({ id: recipeId }, updatePointFromRecipe(pointUpdate));
     },
 };
+
+export const currentPoints = derived([recipes, activeRecipe], ([$recipes, $activeRecipe]) => {
+    return $recipes?.[$activeRecipe]?.points
+}
+)
 
 
 function addPointToRecipe(point: Point) {

@@ -5,27 +5,18 @@
 	import Sidebar from '../components/Sidebar.svelte';
 
 	let width: number, height: number;
-
-	function getAddToPoints(recipeId: string) {
-		return function (point: Point): void {
-			points.add(point, recipeId);
-		};
-	}
 </script>
 
 <div class="app">
 	<Sidebar />
 	{#if $recipes && Object.keys($recipes).includes($activeRecipe)}
-		<div class="recipe">
+		<div class="scroll">
 			<!-- Can't render it as long as we don't have width height -->
 			<!-- fix ssr issue logically and seems on very first render  -->
 			<!-- width height are undefined as well -->
-			<div class="graph" bind:clientWidth={width} bind:clientHeight={height}>
+			<div class="recipe" bind:clientWidth={width} bind:clientHeight={height}>
 				{#if width && height}
 					<RecipeChart
-						{width}
-						{height}
-						onAddPoint={getAddToPoints($activeRecipe)}
 						name={$recipes[$activeRecipe]?.name}
 						points={$recipes[$activeRecipe]?.points}
 						axisNames={$recipes[$activeRecipe]?.axisNames}
@@ -42,12 +33,12 @@
 </div>
 
 <style lang="less">
-	div.recipe {
+	div.scroll {
 		width: 100%;
 		position: static;
 		overflow-y: scroll;
 	}
-	div.graph {
+	div.recipe {
 		margin: auto;
 		max-width: 90%;
 		width: min(65vw, 65vh);
@@ -57,7 +48,7 @@
 
 	.app {
 		display: flex;
-		min-height: calc(100% - 3rem - 2px);
+		min-height: calc(100% - 3rem - 4px);
 	}
 	.no-recipe {
 		text-align: center;

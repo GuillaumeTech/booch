@@ -1,13 +1,17 @@
 type AtLeast<T, K extends keyof T> = Partial<T> & Pick<T, K>
 
+
+export type StepDate = { title: string, date: Date }
+
 export type Point = {
     x: number;
     y: number;
     id: string;
-    title?: string;
+    title: string;
     details?: string;
+    chronology?: StepDate[]
     tasted_at?: Date;
-
+    isFermenting: boolean
 };
 
 export type NewPoint = Partial<Point>

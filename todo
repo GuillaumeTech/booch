@@ -87,7 +87,6 @@
 [] solve a11y
 [] check XSS 
 [] add analytics
-[] help page
 [-] playwright
       [x] testrecipe CRUD
       [x] test points CRUD
@@ -110,7 +109,22 @@
 [x] send localstorage to suppabase on account creation
 [] delete point confirm modal
 [] better modal compoment
-[] currently fermenting part ???
+      [] separated on for each use
+      [x] ferment edit
+      [] delete
+      [] login
+[-] currently fermenting part ???
+      [x] section
+      [x] drag and drop
+      [x] chronology
+      [x] icons and basic laout
+      [x] editable
+      [x] use edit popup for fermented
+      [x] simplify recipe compoment
+      [x] fix readonlymode
+      [x] display chronology
+      [x] fix tests
+[x] DRAG AND DROP POINTS BB
 [] forgot password
 [] login fail
 [x] use a form library

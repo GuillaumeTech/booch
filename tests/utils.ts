@@ -1,6 +1,28 @@
 
-import { expect, type Page } from '@playwright/test';
+import { expect, type Locator, type Page } from '@playwright/test';
 import type { NewPoint } from '../src/types/recipe';
+
+
+/**
+ * drag locator from center of element to center of target locator element
+ * @param locatorToDrag - Locator to drag
+ * @param locatorDragTarget - Locator to drag to
+ */
+async function dragAndDrop(page: Page, locatorToDrag: Locator, locatorDragTarget: Locator) {
+    const toDragBox = await locatorToDrag.boundingBox();
+    const dragTargetBox = await locatorDragTarget.boundingBox();
+
+    await page.mouse.move(
+        toDragBox!.x + toDragBox!.width / 2,
+        toDragBox!.y + toDragBox!.height / 2
+    );
+    await page.mouse.down();
+    await page.mouse.move(
+        dragTargetBox!.x + dragTargetBox!.width / 2,
+        dragTargetBox!.y + dragTargetBox!.height / 2
+    );
+    await page.mouse.up();
+}
 
 export async function createRecipe(page: Page, recipeName: string) {
     await page.getByTestId('new-recipe').click();
@@ -32,23 +54,35 @@ export async function editAxes(page: Page, axisNames: { x: string, y: string }) 
 
 
 export async function createPoint(page: Page, title: string, details: string) {
-    await page.getByTestId('new-point').click();
-    await page.getByTestId('graph').click();
+    await page.getByTestId('add-ferment').click();
     await page.getByLabel('Title').click();
     await page.getByLabel('Title').fill(title);
     await page.getByLabel('Details').click();
     await page.getByLabel('Details').fill(details)
+    await page.getByTestId('add-date').click();
+    await page.getByTestId('title-0').click();
+    await page.getByTestId('title-0').fill('start');
+    await page.getByTestId('date-0').fill('2023-03-25');
     await page.getByRole('button', { name: 'OK' }).click();
-    await expect(page.getByTestId(title)).toBeVisible()
+    await expect(page.getByTestId(`jar-${title}`)).toBeVisible()
 }
 
-export async function editPointDetails(page: Page, pointName: string, newDetails: string) {
-    await page.getByTestId(pointName).click();
-    await page.getByTestId(`edit-${pointName}`).click();
-    await page.getByTestId(`edit-details-${pointName}`).click();
-    await page.getByTestId(`edit-details-${pointName}`).fill(newDetails);
-    await page.getByTestId(`edit-${pointName}`).click(); // this is like clicking on done
-    await expect(page.getByTestId(`details-${pointName}`)).toHaveText(newDetails)
+export async function editPointName(page: Page, pointName: string, newName: string) {
+    await page.getByTestId(`jar-${pointName}`).click();
+    await page.getByLabel('Title').click();
+    await page.getByLabel('Title').fill(newName);
+    await page.getByRole('button', { name: 'OK' }).click();
+    await expect(page.getByTestId(`text-${newName}`)).toBeVisible()
+
+}
+
+export async function gradePoint(page: Page, pointName: string) {
+    const jar = await page.getByTestId(`jar-${pointName}`);
+    const graph = await page.getByTestId('graph')
+    // couldn't get jar.dragTo work so using a custom one
+    dragAndDrop(page, jar, graph)
+
+    await expect(page.getByTestId(pointName)).toBeVisible()
 }
 
 export async function deletePoint(page: Page, pointName: string) {
