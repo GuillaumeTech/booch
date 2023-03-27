@@ -51,6 +51,7 @@
             [] better button
             [] unified
       [x] text areas
+      [] responsive
 - [-] suppabase
       [x] some order in compoments
             [x] app compoment
@@ -129,7 +130,7 @@
 [] login fail
 [x] use a form library
 -------- [] POST ABOUT IT / PROD
-      [] help page
+      [] help page / landing
       [] proper domain
       [] reddit posts
 
