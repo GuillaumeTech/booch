@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { createRecipe, deleteRecipe, editRecipeName } from './utils.ts';
+import { createRecipe, deleteRecipe, editRecipeName } from './utils.js';
 
 
 test('Can create,edit and delete a Recipe', async ({ page }) => {

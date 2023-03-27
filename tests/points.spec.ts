@@ -1,4 +1,4 @@
-import { createPoint, createRecipe, deletePoint, editPointName } from "./utils.ts";
+import { createPoint, createRecipe, deletePoint, editPointName } from "./utils.js";
 import { expect, test } from '@playwright/test';
 import { gradePoint } from "./utils";
 
