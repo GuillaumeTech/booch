@@ -32,8 +32,7 @@ export async function editAxes(page: Page, axisNames: { x: string, y: string }) 
 
 
 export async function createPoint(page: Page, title: string, details: string) {
-    await page.getByTestId('new-point').click();
-    await page.getByTestId('graph').click();
+    await page.getByTestId('add-ferment').click();
     await page.getByLabel('Title').click();
     await page.getByLabel('Title').fill(title);
     await page.getByLabel('Details').click();
@@ -48,10 +47,9 @@ export async function createPoint(page: Page, title: string, details: string) {
 
 export async function editPointName(page: Page, pointName: string, newName: string) {
     await page.getByTestId(`jar-${pointName}`).click();
-    await page.getByTestId(`edit-${pointName}`).click();
     await page.getByLabel('Title').click();
     await page.getByLabel('Title').fill(newName);
-    await page.getByTestId(`edit-${pointName}`).click(); // this is like clicking on done
+    await page.getByRole('button', { name: 'OK' }).click();
     await expect(page.getByTestId(`text-${newName}`)).toBeVisible()
 
 }

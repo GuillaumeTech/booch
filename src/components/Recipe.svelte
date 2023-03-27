@@ -122,7 +122,7 @@ it could also be done with reactive statements but seems the point.chornoly does
 		{/each}
 		<div class="item">
 			<button
-				data-testid={`add-ferment`}
+				data-testid="add-ferment"
 				class="add-ferment"
 				on:click={() => {
 					pointData = { isFermenting: true };
