@@ -1,6 +1,28 @@
 
-import { expect, type Page } from '@playwright/test';
+import { expect, type Locator, type Page } from '@playwright/test';
 import type { NewPoint } from '../src/types/recipe';
+
+
+/**
+ * drag locator from center of element to center of target locator element
+ * @param locatorToDrag - Locator to drag
+ * @param locatorDragTarget - Locator to drag to
+ */
+async function dragAndDrop(page: Page, locatorToDrag: Locator, locatorDragTarget: Locator) {
+    const toDragBox = await locatorToDrag.boundingBox();
+    const dragTargetBox = await locatorDragTarget.boundingBox();
+
+    await page.mouse.move(
+        toDragBox!.x + toDragBox!.width / 2,
+        toDragBox!.y + toDragBox!.height / 2
+    );
+    await page.mouse.down();
+    await page.mouse.move(
+        dragTargetBox!.x + dragTargetBox!.width / 2,
+        dragTargetBox!.y + dragTargetBox!.height / 2
+    );
+    await page.mouse.up();
+}
 
 export async function createRecipe(page: Page, recipeName: string) {
     await page.getByTestId('new-recipe').click();
@@ -56,16 +78,10 @@ export async function editPointName(page: Page, pointName: string, newName: stri
 
 export async function gradePoint(page: Page, pointName: string) {
     const jar = await page.getByTestId(`jar-${pointName}`);
-    const graph = await page.getByTestId('graph').boundingBox();
+    const graph = await page.getByTestId('graph')
+    // couldn't get jar.dragTo work so using a custom one
+    dragAndDrop(page, jar, graph)
 
-    await jar.dragTo(jar, {
-        force: true,
-        targetPosition: {
-            // moving the slider to the target value in %
-            x: graph.x + graph.width / 2,
-            y: graph.y + graph.height / 2
-        },
-    });
     await expect(page.getByTestId(pointName)).toBeVisible()
 }
 

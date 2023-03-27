@@ -8,7 +8,7 @@ test('Can create,edit and delete a point', async ({ page }) => {
     await editPointName(page, 'test-point', 'something-new')
     await gradePoint(page, 'something-new')
 
-    await deletePoint(page, 'test-point')
+    await deletePoint(page, 'something-new')
     await expect(page.locator('circle')).toBeHidden();
 
 
