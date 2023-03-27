@@ -1,6 +1,5 @@
-import { createPoint, createRecipe, deletePoint, editPointName } from "./utils.js";
+import { createPoint, createRecipe, deletePoint, editPointName, gradePoint } from "./utils.ts";
 import { expect, test } from '@playwright/test';
-import { gradePoint } from "./utils";
 
 test('Can create,edit and delete a point', async ({ page }) => {
     await page.goto('/');
