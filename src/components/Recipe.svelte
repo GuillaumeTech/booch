@@ -111,17 +111,19 @@ it could also be done with reactive statements but seems the point.chornoly does
 						pointData = point;
 						showModal = true;
 					}}
+					data-testid={`jar-${point.title}`}
 					draggable={true}
 					on:dragstart={(event) => dragStart(event, point.id)}
 				>
 					<Jar />
-					<small>{point.title}</small>
+					<small data-testid={`text-${point.title}`}>{point.title}</small>
 				</li>
 			</div>
 		{/each}
 		<div class="item">
 			<button
-				class="add-kombucha"
+				data-testid={`add-ferment`}
+				class="add-ferment"
 				on:click={() => {
 					pointData = { isFermenting: true };
 					showModal = true;
@@ -210,7 +212,7 @@ it could also be done with reactive statements but seems the point.chornoly does
 		}
 	}
 
-	button.add-kombucha {
+	button.add-ferment {
 		background: none;
 		border: none;
 		transition: opacity 200ms ease;

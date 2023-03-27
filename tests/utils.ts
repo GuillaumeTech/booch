@@ -38,17 +38,37 @@ export async function createPoint(page: Page, title: string, details: string) {
     await page.getByLabel('Title').fill(title);
     await page.getByLabel('Details').click();
     await page.getByLabel('Details').fill(details)
+    await page.getByTestId('add-date').click();
+    await page.getByTestId('title-0').click();
+    await page.getByTestId('title-0').fill('start');
+    await page.getByTestId('date-0').fill('2023-03-25');
     await page.getByRole('button', { name: 'OK' }).click();
-    await expect(page.getByTestId(title)).toBeVisible()
+    await expect(page.getByTestId(`jar-${title}`)).toBeVisible()
 }
 
-export async function editPointDetails(page: Page, pointName: string, newDetails: string) {
-    await page.getByTestId(pointName).click();
+export async function editPointName(page: Page, pointName: string, newName: string) {
+    await page.getByTestId(`jar-${pointName}`).click();
     await page.getByTestId(`edit-${pointName}`).click();
-    await page.getByTestId(`edit-details-${pointName}`).click();
-    await page.getByTestId(`edit-details-${pointName}`).fill(newDetails);
+    await page.getByLabel('Title').click();
+    await page.getByLabel('Title').fill(newName);
     await page.getByTestId(`edit-${pointName}`).click(); // this is like clicking on done
-    await expect(page.getByTestId(`details-${pointName}`)).toHaveText(newDetails)
+    await expect(page.getByTestId(`text-${newName}`)).toBeVisible()
+
+}
+
+export async function gradePoint(page: Page, pointName: string) {
+    const jar = await page.getByTestId(`jar-${pointName}`);
+    const graph = await page.getByTestId('graph').boundingBox();
+
+    await jar.dragTo(jar, {
+        force: true,
+        targetPosition: {
+            // moving the slider to the target value in %
+            x: graph.x + graph.width / 2,
+            y: graph.y + graph.height / 2
+        },
+    });
+    await expect(page.getByTestId(pointName)).toBeVisible()
 }
 
 export async function deletePoint(page: Page, pointName: string) {

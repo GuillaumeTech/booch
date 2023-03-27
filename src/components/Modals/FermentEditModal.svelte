@@ -46,8 +46,8 @@
 		<label for="detail">Chronology</label>
 		{#each chronology as chronoEntry, index (index)}
 			<div class="chrono">
-				<input type="text" bind:value={chronoEntry.title} />
-				<input type="date" bind:value={chronoEntry.date} />
+				<input type="text" data-testid={`title-${index}`} bind:value={chronoEntry.title} />
+				<input type="date" data-testid={`date-${index}`} bind:value={chronoEntry.date} />
 				<button
 					on:click={() => {
 						chronology = removeAtIndex(chronology, index);
@@ -59,6 +59,7 @@
 			on:click={() => {
 				chronology = [...chronology, { title: '', date: new Date() }];
 			}}
+			data-testid="add-date"
 		>
 			Add date</button
 		>
