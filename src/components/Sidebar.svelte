@@ -152,7 +152,7 @@
 		{/if}
 		<li>Help</li>
 		<li>Contact</li>
-		{#if activeSession}
+		{#if activeSession && $activeSession?.user}
 			<li class="user">Logged as: {$activeSession.user.email}</li>
 		{/if}
 	</ul>
