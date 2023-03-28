@@ -127,7 +127,7 @@
       [x] fix tests
 [x] DRAG AND DROP POINTS BB
 [x] forgot password
-[] login fail
+[x] login fail
 [x] use a form library
 -------- [] POST ABOUT IT / PROD
       [] help page / landing
