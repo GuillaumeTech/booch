@@ -82,7 +82,7 @@
 		{#each recipesOrdered as { name, id } (id)}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			{#if editingId == id}
-				<li>
+				<li class="edit-name">
 					<input data-testid={`new-name-${name}`} type="text" bind:value={editingName} />
 					<button
 						on:click={(e) => {
@@ -150,9 +150,11 @@
 				Login/Sign-up
 			</li>
 		{/if}
-
-		<li>About</li>
+		<li>Help</li>
 		<li>Contact</li>
+		{#if activeSession}
+			<li class="user">Logged as: {$activeSession.user.email}</li>
+		{/if}
 	</ul>
 </div>
 <Modal
@@ -199,6 +201,7 @@
 			&:hover {
 				background-color: salmon;
 				color: white;
+				cursor: pointer;
 				button {
 					filter: invert(1);
 				}
@@ -209,7 +212,7 @@
 			}
 			button {
 				margin: 0;
-				padding: 0;
+				padding: 0 0.3rem;
 				border: 0;
 				background: none;
 				transition: transform 0.1s;
@@ -221,11 +224,38 @@
 				float: right;
 				margin-right: 0.5rem;
 			}
+			&.edit-name {
+				display: flex;
+				flex-direction: row;
+				padding: 0;
+				justify-content: space-between;
+				input {
+					padding-top: 0.1rem;
+					padding-bottom: 0.1rem;
+					font-family: 'Inter';
+					font-style: italic;
+					padding-left: 0.7rem;
+					min-width: 5rem;
+				}
+				button {
+					margin-left: 0.2rem;
+
+					margin-right: 0.2rem;
+				}
+			}
 		}
 		&.more {
 			border-top: 2px solid salmon;
 			padding-top: 0.5rem;
-			padding-bottom: 0.5rem;
+		}
+		li.user {
+			border-top: 5px solid salmon;
+
+			background: whitesmoke;
+			color: black;
+			&:hover {
+				cursor: default;
+			}
 		}
 	}
 	.add-recipe {
