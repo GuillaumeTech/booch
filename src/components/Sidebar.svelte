@@ -249,8 +249,9 @@
 			padding-top: 0.5rem;
 		}
 		li.user {
+			overflow: hidden;
 			border-top: 5px solid salmon;
-
+			text-overflow: ellipsis;
 			background: whitesmoke;
 			color: black;
 			&:hover {
