@@ -48,7 +48,7 @@
 
 	.app {
 		display: flex;
-		min-height: calc(100% - 3rem - 4px);
+		min-height: calc(100% - 3rem - 7px);
 	}
 	.no-recipe {
 		text-align: center;
