@@ -42,7 +42,7 @@
 		font-weight: normal;
 		width: fit-content;
 		:hover {
-			color: midnightblue;
+			color: black;
 		}
 	}
 	span {
