@@ -8,7 +8,7 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@500;800&family=Gamja+Flower&family=Loved+by+the+King&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@500;800&family=Roboto+Slab:wght@400;700&display=swap"
 			rel="stylesheet"
 		/>
 
@@ -37,14 +37,19 @@
 	input {
 		background-color: whitesmoke;
 		border: none;
+		border: 1px solid DarkGray;
+
 		border-bottom: 2px solid black;
 		padding: 0.5rem;
 		font-size: 1rem;
+		transition: border 150ms ease-out;
 	}
 
 	input:focus {
 		outline: none;
 		background-color: papayawhip;
+		border: 1px solid orange;
+		border-bottom: 2px solid orange;
 	}
 
 	body,
@@ -55,7 +60,7 @@
 	h1,
 	h2,
 	h3 {
-		font-family: 'Gamja Flower', cursive;
+		font-family: 'Roboto Slab', serif;
 	}
 
 	h2 {
@@ -65,12 +70,9 @@
 	}
 
 	h3 {
-		font-size: 1.9em;
+		font-size: 1.5em;
 		margin: 0;
 		font-weight: normal;
-		text-decoration: underline;
-		text-decoration-thickness: 0.15rem;
-		text-underline-offset: 0.2rem;
 	}
 
 	body {
