@@ -19,7 +19,7 @@
 				We sent you an email with a reset link, If you didn't receive it check your spam folder as
 				well, it could take a few minutes
 			</p>
-			<a href="/"> Go home</a>
+			<a href="/"> Go back to the app</a>
 		</div>
 	{:else}
 		<h4>Password Recovery</h4>
