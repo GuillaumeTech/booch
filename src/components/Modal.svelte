@@ -83,6 +83,8 @@
 	}
 	button {
 		display: block;
+		font-size: 1rem;
+		padding: 0.5rem 2rem;
 	}
 	span {
 		display: flex;
