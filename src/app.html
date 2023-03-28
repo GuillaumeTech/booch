@@ -48,8 +48,8 @@
 	input:focus {
 		outline: none;
 		background-color: papayawhip;
-		border: 1px solid orange;
-		border-bottom: 2px solid orange;
+		border: 1px solid salmon;
+		border-bottom: 2px solid salmon;
 	}
 
 	body,
@@ -94,13 +94,15 @@
 	}
 
 	button {
-		border: none;
-		border-radius: 0.1rem;
-		background: salmon;
+		background: none;
 		border: 2px salmon solid;
+		transition: background 200ms ease;
 	}
 	button:hover {
-		border: 2px black solid;
+		cursor: pointer;
+		border: 2px b solid;
+		background: salmon;
+		color: white;
 	}
 	button:disabled,
 	button[disabled] {
