@@ -32,9 +32,10 @@
 	</div>
 </div>
 
-<style>
+<style lang="less">
 	div.recipe {
 		width: 100%;
+		height: 100%;
 		position: static;
 		overflow-y: scroll;
 	}
@@ -44,5 +45,9 @@
 		width: 65vmin;
 		height: 65vmin;
 		margin-top: 0;
+		@media screen and (max-width: 800px) {
+			width: 90vmin;
+			height: 90vmin;
+		}
 	}
 </style>
