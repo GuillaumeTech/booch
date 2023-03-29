@@ -29,7 +29,7 @@
 	let nearestPoint: Point | null = null;
 	let click: boolean = false;
 
-	function computeDistance(xa: number, ya: number, xb: number, yb: number): number {
+	function computeEuclideanDistance(xa: number, ya: number, xb: number, yb: number): number {
 		return Math.sqrt((xa - xb) ** 2 + (ya - yb) ** 2);
 	}
 
@@ -67,6 +67,18 @@
 		(d: Point) => abscissa(d.x),
 		(d: Point) => ordinate(d.y)
 	);
+
+	function computeDistanceInDomainSpace(xa: number, ya: number, xb: number, yb: number): number {
+		const distance = computeEuclideanDistance(
+			PixelsToDomain(xa, abscissa),
+			PixelsToDomain(ya, ordinate),
+			// Clamp so if someone set coordinates out of the domain
+			// the distance comput still works
+			clamp(xb, 0, 10),
+			clamp(yb, 0, 10)
+		);
+		return distance;
+	}
 </script>
 
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
@@ -94,16 +106,9 @@
 		const index = delaunay.find(offsetX, offsetY);
 		if (Number.isInteger(index) && index >= 0 && !pointMovingIdx) {
 			const point = points[index];
-			const distance = computeDistance(
-				PixelsToDomain(offsetX, abscissa),
-				PixelsToDomain(offsetY, ordinate),
-				// Clamp so if someone set coordinates out of the domain
-				// the distance comput still works
-				clamp(point.x, 0, 10),
-				clamp(point.y, 0, 10)
-			);
+			const distance = computeDistanceInDomainSpace(offsetX, offsetY, point.x, point.y);
 
-			if (distance < 0.3) {
+			if (distance < 1) {
 				nearestPoint = point;
 			} else {
 				nearestPoint = null;
@@ -135,7 +140,18 @@
 		}
 		pointMovingIdx = undefined;
 	}}
-	on:click={() => {
+	on:click={({ offsetX, offsetY }) => {
+		const index = delaunay.find(offsetX, offsetY);
+		if (Number.isInteger(index) && index >= 0 && !pointMovingIdx) {
+			const point = points[index];
+			const distance = computeDistanceInDomainSpace(offsetX, offsetY, point.x, point.y);
+
+			if (distance < 1) {
+				nearestPoint = point;
+			} else {
+				nearestPoint = null;
+			}
+		}
 		if (nearestPoint && !pointMovingIdx) {
 			pointPicked = points.find((point) => point.id === nearestPoint.id);
 		} else if (!nearestPoint) {
