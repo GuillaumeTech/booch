@@ -2,6 +2,8 @@
 	import type { Point } from '../types/recipe';
 	import RecipeChart from '../components/Recipe.svelte';
 	import { recipes, activeRecipe, points } from '../stores/recipe';
+	import { displaySideBarResponsive } from '../stores/display';
+
 	import Sidebar from '../components/Sidebar.svelte';
 
 	let width: number, height: number;
@@ -9,6 +11,7 @@
 
 <div class="app">
 	<Sidebar />
+
 	{#if $recipes && Object.keys($recipes).includes($activeRecipe)}
 		<div class="scroll">
 			<!-- Can't render it as long as we don't have width height -->
@@ -41,9 +44,13 @@
 	div.recipe {
 		margin: auto;
 		max-width: 90%;
-		width: min(65vw, 65vh);
-		height: min(65vw, 65vh);
+		width: 65vmin;
+		height: 65vmin;
 		margin-top: 0;
+		@media screen and (max-width: 800px) {
+			width: 90vmin;
+			height: 90vmin;
+		}
 	}
 
 	.app {

@@ -42,8 +42,8 @@
 	div.graph {
 		margin: auto;
 		max-width: 90%;
-		width: min(65vw, 65vh);
-		height: min(65vw, 65vh);
+		width: 65vmin;
+		height: 65vmin;
 		margin-top: 0;
 	}
 </style>

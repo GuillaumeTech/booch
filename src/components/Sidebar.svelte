@@ -6,6 +6,7 @@
 	import LoginModal from './Modals/LoginModal.svelte';
 	import { activeSession } from '../stores/supabase';
 	import { supabase } from '../supabaseClient';
+	import { displaySideBarResponsive } from '../stores/display';
 
 	let addingNewRecipe = false;
 	let newRecipeName = '';
@@ -53,7 +54,7 @@
 		: [];
 </script>
 
-<div class="side-bar">
+<div class={`side-bar ${$displaySideBarResponsive ? 'responsive-display' : ''}`}>
 	<ul>
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		{#if !addingNewRecipe}
@@ -179,14 +180,62 @@
 	}}
 />
 
+<div
+	class={`side-bar-dimmer ${$displaySideBarResponsive ? 'responsive-display' : ''}`}
+	on:click|self={() => {
+		displaySideBarResponsive.set(false);
+	}}
+/>
+
 <style lang="less">
 	div.side-bar {
-		width: 25%;
+		width: 15rem;
+
+		min-width: 12rem;
 		border-right: 2px solid salmon;
 		overflow: auto;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
+	}
+
+	.side-bar-dimmer {
+		display: none;
+	}
+	@media screen and (max-width: 800px) {
+		div.side-bar {
+			left: -20rem; //outside ou screen when not active
+			position: absolute;
+			// top: 0 and bottom: 0 works but has short comings, i don't care yet
+			// this will probably be less hacky once I get to redoing the layout
+			// see https://stackoverflow.com/a/14073016
+			top: 0;
+			bottom: 0;
+			padding: 1rem;
+			min-width: 12rem;
+			z-index: 10;
+			background: white url('/bg-texture.png');
+			transition: left 200ms ease-out;
+		}
+
+		div.side-bar.responsive-display {
+			left: 0; //bring it in
+		}
+
+		div.side-bar-dimmer {
+			content: '';
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+			z-index: 1;
+			background-color: rgba(0, 0, 0, 0.2);
+		}
+		div.side-bar-dimmer.responsive-display {
+			display: block;
+		}
 	}
 	ul {
 		list-style-type: none;

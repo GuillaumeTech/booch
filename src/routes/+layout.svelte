@@ -2,10 +2,20 @@
 	import { syncing } from '../stores/supabase';
 	import { SvelteToast } from '@zerodevx/svelte-toast';
 	import { browser } from '$app/environment';
+	import { displaySideBarResponsive } from '../stores/display';
+	import Icon from '../components/Icon.svelte';
 </script>
 
 <header>
-	<h1><a href="/">My fermentation Notes</a></h1>
+	<h1>
+		<button
+			on:click={() => {
+				displaySideBarResponsive.set(true);
+			}}
+		>
+			<Icon name="menu" fill="white" strokeWidth={3} stroke="white" /></button
+		><a href="/">My fermentation Notes</a>
+	</h1>
 	{#if $syncing.size !== 0}
 		<div class="loader"><span>&#9632;</span> syncing</div>
 	{/if}
@@ -68,6 +78,18 @@
 		--toastMinHeight: 2rem;
 		--toastPadding: 0 0.5rem;
 		font-size: 0.875rem;
+	}
+	button {
+		display: none;
+		font-size: 1.6rem;
+		border: none;
+	}
+	@media screen and (max-width: 800px) {
+		button {
+			display: inline-block;
+			font-size: 1.6rem;
+			border: none;
+		}
 	}
 	@media (min-width: 40rem) {
 		.toasters {
