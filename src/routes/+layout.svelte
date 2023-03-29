@@ -4,6 +4,7 @@
 	import { browser } from '$app/environment';
 	import { displaySideBarResponsive } from '../stores/display';
 	import Icon from '../components/Icon.svelte';
+	import { page } from '$app/stores';
 </script>
 
 <!-- limit this to client side rendering, behave a bit weirdly with ssr -->
@@ -18,17 +19,22 @@
 <div class="border">
 	<header>
 		<h1>
-			<button
-				on:click={() => {
-					displaySideBarResponsive.set(true);
-				}}
-			>
-				<Icon name="menu" fill="white" strokeWidth={2} stroke="white" /></button
-			><a href="/">My fermentation Notes</a>
+			<!-- don't display sidebar button on anything expext app route -->
+			{#if $page.route.id == '/'}
+				<button
+					on:click={() => {
+						displaySideBarResponsive.set(true);
+					}}
+				>
+					<Icon name="menu" fill="white" strokeWidth={2} stroke="white" />
+				</button>
+			{/if}
+
+			<a href="/">My fermentation Notes</a>
 		</h1>
-		<!-- {#if $syncing.size !== 0} -->
-		<div class="loader"><span>&#9632;</span></div>
-		<!-- {/if} -->
+		{#if $syncing.size !== 0}
+			<div class="loader"><span> &#9632;</span></div>
+		{/if}
 	</header>
 	<slot />
 </div>
@@ -76,9 +82,13 @@
 			color: black;
 		}
 	}
-	span {
-		font-size: 1.2rem;
-		animation: blink 0.5s ease-in-out infinite;
+	.loader {
+		span {
+			font-size: 1.2rem;
+
+			margin-right: 1rem;
+			animation: blink 0.5s ease-in-out infinite;
+		}
 	}
 
 	@keyframes blink {
