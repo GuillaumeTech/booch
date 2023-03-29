@@ -44,12 +44,12 @@
 		flex-direction: column;
 	}
 
-	// @media screen and (max-width: 1500px) {
-	// 	.border {
-	// 		width: auto;
-	// 		margin: 1rem;
-	// 	}
-	// }
+	@media screen and (min-width: 1500px) {
+		.border {
+			width: 1500px;
+			margin: auto;
+		}
+	}
 
 	header {
 		background: salmon;
