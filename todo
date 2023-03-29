@@ -129,6 +129,10 @@
 [x] forgot password
 [x] login fail
 [x] use a form library
+[] alerts styling
+      [] new one when not logged
+[] update logo
+[] click near point selects it (mobile)
 -------- [] POST ABOUT IT / PROD
       [] help page / landing
       [] proper domain

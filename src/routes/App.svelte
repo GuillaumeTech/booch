@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Point } from '../types/recipe';
-	import RecipeChart from '../components/Recipe.svelte';
+	import Recipe from '../components/Recipe.svelte';
 	import { recipes, activeRecipe, points } from '../stores/recipe';
 	import { displaySideBarResponsive } from '../stores/display';
 
@@ -19,7 +19,7 @@
 			<!-- width height are undefined as well -->
 			<div class="recipe" bind:clientWidth={width} bind:clientHeight={height}>
 				{#if width && height}
-					<RecipeChart
+					<Recipe
 						name={$recipes[$activeRecipe]?.name}
 						points={$recipes[$activeRecipe]?.points}
 						axisNames={$recipes[$activeRecipe]?.axisNames}
@@ -55,7 +55,7 @@
 
 	.app {
 		display: flex;
-		min-height: calc(100% - 3rem - 7px);
+		height: 100%;
 	}
 	.no-recipe {
 		text-align: center;

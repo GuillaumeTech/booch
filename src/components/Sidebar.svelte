@@ -103,9 +103,10 @@
 						$activeRecipe = id;
 					}}
 					data-testid={`recipe-${name}`}
-					class={$activeRecipe === id ? 'underline' : ''}
+					class={`menu-item ${$activeRecipe === id ? 'underline' : ''}`}
 				>
-					{name}
+					<div>{name}</div>
+
 					<span
 						><button
 							on:click={(e) => {
@@ -189,9 +190,9 @@
 
 <style lang="less">
 	div.side-bar {
-		width: 15rem;
+		width: 25%;
 
-		min-width: 12rem;
+		min-width: 16rem;
 		border-right: 2px solid salmon;
 		overflow: auto;
 		display: flex;
@@ -206,13 +207,11 @@
 		div.side-bar {
 			left: -20rem; //outside ou screen when not active
 			position: absolute;
-			// top: 0 and bottom: 0 works but has short comings, i don't care yet
-			// this will probably be less hacky once I get to redoing the layout
-			// see https://stackoverflow.com/a/14073016
 			top: 0;
-			bottom: 0;
+			height: 100%;
 			padding: 1rem;
 			min-width: 12rem;
+			width: 15rem;
 			z-index: 10;
 			background: white url('/bg-texture.png');
 			transition: left 200ms ease-out;
@@ -256,8 +255,23 @@
 				}
 			}
 			&.underline {
-				text-decoration: underline black;
-				text-underline-offset: 0.15rem;
+				font-weight: 800;
+			}
+			&.menu-item {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				div {
+					white-space: nowrap;
+					text-overflow: ellipsis;
+					flex-wrap: wrap;
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
+				span {
+					margin-right: 0.5rem;
+					min-width: 4rem;
+				}
 			}
 			button {
 				margin: 0;
@@ -269,10 +283,7 @@
 					transform: scale(1.2);
 				}
 			}
-			span {
-				float: right;
-				margin-right: 0.5rem;
-			}
+
 			&.edit-name {
 				display: flex;
 				flex-direction: row;

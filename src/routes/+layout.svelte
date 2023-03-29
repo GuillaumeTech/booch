@@ -4,22 +4,9 @@
 	import { browser } from '$app/environment';
 	import { displaySideBarResponsive } from '../stores/display';
 	import Icon from '../components/Icon.svelte';
+	import { page } from '$app/stores';
 </script>
 
-<header>
-	<h1>
-		<button
-			on:click={() => {
-				displaySideBarResponsive.set(true);
-			}}
-		>
-			<Icon name="menu" fill="white" strokeWidth={3} stroke="white" /></button
-		><a href="/">My fermentation Notes</a>
-	</h1>
-	{#if $syncing.size !== 0}
-		<div class="loader"><span>&#9632;</span> syncing</div>
-	{/if}
-</header>
 <!-- limit this to client side rendering, behave a bit weirdly with ssr -->
 <!-- Also not even sure SSRing this make sense -->
 {#if browser}
@@ -29,13 +16,50 @@
 	</div>
 {/if}
 
-<slot />
+<div class="border">
+	<header>
+		<h1>
+			<!-- don't display sidebar button on anything expext app route -->
+			{#if $page.route.id == '/'}
+				<button
+					on:click={() => {
+						displaySideBarResponsive.set(true);
+					}}
+				>
+					<Icon name="menu" fill="white" strokeWidth={2} stroke="white" />
+				</button>
+			{/if}
+
+			<a href="/">My fermentation Notes</a>
+		</h1>
+		{#if $syncing.size !== 0}
+			<div class="loader"><span> &#9632;</span></div>
+		{/if}
+	</header>
+	<slot />
+</div>
 
 <style lang="less">
+	.border {
+		outline: red;
+		border: salmon;
+		border-style: solid;
+		border-width: 3px;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	@media screen and (min-width: 1500px) {
+		.border {
+			width: 1500px;
+			margin: auto;
+		}
+	}
+
 	header {
 		background: salmon;
 		color: white;
-		padding: 0.4rem 0.7rem 0.4rem 0.7rem;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
@@ -43,10 +67,13 @@
 		h1 > a {
 			color: white;
 			text-decoration: none;
+			padding: 0.3rem;
 		}
 	}
 	h1 {
-		font-size: 2em;
+		display: flex;
+		flex-direction: row;
+		font-size: 1.5em;
 		padding: 0;
 		margin: 0;
 		font-weight: normal;
@@ -55,9 +82,13 @@
 			color: black;
 		}
 	}
-	span {
-		font-size: 1.2rem;
-		animation: blink 0.5s ease-in-out infinite;
+	.loader {
+		span {
+			font-size: 1.2rem;
+
+			margin-right: 1rem;
+			animation: blink 0.5s ease-in-out infinite;
+		}
 	}
 
 	@keyframes blink {
@@ -81,14 +112,13 @@
 	}
 	button {
 		display: none;
-		font-size: 1.6rem;
-		border: none;
 	}
 	@media screen and (max-width: 800px) {
 		button {
 			display: inline-block;
-			font-size: 1.6rem;
+			font-size: 1.3rem;
 			border: none;
+			background: darkred;
 		}
 	}
 	@media (min-width: 40rem) {
