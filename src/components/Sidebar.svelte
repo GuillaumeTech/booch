@@ -206,11 +206,8 @@
 		div.side-bar {
 			left: -20rem; //outside ou screen when not active
 			position: absolute;
-			// top: 0 and bottom: 0 works but has short comings, i don't care yet
-			// this will probably be less hacky once I get to redoing the layout
-			// see https://stackoverflow.com/a/14073016
 			top: 0;
-			bottom: 0;
+			height: 100%;
 			padding: 1rem;
 			min-width: 12rem;
 			z-index: 10;
