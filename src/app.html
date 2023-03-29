@@ -20,18 +20,56 @@
 </html>
 
 <style type="text/css">
-	html,
-	body {
-		height: calc(100% - 1.2rem);
+	/*
+	  Josh's Custom CSS Reset
+	  https://www.joshwcomeau.com/css/custom-css-reset/
+	*/
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+	* {
 		margin: 0;
 	}
-
+	html,
 	body {
-		overflow: hidden;
+		height: 100%;
 	}
-
+	body {
+		line-height: 1.5;
+		-webkit-font-smoothing: antialiased;
+	}
+	img,
+	picture,
+	video,
+	canvas,
+	svg {
+		display: block;
+		max-width: 100%;
+	}
+	input,
+	button,
+	textarea,
+	select {
+		font: inherit;
+	}
+	p,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		overflow-wrap: break-word;
+	}
+	/* end reset*/
 	html {
 		background-image: url('/bg-texture.png');
+	}
+
+	body {
+		padding: 1rem;
 	}
 
 	input {
@@ -73,24 +111,6 @@
 		font-size: 1.5em;
 		margin: 0;
 		font-weight: normal;
-	}
-
-	body {
-		border: salmon;
-
-		margin: auto;
-		margin-top: 1rem;
-		margin-bottom: 0;
-		width: calc(1500px - 1rem);
-		border-style: solid;
-		border-width: 3px;
-	}
-
-	@media screen and (max-width: 1500px) {
-		body {
-			width: auto;
-			margin: 1rem;
-		}
 	}
 
 	button {
