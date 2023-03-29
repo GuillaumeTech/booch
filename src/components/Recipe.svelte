@@ -11,6 +11,7 @@
 	import Jar from './Jar.svelte';
 	import FermentEditModal from './Modals/FermentEditModal.svelte';
 	import RecipeChart from './RecipeChart.svelte';
+	import AxisEditModal from './Modals/AxisEditModal.svelte';
 
 	export let name: string,
 		points: Point[] = [],
@@ -22,8 +23,7 @@
 	let pointData: NewPoint;
 	let width: number, height: number;
 
-	let editingAxes = false;
-	$: editableAxisNames = writable(axisNames);
+	let showAxisEditModal = false;
 	let showModal = false;
 
 	function dragStart(event: DragEvent, id: string) {
@@ -135,24 +135,22 @@ it could also be done with reactive statements but seems the point.chornoly does
 </div>
 
 <h3>Grading</h3>
-{#if editingAxes}
-	<span>X-Axis: <input bind:value={$editableAxisNames.x} /></span>
-	<span>Y-Axis: <input bind:value={$editableAxisNames.y} /></span>
-	<button
-		on:click={() => {
-			editingAxes = !editingAxes;
-			recipes.update({ id: $activeRecipe, axisNames: $editableAxisNames });
-		}}>Done</button
-	>
-{:else}
-	<span>X-Axis: {axisNames.x}</span>
-	<span>Y-Axis: {axisNames.y}</span>
-	<button
-		on:click={() => {
-			editingAxes = !editingAxes;
-		}}>Edit</button
-	>
-{/if}
+<AxisEditModal
+	onOk={() => {
+		showAxisEditModal = false;
+	}}
+	onCancel={() => {
+		showAxisEditModal = false;
+	}}
+	showModal={showAxisEditModal}
+	{axisNames}
+/>
+
+<button
+	on:click={() => {
+		showAxisEditModal = true;
+	}}>Edit</button
+>
 <!-- Can't render it as long as we don't have width height -->
 <!-- fix ssr issue logically, and seems on very first render  width height are undefined as well -->
 

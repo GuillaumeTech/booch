@@ -137,4 +137,7 @@
 	hr {
 		width: 100%;
 	}
+	small {
+		height: 0.7rem;
+	}
 </style>
