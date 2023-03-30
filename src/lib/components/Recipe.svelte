@@ -11,7 +11,7 @@
 	import FermentEditModal from './Modals/FermentEditModal.svelte';
 	import RecipeChart from './RecipeChart.svelte';
 	import AxisEditModal from './Modals/AxisEditModal.svelte';
-	import Icon from './Icon.svelte';
+	import IconButton from './IconButton.svelte';
 
 	export let name: string,
 		points: Point[] = [],
@@ -147,11 +147,14 @@ it could also be done with reactive statements but seems the point.chornoly does
 		{axisNames}
 	/>
 
-	<button
-		on:click={() => {
+	<IconButton
+		iconName="edit-2"
+		fill="black"
+		stroke="black"
+		on:click={(e) => {
 			showAxisEditModal = true;
-		}}><Icon name="edit-2" fill="black" stroke="black" /></button
-	>
+		}}
+	/>
 </div>
 
 <!-- Can't render it as long as we don't have width height -->
@@ -227,13 +230,5 @@ it could also be done with reactive statements but seems the point.chornoly does
 	}
 	.grading {
 		display: flex;
-		button {
-			border: none;
-			&:hover {
-				background: none;
-
-				transform: scale(1.2);
-			}
-		}
 	}
 </style>

@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { v4 as uuidv4 } from 'uuid';
-	import Modal from './Modal.svelte';
 	import { recipes, activeRecipe } from '../../stores/recipe';
-	import Icon from './Icon.svelte';
 	import LoginModal from './Modals/LoginModal.svelte';
 	import { activeSession } from '../../stores/supabase';
 	import { supabase } from '../../supabaseClient';
 	import { displaySideBarResponsive } from '../../stores/display';
 	import DeleteModal from './Modals/DeleteModal.svelte';
+	import IconButton from './IconButton.svelte';
 
 	let addingNewRecipe = false;
 	let newRecipeName = '';
@@ -86,7 +85,10 @@
 			{#if editingId == id}
 				<li class="edit-name">
 					<input data-testid={`new-name-${name}`} type="text" bind:value={editingName} />
-					<button
+					<IconButton
+						iconName="check"
+						fill="black"
+						stroke="black"
 						on:click={(e) => {
 							e.stopPropagation();
 							editRecipeName(id, editingName);
@@ -94,9 +96,7 @@
 							editingName = '';
 						}}
 						data-testid={`change-name-${name}`}
-					>
-						<Icon strokeWidth="4px" name="check" stroke="black" />
-					</button>
+					/>
 				</li>
 			{:else}
 				<li
@@ -109,17 +109,21 @@
 					<div>{name}</div>
 
 					<span
-						><button
+						><IconButton
+							iconName="edit-2"
+							fill="black"
+							stroke="black"
 							on:click={(e) => {
 								e.stopPropagation();
 								editingId = id;
 								editingName = name;
 							}}
 							data-testid={`edit-recipe-${name}`}
-						>
-							<Icon name="edit-2" fill="black" stroke="black" />
-						</button>
-						<button
+						/>
+						<IconButton
+							iconName="trash"
+							fill="black"
+							stroke="black"
 							on:click={(e) => {
 								e.stopPropagation();
 								deletingId = id;
@@ -127,10 +131,8 @@
 								showDeleteConfirm = true;
 							}}
 							data-testid={`delete-recipe-${name}`}
-						>
-							<Icon name="trash" fill="black" stroke="black" />
-						</button></span
-					>
+						/>
+					</span>
 				</li>
 			{/if}
 		{/each}
@@ -276,12 +278,6 @@
 			button {
 				margin: 0;
 				padding: 0 0.3rem;
-				border: 0;
-				background: none;
-				transition: transform 0.1s;
-				&:hover {
-					transform: scale(1.2);
-				}
 			}
 
 			&.edit-name {

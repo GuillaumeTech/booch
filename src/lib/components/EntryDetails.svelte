@@ -7,6 +7,7 @@
 	import Timeline from './Timeline.svelte';
 	import Icon from './Icon.svelte';
 	import DeleteModal from './Modals/DeleteModal.svelte';
+	import IconButton from './IconButton.svelte';
 
 	export let pointId: string, resetPickedPoint: Function, readOnly: Boolean, axisNames: AxisNames;
 
@@ -50,26 +51,37 @@
 				<h3>{pointPicked.title}</h3>
 
 				{#if !readOnly}
-					<button
-						data-testid={`edit-${pointPicked.title}`}
-						on:click={() => {
+					<IconButton
+						iconName="edit-2"
+						fill="black"
+						stroke="black"
+						on:click={(e) => {
 							editing = !editing;
-						}}><Icon name="edit-2" fill="black" stroke="black" /></button
-					>
-					<button
-						data-testid={`delete-${pointPicked.title}`}
-						on:click={() => {
+						}}
+						data-testid={`edit-${pointPicked.title}`}
+					/>
+					<IconButton
+						iconName="trash"
+						fill="black"
+						stroke="black"
+						on:click={(e) => {
 							showDeletingModal = true;
-						}}><Icon name="trash" fill="black" stroke="black" /></button
-					>
+						}}
+						data-testid={`delete-${pointPicked.title}`}
+					/>
 				{/if}
-				<button
-					class="hide"
-					data-testid={`hide-${pointPicked.title}`}
-					on:click={() => {
-						resetPickedPoint();
-					}}><Icon name="x" fill="black" stroke="black" strokeWidth="3" /></button
-				>
+				<div class="hide">
+					<IconButton
+						iconName="x"
+						fill="black"
+						stroke="black"
+						strokeWidth="3"
+						on:click={() => {
+							resetPickedPoint();
+						}}
+						data-testid={`hide-${pointPicked.title}`}
+					/>
+				</div>
 			</div>
 			<div>
 				<div class="point-info">
