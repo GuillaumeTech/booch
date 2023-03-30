@@ -5,6 +5,7 @@
 	import { writable } from 'svelte/store';
 	import FermentEditModal from './Modals/FermentEditModal.svelte';
 	import Timeline from './Timeline.svelte';
+	import Icon from './Icon.svelte';
 
 	export let pointId: string, resetPickedPoint: Function, readOnly: Boolean, axisNames: AxisNames;
 
@@ -30,7 +31,9 @@
 				}}
 			/>
 
-			<div>
+			<div class="title-and-options">
+				<h3>{pointPicked.title}</h3>
+
 				{#if !readOnly}
 					<button
 						data-testid={`edit-${pointPicked.title}`}
@@ -39,7 +42,7 @@
 								points.update($editablePoint, $activeRecipe);
 							}
 							editing = !editing;
-						}}>{editing ? 'Done' : 'Edit'}</button
+						}}><Icon name="edit-2" fill="black" stroke="black" /></button
 					>
 					<button
 						data-testid={`delete-${pointPicked.title}`}
@@ -49,19 +52,18 @@
 								points.remove(pointPicked.id, $activeRecipe);
 								resetPickedPoint();
 							}
-						}}>delete</button
+						}}><Icon name="trash" fill="black" stroke="black" /></button
 					>
 				{/if}
 				<button
+					class="hide"
 					data-testid={`hide-${pointPicked.title}`}
 					on:click={() => {
 						resetPickedPoint();
-					}}>hide</button
+					}}><Icon name="x" fill="black" stroke="black" strokeWidth="3" /></button
 				>
 			</div>
 			<div>
-				<h3>{pointPicked.title}</h3>
-
 				<div class="point-info">
 					<div>
 						<h4>Details</h4>
@@ -105,6 +107,27 @@
 		display: flex;
 		flex-direction: row;
 		gap: 5rem;
+		h4 {
+			margin: 1rem 0 0.4rem 0;
+		}
+	}
+	h3 {
+		font-size: 1.25rem;
+	}
+	.title-and-options {
+		display: flex;
+		flex-direction: row;
+		gap: 1rem;
+		.hide {
+			margin-left: auto;
+		}
+		button {
+			border: none;
+			&:hover {
+				background: none;
+				transform: scale(1.2);
+			}
+		}
 	}
 
 	@media screen and (max-width: 600px) {
