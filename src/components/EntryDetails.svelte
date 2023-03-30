@@ -6,13 +6,14 @@
 	import FermentEditModal from './Modals/FermentEditModal.svelte';
 	import Timeline from './Timeline.svelte';
 	import Icon from './Icon.svelte';
+	import DeleteModal from './Modals/DeleteModal.svelte';
 
 	export let pointId: string, resetPickedPoint: Function, readOnly: Boolean, axisNames: AxisNames;
 
 	currentPoints;
 	$: pointPicked = $currentPoints.find(({ id }) => id === pointId);
-	$: editablePoint = writable(pointPicked);
 	let editing = false;
+	let showDeletingModal = false;
 </script>
 
 {#if pointPicked}
@@ -30,6 +31,20 @@
 					editing = false;
 				}}
 			/>
+			<DeleteModal
+				deleting={pointPicked.title}
+				showModal={showDeletingModal}
+				onCancel={() => {
+					showDeletingModal = false;
+				}}
+				onOk={() => {
+					showDeletingModal = false;
+					if (pointPicked) {
+						points.remove(pointPicked.id, $activeRecipe);
+					}
+					resetPickedPoint();
+				}}
+			/>
 
 			<div class="title-and-options">
 				<h3>{pointPicked.title}</h3>
@@ -38,20 +53,13 @@
 					<button
 						data-testid={`edit-${pointPicked.title}`}
 						on:click={() => {
-							if (editing) {
-								points.update($editablePoint, $activeRecipe);
-							}
 							editing = !editing;
 						}}><Icon name="edit-2" fill="black" stroke="black" /></button
 					>
 					<button
 						data-testid={`delete-${pointPicked.title}`}
 						on:click={() => {
-							if (pointPicked) {
-								// the if here makes ts happy but if is un-needed really
-								points.remove(pointPicked.id, $activeRecipe);
-								resetPickedPoint();
-							}
+							showDeletingModal = true;
 						}}><Icon name="trash" fill="black" stroke="black" /></button
 					>
 				{/if}
