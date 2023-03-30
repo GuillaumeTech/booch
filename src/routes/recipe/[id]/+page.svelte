@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import RecipeChart from '../../../components/RecipeChart.svelte';
+	import RecipeChart from '$lib/components/RecipeChart.svelte';
 
 	let width: number, height: number;
 

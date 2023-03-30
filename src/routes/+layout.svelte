@@ -3,7 +3,7 @@
 	import { SvelteToast } from '@zerodevx/svelte-toast';
 	import { browser } from '$app/environment';
 	import { displaySideBarResponsive } from '../stores/display';
-	import Icon from '../components/Icon.svelte';
+	import Icon from '$lib/components/Icon.svelte';
 	import { page } from '$app/stores';
 </script>
 

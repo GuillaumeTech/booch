@@ -1,10 +1,10 @@
 <script lang="ts">
 	import type { Point } from '../types/recipe';
-	import Recipe from '../components/Recipe.svelte';
+	import Recipe from '$lib/components/Recipe.svelte';
 	import { recipes, activeRecipe, points } from '../stores/recipe';
 	import { displaySideBarResponsive } from '../stores/display';
 
-	import Sidebar from '../components/Sidebar.svelte';
+	import Sidebar from '$lib/components/Sidebar.svelte';
 
 	let width: number, height: number;
 </script>

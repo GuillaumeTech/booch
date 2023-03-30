@@ -1,8 +1,5 @@
 <script lang="ts">
-	import type { AxisNames } from '../../types/recipe';
 	import Modal from '../Modal.svelte';
-	import { field, form } from 'svelte-forms';
-	import { required } from 'svelte-forms/validators';
 
 	export let showModal: boolean;
 	export let deleting: string;

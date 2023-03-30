@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { AxisNames, NewPoint, Point, StepDate } from '../../types/recipe';
+	import type { AxisNames, NewPoint, Point, StepDate } from '../../../types/recipe';
 	import { removeAtIndex } from '$lib/utils';
 	import Modal from '../Modal.svelte';
 	import { field } from 'svelte-forms';

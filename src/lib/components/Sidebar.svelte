@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { v4 as uuidv4 } from 'uuid';
 	import Modal from './Modal.svelte';
-	import { recipes, activeRecipe } from '../stores/recipe';
+	import { recipes, activeRecipe } from '../../stores/recipe';
 	import Icon from './Icon.svelte';
 	import LoginModal from './Modals/LoginModal.svelte';
-	import { activeSession } from '../stores/supabase';
-	import { supabase } from '../supabaseClient';
-	import { displaySideBarResponsive } from '../stores/display';
+	import { activeSession } from '../../stores/supabase';
+	import { supabase } from '../../supabaseClient';
+	import { displaySideBarResponsive } from '../../stores/display';
 	import DeleteModal from './Modals/DeleteModal.svelte';
 
 	let addingNewRecipe = false;

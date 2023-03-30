@@ -7,11 +7,11 @@
 	import { fade } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
 	import EntryDetails from './EntryDetails.svelte';
-	import type { Margin } from '../types/layout';
-	import { activeRecipe, points as pointsStore } from '../stores/recipe';
+	import type { Margin } from '../../types/layout';
+	import { activeRecipe, points as pointsStore } from '../../stores/recipe';
 
 	import { clamp } from 'lodash';
-	import type { Point } from '../types/recipe';
+	import type { Point } from '../../types/recipe';
 
 	export let width: number,
 		height: number,

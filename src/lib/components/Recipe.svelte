@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { v4 as uuidv4 } from 'uuid';
 
-	import { writable } from 'svelte/store';
-	import type { NewPoint, Point, PointUpdate, StepDate } from '../types/recipe';
+	import type { NewPoint, Point, PointUpdate, StepDate } from '../../types/recipe';
 
-	import { recipes, activeRecipe, points as pointsStore } from '../stores/recipe';
+	import { recipes, activeRecipe, points as pointsStore } from '../../stores/recipe';
 	import { flip } from 'svelte/animate';
-	import { activeSession } from '../stores/supabase';
+	import { activeSession } from '../../stores/supabase';
 
 	import Jar from './Jar.svelte';
 	import FermentEditModal from './Modals/FermentEditModal.svelte';

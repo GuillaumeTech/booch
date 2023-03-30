@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { StepDate } from '../types/recipe';
+	import type { StepDate } from '../../types/recipe';
 	export let dates: StepDate[] | undefined;
 
 	$: prepedDates = (dates || [])

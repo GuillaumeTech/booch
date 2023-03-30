@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { AxisNames } from '../../types/recipe';
+	import type { AxisNames } from '../../../types/recipe';
 	import Modal from '../Modal.svelte';
 	import { field, form } from 'svelte-forms';
 	import { required } from 'svelte-forms/validators';
 	import { errorsToText } from '$lib/forms';
-	import { activeRecipe, recipes } from '../../stores/recipe';
+	import { activeRecipe, recipes } from '../../../stores/recipe';
 
 	export let axisNames: AxisNames;
 	export let showModal: boolean;

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { AxisNames, Point } from '../types/recipe';
-	import { points, activeRecipe, currentPoints } from '../stores/recipe';
+	import type { AxisNames, Point } from '../../types/recipe';
+	import { points, activeRecipe, currentPoints } from '../../stores/recipe';
 	import { fade, fly } from 'svelte/transition';
 	import { writable } from 'svelte/store';
 	import FermentEditModal from './Modals/FermentEditModal.svelte';

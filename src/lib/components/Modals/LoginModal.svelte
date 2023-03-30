@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { success } from '../../lib/toasters';
-	import { supabase } from '../../supabaseClient';
-	import { recipes } from '../../stores/recipe';
-	import { firstLogin } from '../../stores/supabase';
+	import { success } from '../../toasters';
+	import { supabase } from '../../../supabaseClient';
+	import { recipes } from '../../../stores/recipe';
+	import { firstLogin } from '../../../stores/supabase';
 	import { field, form, style } from 'svelte-forms';
 	import { required, matchField, email as emailValid, min } from 'svelte-forms/validators';
 	import { errorsToText } from '$lib/forms';
