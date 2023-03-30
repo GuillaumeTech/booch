@@ -135,6 +135,7 @@
 		font-size: 1.25rem;
 	}
 	.title-and-options {
+		margin-top: 1rem;
 		display: flex;
 		flex-direction: row;
 		gap: 1rem;
