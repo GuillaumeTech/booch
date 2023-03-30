@@ -108,7 +108,7 @@
 			const point = points[index];
 			const distance = computeDistanceInDomainSpace(offsetX, offsetY, point.x, point.y);
 
-			if (distance < 1) {
+			if (distance < 0.5) {
 				nearestPoint = point;
 			} else {
 				nearestPoint = null;
@@ -146,7 +146,7 @@
 			const point = points[index];
 			const distance = computeDistanceInDomainSpace(offsetX, offsetY, point.x, point.y);
 
-			if (distance < 1) {
+			if (distance < 0.5) {
 				nearestPoint = point;
 			} else {
 				nearestPoint = null;

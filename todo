@@ -131,7 +131,7 @@
 [] alerts styling
       [] new one when not logged
 [] update logo
-[] click near point selects it (that's for mobile)
+[x] click near point selects it (that's for mobile)
 [] console.log cleanup
       [] check for no errors in console 
 -------- [] POST ABOUT IT / PROD
