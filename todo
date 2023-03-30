@@ -46,10 +46,10 @@
       [] css icons
       [-] csss general style
       [] validate on enter
-      [-] better modal
+      [x] better modal
             [x] responsive
-            [] better button
-            [] unified
+            [x] better button
+            [x] unified
       [x] text areas
       [X]responsive
 - [-] suppabase
@@ -101,18 +101,17 @@
   [x] when error
   [x] alerts are centerer
   [x] alerts styling
-[] console.log cleanup
-      [] check for no errors in console 
+
 [x] click on header bring to home
 [x] share only available if logged in
 [x] login signup auto complete
 [x] DEPLOY
 [x] send localstorage to suppabase on account creation
-[] delete point confirm modal
-[] better modal compoment
-      [] separated on for each use
+[x] delete point confirm modal
+[-] better modal compoment
+      [x] separated on for each use
       [x] ferment edit
-      [] delete
+      [x] delete
       [] login
 [x] currently fermenting part ???
       [x] section
@@ -132,7 +131,9 @@
 [] alerts styling
       [] new one when not logged
 [] update logo
-[] click near point selects it (mobile)
+[] click near point selects it (that's for mobile)
+[] console.log cleanup
+      [] check for no errors in console 
 -------- [] POST ABOUT IT / PROD
       [] help page / landing
       [] proper domain
