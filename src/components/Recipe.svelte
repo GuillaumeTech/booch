@@ -100,7 +100,7 @@ it could also be done with reactive statements but seems the point.chornoly does
 {/key}
 
 <div>
-	<h3>Currently fermenting</h3>
+	<h3>CURRENTLY FERMENTING</h3>
 
 	<ul>
 		{#each pointsFermenting as point (point.id)}
@@ -134,7 +134,7 @@ it could also be done with reactive statements but seems the point.chornoly does
 	</ul>
 </div>
 
-<h3>Grading</h3>
+<h3>GRADING</h3>
 <AxisEditModal
 	onOk={() => {
 		showAxisEditModal = false;

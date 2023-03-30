@@ -15,8 +15,7 @@
 		<SvelteToast target="notloggedin" />
 	</div>
 {/if}
-
-<div class="border">
+<div class="app">
 	<header>
 		<h1>
 			<!-- don't display sidebar button on anything expext app route -->
@@ -30,42 +29,49 @@
 				</button>
 			{/if}
 
-			<a href="/">My fermentation Notes</a>
+			<a href="/">my fermentaion notes</a>
 		</h1>
 		{#if $syncing.size !== 0}
-			<div class="loader"><span> &#9632;</span></div>
+			<div class="loader"><span class="text">Syncing</span><span> &#9632;</span></div>
 		{/if}
 	</header>
-	<slot />
+	<div class="border">
+		<slot />
+	</div>
 </div>
 
 <style lang="less">
+	.app {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+	}
 	.border {
 		outline: red;
 		border: salmon;
 		border-style: solid;
 		border-width: 3px;
-		height: 100%;
 		display: flex;
 		flex-direction: column;
+		flex-grow: 2;
 	}
 
 	@media screen and (min-width: 1500px) {
-		.border {
+		.app {
 			width: 1500px;
 			margin: auto;
 		}
 	}
 
 	header {
-		background: salmon;
-		color: white;
+		// background: salmon;
+		color: salmon;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 		justify-content: space-between;
 		h1 > a {
-			color: white;
+			color: salmon;
 			text-decoration: none;
 			padding: 0.3rem;
 		}
@@ -73,7 +79,7 @@
 	h1 {
 		display: flex;
 		flex-direction: row;
-		font-size: 1.5em;
+		font-size: 1em;
 		padding: 0;
 		margin: 0;
 		font-weight: normal;
@@ -83,11 +89,17 @@
 		}
 	}
 	.loader {
+		animation: blink 0.5s ease-in-out infinite;
+
+		span.text {
+			font-size: 1.2rem;
+			font-size: 0.9rem;
+			margin-right: 0.7rem;
+		}
 		span {
 			font-size: 1.2rem;
 
 			margin-right: 1rem;
-			animation: blink 0.5s ease-in-out infinite;
 		}
 	}
 
