@@ -9,7 +9,7 @@
 	export let fill: string | null = null;
 </script>
 
-<button {...$$restProps}>
+<button on:click {...$$restProps}>
 	<Icon name={iconName} {fill} {stroke} {strokeWidth} />
 </button>
 
