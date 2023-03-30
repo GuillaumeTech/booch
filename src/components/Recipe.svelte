@@ -12,6 +12,7 @@
 	import FermentEditModal from './Modals/FermentEditModal.svelte';
 	import RecipeChart from './RecipeChart.svelte';
 	import AxisEditModal from './Modals/AxisEditModal.svelte';
+	import Icon from './Icon.svelte';
 
 	export let name: string,
 		points: Point[] = [],
@@ -134,23 +135,26 @@ it could also be done with reactive statements but seems the point.chornoly does
 	</ul>
 </div>
 
-<h3>GRADING</h3>
-<AxisEditModal
-	onOk={() => {
-		showAxisEditModal = false;
-	}}
-	onCancel={() => {
-		showAxisEditModal = false;
-	}}
-	showModal={showAxisEditModal}
-	{axisNames}
-/>
+<div class="grading">
+	<h3>GRADING</h3>
+	<AxisEditModal
+		onOk={() => {
+			showAxisEditModal = false;
+		}}
+		onCancel={() => {
+			showAxisEditModal = false;
+		}}
+		showModal={showAxisEditModal}
+		{axisNames}
+	/>
 
-<button
-	on:click={() => {
-		showAxisEditModal = true;
-	}}>Edit</button
->
+	<button
+		on:click={() => {
+			showAxisEditModal = true;
+		}}><Icon name="edit-2" fill="black" stroke="black" /></button
+	>
+</div>
+
 <!-- Can't render it as long as we don't have width height -->
 <!-- fix ssr issue logically, and seems on very first render  width height are undefined as well -->
 
@@ -221,5 +225,16 @@ it could also be done with reactive statements but seems the point.chornoly does
 	}
 	small {
 		font-size: 0.79rem;
+	}
+	.grading {
+		display: flex;
+		button {
+			border: none;
+			&:hover {
+				background: none;
+
+				transform: scale(1.2);
+			}
+		}
 	}
 </style>
