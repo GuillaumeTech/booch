@@ -29,7 +29,7 @@
 				</button>
 			{/if}
 
-			<a href="/">my fermentaion notes</a>
+			<a href="/">my fermentation notes</a>
 		</h1>
 		{#if $syncing.size !== 0}
 			<div class="loader"><span class="text">Syncing</span><span> &#9632;</span></div>
@@ -82,6 +82,7 @@
 		padding: 0;
 		margin: 0;
 		font-weight: normal;
+
 		width: fit-content;
 		:hover {
 			color: black;
@@ -141,7 +142,7 @@
 	}
 
 	:root {
-		--main-color: #9622d5;
+		--main-color: #ff6500;
 		--accent-color: #0dd66f;
 	}
 </style>
