@@ -41,7 +41,7 @@
 	}
 	svg:hover {
 		path.liquid {
-			fill: salmon;
+			fill: var(--main-color);
 		}
 	}
 </style>

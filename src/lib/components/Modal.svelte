@@ -32,6 +32,7 @@
 			<!-- svelte-ignore a11y-autofocus -->
 			<button
 				autofocus
+				class="ok"
 				data-testid="ok-modal"
 				disabled={disableOK}
 				on:click={() => {
@@ -43,7 +44,7 @@
 	</div>
 </dialog>
 
-<style>
+<style lang="less">
 	dialog {
 		max-width: 35rem;
 		border: 2px solid black;
@@ -88,6 +89,12 @@
 		display: block;
 		font-size: 1rem;
 		padding: 0.5rem 2rem;
+		&.ok:not(:disabled) {
+			border: 2px solid var(--accent-color);
+			&:hover {
+				background: var(--accent-color);
+			}
+		}
 	}
 	span {
 		display: flex;

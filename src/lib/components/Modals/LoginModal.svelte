@@ -258,7 +258,7 @@ thus triggerig onclick when releasing the mouse, mouse down prevent this -->
 		background: none;
 		border: none;
 		font-size: inherit;
-		color: salmon;
+		color: var(--main-color);
 		&:hover {
 			text-decoration: underline;
 			cursor: pointer;

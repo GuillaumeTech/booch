@@ -88,8 +88,8 @@
 	input:focus {
 		outline: none;
 		background-color: papayawhip;
-		border: 1px solid salmon;
-		border-bottom: 2px solid salmon;
+		border: 1px solid var(--main-color);
+		border-bottom: 2px solid var(--main-color);
 	}
 
 	body,
@@ -121,17 +121,18 @@
 
 	button {
 		background: none;
-		border: 2px salmon solid;
+		border: 2px var(--main-color) solid;
 		transition: background 200ms ease;
 	}
-	button:hover {
+	button:hover:not(:disabled) {
 		cursor: pointer;
 		border: 2px b solid;
-		background: salmon;
+		background: var(--main-color);
 		color: white;
 	}
 	button:disabled,
 	button[disabled] {
+		cursor: not-allowed;
 		background: whitesmoke;
 		border: 2px whitesmoke solid;
 	}

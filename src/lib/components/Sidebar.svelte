@@ -225,7 +225,7 @@
 		width: 25%;
 
 		min-width: 16rem;
-		border-right: 2px solid salmon;
+		border-right: 2px solid var(--main-color);
 		overflow: auto;
 		display: flex;
 		flex-direction: column;
@@ -281,7 +281,7 @@
 
 			padding-left: 0.7rem;
 			&:hover {
-				background-color: salmon;
+				background-color: var(--main-color);
 				color: white;
 				cursor: pointer;
 				button {
@@ -333,12 +333,12 @@
 		}
 		&.more {
 			margin-top: auto;
-			border-top: 2px solid salmon;
+			border-top: 2px solid var(--main-color);
 			padding-top: 0.5rem;
 		}
 		li.user {
 			overflow: hidden;
-			border-top: 5px solid salmon;
+			border-top: 5px solid var(--main-color);
 			text-overflow: ellipsis;
 			background: whitesmoke;
 			color: black;
@@ -348,6 +348,6 @@
 		}
 	}
 	.add-recipe {
-		border-bottom: 2px solid salmon;
+		border-bottom: 2px solid var(--main-color);
 	}
 </style>

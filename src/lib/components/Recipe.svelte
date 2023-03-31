@@ -189,7 +189,7 @@ it could also be done with reactive statements but seems the point.chornoly does
 			background-color: black;
 			border: 2px solid black;
 			&:hover {
-				border: 2px solid salmon;
+				border: 2px solid var(--main-color);
 			}
 		}
 	}
@@ -198,7 +198,7 @@ it could also be done with reactive statements but seems the point.chornoly does
 		font-size: 1rem;
 
 		&:hover {
-			border: 2px solid salmon;
+			border: 2px solid var(--main-color);
 		}
 	}
 

@@ -21,7 +21,7 @@
 	button {
 		border: none;
 		transition: transform 150ms ease-out;
-		&:hover {
+		&:hover:not(disabled) {
 			background: none;
 			border: none;
 			transform: scale(1.2);

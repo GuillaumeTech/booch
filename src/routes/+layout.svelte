@@ -48,7 +48,7 @@
 	}
 	.border {
 		outline: red;
-		border: salmon;
+		border: var(--main-color);
 		border-style: solid;
 		border-width: 3px;
 		display: flex;
@@ -64,14 +64,13 @@
 	}
 
 	header {
-		// background: salmon;
-		color: salmon;
+		color: var(--main-color);
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 		justify-content: space-between;
 		h1 > a {
-			color: salmon;
+			color: var(--main-color);
 			text-decoration: none;
 			padding: 0.3rem;
 		}
@@ -130,7 +129,7 @@
 			display: inline-block;
 			font-size: 1.3rem;
 			border: none;
-			background: darkred;
+			background: var(--main-color);
 		}
 	}
 	@media (min-width: 40rem) {
@@ -139,5 +138,10 @@
 			--toastContainerLeft: calc(50vw - 20rem);
 			--toastWidth: 40rem;
 		}
+	}
+
+	:root {
+		--main-color: #9622d5;
+		--accent-color: #0dd66f;
 	}
 </style>

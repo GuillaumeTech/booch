@@ -139,6 +139,7 @@
 		display: flex;
 		flex-direction: row;
 		gap: 1rem;
+		align-items: center;
 		.hide {
 			margin-left: auto;
 		}
