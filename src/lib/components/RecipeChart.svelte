@@ -168,7 +168,7 @@
 			y={ordinate(y)}
 			{title}
 			{id}
-			fill={id === pointPicked?.id ? '#0DD66F' : '#9622d5'}
+			fill={id === pointPicked?.id ? '#0DD66F' : '#d65602'}
 			r={(id === nearestPoint?.id && !click) || id === pointPicked?.id ? 6 : 4}
 			stroke={id === nearestPoint?.id || id === pointPicked?.id ? '#000' : null}
 		/>
