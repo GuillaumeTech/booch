@@ -2,14 +2,18 @@
 	import Icon from './Icon.svelte';
 
 	export let iconName: string;
-
+	export let margins: any;
 	export let strokeWidth = '1';
 	export let stroke = 'black';
-
+	console.log(margins);
 	export let fill: string | null = null;
 </script>
 
-<button on:click {...$$restProps}>
+<button
+	style={margins !== undefined ? `margin-left:${margins.left}; margin-right:${margins.right}` : ''}
+	on:click
+	{...$$restProps}
+>
 	<Icon name={iconName} {fill} {stroke} {strokeWidth} />
 </button>
 

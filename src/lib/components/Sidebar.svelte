@@ -68,16 +68,20 @@
 				+ new recipe
 			</li>
 		{:else}
-			<li class="add-recipe">
+			<li class="adding-recipe">
 				<input data-testid="new-recipe-name" type="text" bind:value={newRecipeName} />
-				<button
-					data-testid="add-new-recipe"
+				<IconButton
+					iconName="check"
+					fill="black"
+					stroke="black"
+					margins={{ left: '0.2rem', right: '0.2rem' }}
 					on:click={() => {
 						addNewRecipe();
 						addingNewRecipe = false;
 						newRecipeName = '';
-					}}>add</button
-				>
+					}}
+					data-testid={`change-name-${name}`}
+				/>
 			</li>
 		{/if}
 		{#each recipesOrdered as { name, id } (id)}
@@ -89,6 +93,7 @@
 						iconName="check"
 						fill="black"
 						stroke="black"
+						margins={{ left: '0.2rem', right: '0.2rem' }}
 						on:click={(e) => {
 							e.stopPropagation();
 							editRecipeName(id, editingName);
@@ -280,7 +285,8 @@
 				padding: 0 0.3rem;
 			}
 
-			&.edit-name {
+			&.edit-name,
+			&.adding-recipe {
 				display: flex;
 				flex-direction: row;
 				padding: 0;
@@ -293,10 +299,7 @@
 					padding-left: 0.7rem;
 					min-width: 5rem;
 				}
-				button {
-					margin-left: 0.2rem;
-
-					margin-right: 0.2rem;
+				.check {
 				}
 			}
 		}
