@@ -37,7 +37,7 @@
 		width: 100%;
 		height: 100%;
 		position: static;
-		overflow-y: scroll;
+		overflow-y: auto;
 	}
 	div.graph {
 		margin: auto;

@@ -300,7 +300,6 @@
 					text-overflow: ellipsis;
 					flex-wrap: wrap;
 					overflow: hidden;
-					text-overflow: ellipsis;
 				}
 				span {
 					margin-right: 0.5rem;

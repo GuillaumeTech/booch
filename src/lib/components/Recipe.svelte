@@ -121,15 +121,17 @@ it could also be done with reactive statements but seems the point.chornoly does
 			</div>
 		{/each}
 		<div class="item">
-			<button
-				data-testid="add-ferment"
-				class="add-ferment"
-				on:click={() => {
-					pointData = { isFermenting: true };
-					showModal = true;
-				}}
-				><Jar displayLiquid={false} displayPlus />
-			</button>
+			<li>
+				<button
+					data-testid="add-ferment"
+					class="add-ferment"
+					on:click={() => {
+						pointData = { isFermenting: true };
+						showModal = true;
+					}}
+					><Jar displayLiquid={false} displayPlus />
+				</button>
+			</li>
 		</div>
 	</ul>
 </div>
@@ -174,6 +176,10 @@ it could also be done with reactive statements but seems the point.chornoly does
 		h2 {
 			font-family: 'Inter';
 			font-weight: 800;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			flex-wrap: wrap;
+			overflow: hidden;
 		}
 	}
 	.chart {
@@ -207,6 +213,7 @@ it could also be done with reactive statements but seems the point.chornoly does
 		flex-direction: row;
 		list-style-type: none;
 		padding: 0;
+		overflow-x: auto;
 		li {
 			display: flex;
 			flex-direction: column;

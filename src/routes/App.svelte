@@ -39,7 +39,7 @@
 	div.scroll {
 		width: 100%;
 		position: static;
-		overflow-y: scroll;
+		overflow-y: auto;
 	}
 	div.recipe {
 		margin: auto;

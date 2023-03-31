@@ -69,16 +69,23 @@
 		flex-direction: row;
 		align-items: center;
 		justify-content: space-between;
+		overflow-x: hidden;
+		text-overflow: ellipsis;
+
 		h1 > a {
 			color: var(--main-color);
 			text-decoration: none;
 			padding: 0.3rem;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			width: 85vw;
 		}
 	}
 	h1 {
 		display: flex;
 		flex-direction: row;
-		font-size: 1em;
+		font-size: 1.1rem;
 		padding: 0;
 		margin: 0;
 		font-weight: normal;
@@ -131,6 +138,7 @@
 			font-size: 1.3rem;
 			border: none;
 			background: var(--main-color);
+			padding: 1px 6px;
 		}
 	}
 	@media (min-width: 40rem) {
