@@ -19,6 +19,7 @@
 	const details = field('details', point?.details);
 	const xAxis = field('xAxis', point?.x, [required()]);
 	const yAxis = field('yAxis', point?.y, [required()]);
+	title.validate();
 	$: isValid =
 		$title.valid && (!grading || ($xAxis.valid && $yAxis.valid && $xAxis.value && $yAxis.value));
 </script>

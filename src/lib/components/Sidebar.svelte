@@ -56,7 +56,6 @@
 
 <div class={`side-bar ${$displaySideBarResponsive ? 'responsive-display' : ''}`}>
 	<ul>
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		{#if !addingNewRecipe}
 			<li
 				class="add-recipe"
@@ -69,39 +68,65 @@
 			</li>
 		{:else}
 			<li class="adding-recipe">
-				<input data-testid="new-recipe-name" type="text" bind:value={newRecipeName} />
-				<IconButton
-					iconName="check"
-					fill="black"
-					stroke="black"
-					margins={{ left: '0.2rem', right: '0.2rem' }}
-					on:click={() => {
+				<form
+					on:submit|preventDefault={() => {
 						addNewRecipe();
 						addingNewRecipe = false;
 						newRecipeName = '';
 					}}
-					data-testid={`change-name-${name}`}
-				/>
-			</li>
-		{/if}
-		{#each recipesOrdered as { name, id } (id)}
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			{#if editingId == id}
-				<li class="edit-name">
-					<input data-testid={`new-name-${name}`} type="text" bind:value={editingName} />
+				>
+					<input autofocus data-testid="new-recipe-name" type="text" bind:value={newRecipeName} />
 					<IconButton
 						iconName="check"
 						fill="black"
 						stroke="black"
 						margins={{ left: '0.2rem', right: '0.2rem' }}
-						on:click={(e) => {
+						on:click={() => {
+							addNewRecipe();
+							addingNewRecipe = false;
+							newRecipeName = '';
+						}}
+						data-testid={`change-name-${name}`}
+					/>
+				</form>
+			</li>
+		{/if}
+	</ul>
+	<ul class="recipes">
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+
+		{#each recipesOrdered as { name, id } (id)}
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			{#if editingId == id}
+				<li class="edit-name">
+					<form
+						on:submit|preventDefault={(e) => {
 							e.stopPropagation();
 							editRecipeName(id, editingName);
 							editingId = '';
 							editingName = '';
 						}}
-						data-testid={`change-name-${name}`}
-					/>
+					>
+						<input
+							autofocus
+							data-testid={`new-name-${name}`}
+							type="text"
+							bind:value={editingName}
+						/>
+						<IconButton
+							iconName="check"
+							fill="black"
+							stroke="black"
+							margins={{ left: '0.2rem', right: '0.2rem' }}
+							on:click={(e) => {
+								e.stopPropagation();
+								editRecipeName(id, editingName);
+								editingId = '';
+								editingName = '';
+							}}
+							data-testid={`change-name-${name}`}
+						/>
+					</form>
 				</li>
 			{:else}
 				<li
@@ -204,7 +229,7 @@
 		overflow: auto;
 		display: flex;
 		flex-direction: column;
-		justify-content: space-between;
+		// justify-content: space-between;
 	}
 
 	.side-bar-dimmer {
@@ -247,7 +272,9 @@
 		list-style-type: none;
 		margin: 0;
 		padding: 0;
-
+		&.recipes {
+			overflow-y: auto;
+		}
 		> li {
 			padding-top: 0.2rem;
 			padding-bottom: 0.2rem;
@@ -287,23 +314,25 @@
 
 			&.edit-name,
 			&.adding-recipe {
-				display: flex;
-				flex-direction: row;
 				padding: 0;
-				justify-content: space-between;
-				input {
-					padding-top: 0.1rem;
-					padding-bottom: 0.1rem;
-					font-family: 'Inter';
-					font-style: italic;
-					padding-left: 0.7rem;
-					min-width: 5rem;
-				}
-				.check {
+				form {
+					display: flex;
+					flex-direction: row;
+
+					justify-content: space-between;
+					input {
+						padding-top: 0.1rem;
+						padding-bottom: 0.1rem;
+						font-family: 'Inter';
+						font-style: italic;
+						padding-left: 0.7rem;
+						min-width: 5rem;
+					}
 				}
 			}
 		}
 		&.more {
+			margin-top: auto;
 			border-top: 2px solid salmon;
 			padding-top: 0.5rem;
 		}

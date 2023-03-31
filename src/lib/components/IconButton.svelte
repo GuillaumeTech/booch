@@ -2,7 +2,7 @@
 	import Icon from './Icon.svelte';
 
 	export let iconName: string;
-	export let margins: any;
+	export let margins: any | undefined = undefined;
 	export let strokeWidth = '1';
 	export let stroke = 'black';
 	console.log(margins);
