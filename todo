@@ -87,7 +87,7 @@
       [x] display link to be shared
 [] solve a11y
 [] check XSS 
-[] add analytics
+[] add analytics 
 [-] playwright
       [x] testrecipe CRUD
       [x] test points CRUD
@@ -130,7 +130,7 @@
 [x] use a form library
 [] alerts styling
       [] new one when not logged
-[] update logo
+[x] update logo
 [x] click near point selects it (that's for mobile)
 [] console.log cleanup
       [] check for no errors in console 
