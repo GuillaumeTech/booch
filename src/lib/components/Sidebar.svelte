@@ -86,7 +86,7 @@
 							addingNewRecipe = false;
 							newRecipeName = '';
 						}}
-						data-testid={`change-name-${name}`}
+						data-testid={`add-new-recipe`}
 					/>
 				</form>
 			</li>
