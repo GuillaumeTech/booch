@@ -22,6 +22,7 @@
 		};
 	let pointData: NewPoint;
 	let width: number, height: number;
+	let copyText: string = 'Copy link';
 
 	let showAxisEditModal = false;
 	let showModal = false;
@@ -55,24 +56,34 @@
 	);
 </script>
 
-<div>
-	{#if $activeSession}
-		<button
-			on:click={() => {
-				recipes.update({ id: $activeRecipe, public: !isPublic });
-			}}
-			class="public-button"
-		>
-			{isPublic ? 'Make private' : 'Make public'}</button
-		>
-		{#if isPublic}
-			<span>{window.location.origin}/recipe/{$activeRecipe}</span>
-		{/if}
-	{/if}
-</div>
-
 <div class="recipe-header">
 	<h2>{name}</h2>
+	<div>
+		{#if $activeSession}
+			<button
+				on:click={() => {
+					recipes.update({ id: $activeRecipe, public: !isPublic });
+				}}
+				class="public-button"
+			>
+				{isPublic ? 'Make private' : 'Make public'}</button
+			>
+			{#if isPublic}
+				<button
+					class="copy-button"
+					on:click={() => {
+						navigator.clipboard.writeText(`${window.location.origin}/recipe/${$activeRecipe}`);
+						copyText = 'Copied !';
+						setTimeout(() => {
+							copyText = 'Copy link';
+						}, 3000);
+					}}
+				>
+					{copyText}</button
+				>
+			{/if}
+		{/if}
+	</div>
 </div>
 
 <!-- using key here reset the field everytime point data change
@@ -177,6 +188,7 @@ it could also be done with reactive statements but seems the point.chornoly does
 			font-family: 'Inter';
 			font-weight: 800;
 			white-space: nowrap;
+			margin-top: 2rem;
 			text-overflow: ellipsis;
 			flex-wrap: wrap;
 			overflow: hidden;
@@ -201,11 +213,9 @@ it could also be done with reactive statements but seems the point.chornoly does
 	}
 	.public-button {
 		margin-top: 1rem;
-		font-size: 1rem;
-
-		&:hover {
-			border: 2px solid var(--main-color);
-		}
+	}
+	.copy-button {
+		width: 6rem;
 	}
 
 	ul {
