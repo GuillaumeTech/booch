@@ -17,13 +17,14 @@
 - [x] localstorage
      [x] fix deleteing localstorage
 
-- [-] table view 
+- [x] table view 
      [x] show everting in a table
      [x] toggle table on an off
      [x] better store
      [x] localstorage with new store
      [-] cells are editable 
      --> saved on feat/table
+     --> meh so not doing
 
 [x] table view is meh, side panel better
       [x] delete table
@@ -36,23 +37,8 @@
 [x] relative to window size labels
     -> fixed with the better plot stuff 
 [x] rename axes
-- [-] styling
-      [-] header
-      [x] side panel for point detail
-      --> became a detail box
-      [x] font
-      [x] generic input
-      [x] css buttons
-      [] css icons
-      [-] csss general style
-      [] validate on enter
-      [x] better modal
-            [x] responsive
-            [x] better button
-            [x] unified
-      [x] text areas
-      [X]responsive
-- [-] suppabase
+
+- [x] suppabase
       [x] some order in compoments
             [x] app compoment
             [x] side bar one
@@ -65,7 +51,7 @@
       [x] login flow css
       [x] improve modal behavior
 
-      [-] store
+      [x] store
       [x] create recipe
       [x] get recipe
       [x] eedit recipe
@@ -85,16 +71,7 @@
       [x] access recipe by id
       [x] fix styling of readonly
       [x] display link to be shared
-[] solve a11y
-[] check XSS 
-[] add analytics 
-[-] playwright
-      [x] testrecipe CRUD
-      [x] test points CRUD
-      [] custom axis test
-      [-] CI
-            [x] make playwright work in github action
-            [] block deploy depending on tests
+
 [x] underline currently selected
 [x] alerts
   [x] when not logged
@@ -108,11 +85,6 @@
 [x] DEPLOY
 [x] send localstorage to suppabase on account creation
 [x] delete point confirm modal
-[-] better modal compoment
-      [x] separated on for each use
-      [x] ferment edit
-      [x] delete
-      [] login
 [x] currently fermenting part ???
       [x] section
       [x] drag and drop
@@ -128,10 +100,43 @@
 [x] forgot password
 [x] login fail
 [x] use a form library
-[] alerts styling
-      [] new one when not logged
 [x] update logo
 [x] click near point selects it (that's for mobile)
+- [-] styling
+      [x] header
+      [x] side panel for point detail
+      --> became a detail box
+      [x] font
+      [x] generic input
+      [x] css buttons
+      [] css icons
+      [-] csss general style
+      [x] validate on enter
+      [x] better modal
+            [x] responsive
+            [x] better button
+            [x] unified
+      [x] text areas
+      [X]responsive
+      [] ferment edit add date and grade button styling
+
+[-] playwright
+      [x] testrecipe CRUD
+      [x] test points CRUD
+      [] custom axis test
+      [-] CI
+            [x] make playwright work in github action
+            [] block deploy depending on tests
+[-] better modal compoment
+      [x] separated on for each use
+      [x] ferment edit
+      [x] delete
+[] alerts styling
+      [] new one when not logged
+[] recipe description
+[] solve a11y
+[] check XSS 
+[] add analytics 
 [] console.log cleanup
       [] check for no errors in console 
 -------- [] POST ABOUT IT / PROD
@@ -146,7 +151,8 @@
     [] github actions
 [x] show points tasted at date
 [x] make tasted at editable
-[-] proper ssr -> see feat/ssr
+[-] full proper ssr for main page with login and stuff -> see feat/ssr
+
 [] more axis
 [] download you data
 [x] currently fermenting
