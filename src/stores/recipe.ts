@@ -31,8 +31,9 @@ activeSession.subscribe(async (session) => {
             }
             toast.pop({ target: 'notloggedin' })
         } catch (e) {
-            console.log(e)
         }
+    } else {
+        info('We recommend you to create an account, if you plan to use this app seriouly !', { target: 'notloggedin' })
     }
 }
 )

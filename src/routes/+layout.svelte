@@ -127,6 +127,11 @@
 		--toastWidth: 100%;
 		--toastMinHeight: 2rem;
 		--toastPadding: 0 0.5rem;
+		--toastBackground: white url('/bg-texture.png');
+		--toastBorderRadius: 0;
+		--toastColor: black;
+		--toastBorder: 3px solid var(--accent-color);
+		--toastBarBackground: var(--main-color);
 		font-size: 0.875rem;
 	}
 	button {
