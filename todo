@@ -109,7 +109,7 @@
       [x] font
       [x] generic input
       [x] css buttons
-      [] css icons
+      [x] css icons
       [-] csss general style
       [x] validate on enter
       [x] better modal
