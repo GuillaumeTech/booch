@@ -33,6 +33,20 @@
 </div>
 
 <style lang="less">
+	.recipe-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		h2 {
+			font-family: 'Inter';
+			font-weight: 800;
+			white-space: nowrap;
+			margin-top: 2rem;
+			text-overflow: ellipsis;
+			flex-wrap: wrap;
+			overflow: hidden;
+		}
+	}
 	div.recipe {
 		width: 100%;
 		height: 100%;
