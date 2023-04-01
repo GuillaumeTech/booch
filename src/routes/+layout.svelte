@@ -5,6 +5,7 @@
 	import { displaySideBarResponsive } from '../stores/display';
 	import Icon from '$lib/components/Icon.svelte';
 	import { page } from '$app/stores';
+	import Header from '$lib/components/Header.svelte';
 </script>
 
 <!-- limit this to client side rendering, behave a bit weirdly with ssr -->
@@ -28,6 +29,7 @@
 					<Icon name="menu" fill="white" strokeWidth={2} stroke="white" />
 				</button>
 			{/if}
+			<!-- <Header /> -->
 
 			<a href="/">my fermentation notes</a>
 		</h1>
@@ -75,16 +77,21 @@
 		h1 > a {
 			color: var(--main-color);
 			text-decoration: none;
-			padding: 0.3rem;
+			padding-left: 0.3rem;
 			white-space: nowrap;
 			text-overflow: ellipsis;
 			overflow: hidden;
 			width: 85vw;
+			@media screen and (max-width: 600px) {
+				font-size: 0.9rem;
+			}
 		}
 	}
 	h1 {
 		display: flex;
 		flex-direction: row;
+		align-items: flex-end;
+
 		font-size: 1.1rem;
 		padding: 0;
 		margin: 0;
@@ -93,6 +100,10 @@
 		width: fit-content;
 		:hover {
 			color: black;
+		}
+		button {
+			width: 2rem;
+			height: 2rem;
 		}
 	}
 	.loader {
