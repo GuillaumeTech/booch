@@ -5,7 +5,6 @@
 	import { displaySideBarResponsive } from '../stores/display';
 	import Icon from '$lib/components/Icon.svelte';
 	import { page } from '$app/stores';
-	import Header from '$lib/components/Header.svelte';
 </script>
 
 <!-- limit this to client side rendering, behave a bit weirdly with ssr -->
