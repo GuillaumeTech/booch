@@ -33,9 +33,6 @@
 
 			<a href="/">my fermentation notes</a>
 		</h1>
-		{#if $syncing.size !== 0}
-			<div class="loader"><span class="text">Syncing</span><span> &#9632;</span></div>
-		{/if}
 	</header>
 	<div class="border">
 		<slot />
