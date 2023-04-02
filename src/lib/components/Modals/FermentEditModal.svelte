@@ -5,6 +5,7 @@
 	import { field } from 'svelte-forms';
 	import { required } from 'svelte-forms/validators';
 	import { errorsToText } from '$lib/forms';
+	import IconButton from '../IconButton.svelte';
 
 	export let point: NewPoint;
 	export let showModal: boolean;
@@ -60,44 +61,53 @@
 
 		<label for="detail">Details</label>
 		<textarea id="detail" rows="7" bind:value={$details.value} />
-		<label for="detail">Chronology</label>
+		<div class="label-side-button">
+			<label for="detail">Chronology</label>
+			<button
+				class="add date"
+				on:click={() => {
+					chronology = [...chronology, { title: '', date: new Date() }];
+				}}
+				data-testid="add-date"
+			>
+				Add date</button
+			>
+		</div>
 		{#each chronology as chronoEntry, index (index)}
 			<div class="chrono">
 				<input type="text" data-testid={`title-${index}`} bind:value={chronoEntry.title} />
 				<input type="date" data-testid={`date-${index}`} bind:value={chronoEntry.date} />
-				<button
-					on:click={() => {
+				<IconButton
+					iconName="trash"
+					fill="black"
+					stroke="black"
+					on:click={(e) => {
 						chronology = removeAtIndex(chronology, index);
-						console.log($xAxis.valid);
-					}}>X</button
-				>
+					}}
+				/>
 			</div>
 		{/each}
-		<button
-			on:click={() => {
-				chronology = [...chronology, { title: '', date: new Date() }];
-			}}
-			data-testid="add-date"
-		>
-			Add date</button
-		>
+
 		{#if point?.isFermenting}
 			<hr />
 		{/if}
 
 		{#if point?.isFermenting}
-			<button
-				on:click={() => {
-					grading = !grading;
-					// force validate show it show errors
-					// otherwise it need a first input to trigger validation
-					xAxis.validate();
-					yAxis.validate();
-				}}
-				data-testid="grade"
-			>
-				{grading ? 'Keep fermenting' : 'Grade'}</button
-			>
+			<div class="label-side-button">
+				<span> Done fermenting ?</span>
+				<button
+					on:click={() => {
+						grading = !grading;
+						// force validate show it show errors
+						// otherwise it need a first input to trigger validation
+						xAxis.validate();
+						yAxis.validate();
+					}}
+					data-testid="grade"
+				>
+					{grading ? 'Keep fermenting' : 'Grade it !'}</button
+				>
+			</div>
 		{/if}
 		{#if !point?.isFermenting || grading}
 			<label for="xAxis">{axisNames.x}</label>
@@ -121,6 +131,16 @@
 		textarea {
 			resize: none;
 		}
+	}
+
+	div.label-side-button {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+	hr {
+		margin: 1rem 0;
 	}
 	div.chrono {
 		display: flex;
