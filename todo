@@ -131,8 +131,11 @@
       [x] separated on for each use
       [x] ferment edit
       [x] delete
-[] alerts styling
-      [] new one when not logged
+[x] alerts styling
+      [x] with bordres
+      [x] new one when not logged 
+[] bette share link
+[] better fermentaion edit modal
 [] recipe description
 [] solve a11y
 [] check XSS 
