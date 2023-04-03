@@ -143,7 +143,7 @@
 [] console.log cleanup
       [] check for no errors in console 
 -------- [] POST ABOUT IT / PROD
-      [-] help page / landing
+      [x] help page / landing
       [] proper domain
       [] reddit posts
 [] list of all public recipes
