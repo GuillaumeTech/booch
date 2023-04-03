@@ -30,7 +30,10 @@
 		</div>
 	{:else}
 		<div class="no-recipe">
-			<h2 data-testid="pick-a-recipe">Select or create a recipe using the side bar</h2>
+			<h2 data-testid="pick-a-recipe">
+				Select or create a recipe using the side bar, You can check out <a href="/help">help</a> if your
+				are lost
+			</h2>
 		</div>
 	{/if}
 </div>

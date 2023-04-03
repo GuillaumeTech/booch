@@ -185,7 +185,7 @@
 				Login/Sign-up
 			</li>
 		{/if}
-		<li>Help</li>
+		<li class="help"><a href="/help">Help/About</a></li>
 		<li>Contact</li>
 		{#if activeSession && $activeSession?.user}
 			<li class="user">Logged as: {$activeSession.user.email}</li>
@@ -286,6 +286,27 @@
 				cursor: pointer;
 				button {
 					filter: invert(1);
+				}
+				a {
+					color: white;
+				}
+			}
+			&.help {
+				padding: 0;
+				&:hover {
+					a {
+						color: white;
+					}
+				}
+				a {
+					width: 100%;
+					height: 100%;
+					padding-top: 0.2rem;
+					padding-bottom: 0.2rem;
+					color: black;
+					text-decoration: none;
+					padding-left: 0.7rem;
+					display: block;
 				}
 			}
 			&.underline {
