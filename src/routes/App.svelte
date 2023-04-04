@@ -31,8 +31,8 @@
 	{:else}
 		<div class="no-recipe">
 			<h2 data-testid="pick-a-recipe">
-				Select or create a recipe using the side bar, You can check out <a href="/help">help</a> if your
-				are lost
+				Select or create a recipe using the side bar, You can also check out <a href="/help">help</a
+				> if your are lost
 			</h2>
 		</div>
 	{/if}
