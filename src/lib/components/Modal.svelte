@@ -1,12 +1,18 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	export let showModal: Boolean,
 		onOk: Function,
 		onCancel: Function,
 		disableOK: boolean = false;
 
 	let dialog: HTMLDialogElement;
+	let okRef: HTMLButtonElement;
 
-	$: if (dialog && showModal) dialog.showModal();
+	$: if (dialog && showModal) {
+		dialog.showModal();
+		okRef.focus();
+	}
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -29,9 +35,8 @@
 				}}
 				data-testid="cancel-modal">Cancel</button
 			>
-			<!-- svelte-ignore a11y-autofocus -->
 			<button
-				autofocus
+				bind:this={okRef}
 				class="ok"
 				data-testid="ok-modal"
 				disabled={disableOK}

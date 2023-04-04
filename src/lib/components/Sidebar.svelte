@@ -16,6 +16,8 @@
 	let deletingName = '';
 	let showDeleteConfirm = false;
 	let showLoginModal = false;
+	let newRecipeRef: HTMLInputElement;
+	let recipeNameEditRef: HTMLInputElement;
 
 	function addNewRecipe() {
 		if (newRecipeName === '') return; // can't create a no name recipe
@@ -52,19 +54,19 @@
 				})
 				.map(([_, recipe]) => recipe) // easier to render straight from the array
 		: [];
+	$: if (newRecipeRef) newRecipeRef.focus();
+	$: if (recipeNameEditRef) recipeNameEditRef.focus();
 </script>
 
 <div class={`side-bar ${$displaySideBarResponsive ? 'responsive-display' : ''}`}>
 	<ul>
 		{#if !addingNewRecipe}
-			<li
-				class="add-recipe"
-				on:click={() => {
-					addingNewRecipe = true;
-				}}
-				data-testid="new-recipe"
-			>
-				+ new recipe
+			<li class="add-recipe" data-testid="new-recipe">
+				<button
+					on:click={() => {
+						addingNewRecipe = true;
+					}}>+ new recipe</button
+				>
 			</li>
 		{:else}
 			<li class="adding-recipe">
@@ -75,7 +77,12 @@
 						newRecipeName = '';
 					}}
 				>
-					<input autofocus data-testid="new-recipe-name" type="text" bind:value={newRecipeName} />
+					<input
+						bind:this={newRecipeRef}
+						data-testid="new-recipe-name"
+						type="text"
+						bind:value={newRecipeName}
+					/>
 					<IconButton
 						iconName="check"
 						fill="black"
@@ -108,7 +115,7 @@
 						}}
 					>
 						<input
-							autofocus
+							bind:this={recipeNameEditRef}
 							data-testid={`new-name-${name}`}
 							type="text"
 							bind:value={editingName}
@@ -130,13 +137,14 @@
 				</li>
 			{:else}
 				<li
-					on:click={() => {
-						$activeRecipe = id;
-					}}
 					data-testid={`recipe-${name}`}
 					class={`menu-item ${$activeRecipe === id ? 'underline' : ''}`}
 				>
-					<div>{name}</div>
+					<button
+						on:click={() => {
+							$activeRecipe = id;
+						}}>{name}</button
+					>
 
 					<span
 						><IconButton
@@ -168,25 +176,28 @@
 		{/each}
 	</ul>
 	<ul class="more">
-		{#if $activeSession}
-			<li
-				on:click={async () => {
-					await supabase.auth.signOut();
-				}}
-			>
-				Logout
-			</li>
-		{:else}
-			<li
-				on:click={() => {
-					showLoginModal = true;
-				}}
-			>
-				Login/Sign-up
-			</li>
-		{/if}
-		<li class="help"><a href="/help">Help/About</a></li>
-		<li>Contact</li>
+		<li>
+			{#if $activeSession}
+				<button
+					on:click={async () => {
+						await supabase.auth.signOut();
+					}}
+				>
+					Logout
+				</button>
+			{:else}
+				<button
+					on:click={() => {
+						showLoginModal = true;
+					}}
+				>
+					Login/Sign-up
+				</button>
+			{/if}
+		</li>
+		<li class="help-contact"><a href="/help">Help/About</a></li>
+		<li class="help-contact"><a href="/contact">Contact</a></li>
+
 		{#if activeSession && $activeSession?.user}
 			<li class="user">Logged as: {$activeSession.user.email}</li>
 		{/if}
@@ -213,7 +224,7 @@
 	}}
 />
 
-<div
+<button
 	class={`side-bar-dimmer ${$displaySideBarResponsive ? 'responsive-display' : ''}`}
 	on:click|self={() => {
 		displaySideBarResponsive.set(false);
@@ -253,7 +264,7 @@
 			left: 0; //bring it in
 		}
 
-		div.side-bar-dimmer {
+		button.side-bar-dimmer {
 			content: '';
 			display: none;
 			position: fixed;
@@ -264,7 +275,7 @@
 			z-index: 1;
 			background-color: rgba(0, 0, 0, 0.2);
 		}
-		div.side-bar-dimmer.responsive-display {
+		button.side-bar-dimmer.responsive-display {
 			display: block;
 		}
 	}
@@ -276,10 +287,18 @@
 			overflow-y: auto;
 		}
 		> li {
-			padding-top: 0.2rem;
-			padding-bottom: 0.2rem;
+			padding: 0;
+			button {
+				display: block;
+				border: none;
+				padding-top: 0.2rem;
+				padding-bottom: 0.2rem;
 
-			padding-left: 0.7rem;
+				padding-left: 0.7rem;
+				transition: none;
+				text-align: left;
+			}
+
 			&:hover {
 				background-color: var(--main-color);
 				color: white;
@@ -288,8 +307,11 @@
 				a {
 					color: white;
 				}
+				button {
+					color: white;
+				}
 			}
-			&.help {
+			&.help-contact {
 				padding: 0;
 				&:hover {
 					a {
@@ -314,7 +336,8 @@
 				display: flex;
 				flex-direction: row;
 				justify-content: space-between;
-				div {
+				align-items: center;
+				button {
 					white-space: nowrap;
 					text-overflow: ellipsis;
 					flex-wrap: wrap;
