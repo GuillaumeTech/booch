@@ -293,6 +293,8 @@
 		> li {
 			padding: 0;
 			button {
+				width: 100%;
+				height: 100%;
 				display: block;
 				border: none;
 				padding-top: 0.2rem;
@@ -378,6 +380,8 @@
 			padding-top: 0.5rem;
 		}
 		li.user {
+			padding: 0.2rem 0 0.2rem 0.7rem;
+
 			overflow: hidden;
 			border-top: 5px solid var(--main-color);
 			text-overflow: ellipsis;
