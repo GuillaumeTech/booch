@@ -33,7 +33,8 @@ activeSession.subscribe(async (session) => {
         } catch (e) {
         }
     } else {
-        info('We recommend you to create an account, if you plan to use this app seriouly !', { target: 'notloggedin' })
+        // not sure about this yet it's a bit weird
+        // info('We recommend you to create an account, if you plan to use this app seriouly !', { target: 'notloggedin' })
     }
 }
 )
