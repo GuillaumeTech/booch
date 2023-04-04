@@ -88,6 +88,6 @@ export async function gradePoint(page: Page, pointName: string) {
 export async function deletePoint(page: Page, pointName: string) {
     await page.getByTestId(pointName).click();
     await page.getByTestId(`delete-${pointName}`).click();
+    await page.getByRole('button', { name: 'OK' }).click();
     await expect(page.getByTestId(pointName)).toBeHidden()
-
 }
