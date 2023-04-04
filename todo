@@ -137,7 +137,7 @@
 [x] bette share link
 [x] better fermentaion edit modal
 [] recipe description
-[] solve a11y
+[x] solve a11y
 [] check XSS 
 [] add analytics 
 [] console.log cleanup
