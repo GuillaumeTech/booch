@@ -67,7 +67,6 @@
 		flex-direction: row;
 		align-items: center;
 		justify-content: space-between;
-		overflow-x: hidden;
 		text-overflow: ellipsis;
 
 		h1 > a {
@@ -78,6 +77,8 @@
 			text-overflow: ellipsis;
 			overflow: hidden;
 			width: 85vw;
+			top: 0.2rem;
+			position: relative;
 			@media screen and (max-width: 600px) {
 				font-size: 0.9rem;
 			}
@@ -86,7 +87,7 @@
 	h1 {
 		display: flex;
 		flex-direction: row;
-		align-items: flex-end;
+		align-items: center;
 
 		font-size: 1.1rem;
 		padding: 0;
