@@ -124,7 +124,7 @@
 							iconName="check"
 							fill="black"
 							stroke="black"
-							margins={{ left: '0.2rem', right: '0.2rem' }}
+							margins={{ left: '0.2rem', right: '0.2rem', top: '0.2rem', bottom: '0.2rem' }}
 							on:click={(e) => {
 								e.stopPropagation();
 								editRecipeName(id, editingName);
