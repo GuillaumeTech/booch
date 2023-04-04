@@ -2,7 +2,6 @@
 	import type { ScaleLinear } from 'd3-scale';
 	import type { Margin } from '../../types/layout';
 	export let scale: ScaleLinear<any, any>,
-		tickSize = 4,
 		margin: Margin,
 		tickNumber = 10,
 		type = 'x',

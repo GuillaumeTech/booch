@@ -20,17 +20,3 @@
 	<b slot="header">Confirm</b>
 	<p>Are you sure about deleting <b>{deleting}</b> ? This can't be undone</p>
 </Modal>
-
-<style lang="less">
-	.content {
-		display: flex;
-		flex-direction: column;
-		label {
-			margin-top: 0.7rem;
-			margin-bottom: 0.5rem;
-		}
-	}
-	small {
-		height: 0.7rem;
-	}
-</style>

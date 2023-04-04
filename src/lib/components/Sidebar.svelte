@@ -284,9 +284,7 @@
 				background-color: var(--main-color);
 				color: white;
 				cursor: pointer;
-				button {
-					filter: invert(1);
-				}
+
 				a {
 					color: white;
 				}
@@ -326,10 +324,6 @@
 					margin-right: 0.5rem;
 					min-width: 4rem;
 				}
-			}
-			button {
-				margin: 0;
-				padding: 0 0.3rem;
 			}
 
 			&.edit-name,

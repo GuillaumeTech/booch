@@ -143,13 +143,6 @@
 		.hide {
 			margin-left: auto;
 		}
-		button {
-			border: none;
-			&:hover {
-				background: none;
-				transform: scale(1.2);
-			}
-		}
 	}
 
 	@media screen and (max-width: 600px) {

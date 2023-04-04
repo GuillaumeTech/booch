@@ -1,5 +1,4 @@
 <script lang="ts">
-	export let width = '2rem';
 	export let height = '4rem';
 	export let displayLiquid = true;
 	export let displayPlus = false;
@@ -52,11 +51,7 @@
 		transition: fill 150ms ease;
 		fill: black;
 	}
-	path.no-hover {
-		transform: translate(0.5rem, 6rem);
-		transform-origin: 50% 50%;
-		fill: var(--main-color);
-	}
+
 	svg:hover {
 		path.liquid {
 			fill: var(--main-color);

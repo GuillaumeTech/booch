@@ -198,19 +198,7 @@ it could also be done with reactive statements but seems the point.chornoly does
 		width: 100%;
 		height: 100%;
 	}
-	.add-entry {
-		float: right;
-		margin-right: 25px;
-		font-size: 1rem;
-		&.adding {
-			color: white;
-			background-color: black;
-			border: 2px solid black;
-			&:hover {
-				border: 2px solid var(--main-color);
-			}
-		}
-	}
+
 	.public-button {
 		margin-top: 1rem;
 	}
