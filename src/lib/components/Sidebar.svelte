@@ -7,6 +7,7 @@
 	import { displaySideBarResponsive } from '../../stores/display';
 	import DeleteModal from './Modals/DeleteModal.svelte';
 	import IconButton from './IconButton.svelte';
+	import Recipe from './Recipe.svelte';
 
 	let addingNewRecipe = false;
 	let newRecipeName = '';
@@ -180,7 +181,10 @@
 			{#if $activeSession}
 				<button
 					on:click={async () => {
-						await supabase.auth.signOut();
+						const { error } = await supabase.auth.signOut();
+						if (!error) {
+							recipes.clearLocalState();
+						}
 					}}
 				>
 					Logout

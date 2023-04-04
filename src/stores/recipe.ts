@@ -208,6 +208,9 @@ export const recipes = (() => {
                 const recipesToInsert = objectToArray(JSON.parse(localStorage.recipes))
                 bulkInsertOnSupabase(recipesToInsert)
             }
+        },
+        clearLocalState: () => {
+            recipes.set({})
         }
     };
 })();
