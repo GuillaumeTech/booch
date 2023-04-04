@@ -63,6 +63,6 @@
 	.no-recipe {
 		text-align: center;
 		align-self: center;
-		margin: auto;
+		margin: 5rem;
 	}
 </style>
