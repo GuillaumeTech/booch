@@ -120,7 +120,6 @@ export const recipes = (() => {
                 .insert(
                     recipes
                 )
-            console.log('err', error)
         }, 'multiple') // this is supposed to be a recipe id for the syning indicator, 
         // we use multiple instead here, as we're syncing multiples recipes
 

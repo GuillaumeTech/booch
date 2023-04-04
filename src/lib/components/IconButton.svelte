@@ -5,7 +5,6 @@
 	export let margins: any | undefined = undefined;
 	export let strokeWidth = '1';
 	export let stroke = 'black';
-	console.log(margins);
 	export let fill: string | null = null;
 </script>
 

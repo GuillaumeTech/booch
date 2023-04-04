@@ -42,7 +42,6 @@
 					const { data, error } = await supabase.auth.updateUser({
 						password: $password.value
 					});
-					console.log(error);
 					if (!error) {
 						success = true;
 					} else {
