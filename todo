@@ -140,7 +140,7 @@
 [x] solve a11y
 [] check XSS 
 [] add analytics 
-[] console.log cleanup
+[x] console.log cleanup
       [] check for no errors in console 
 -------- [] POST ABOUT IT / PROD
       [x] help page / landing
