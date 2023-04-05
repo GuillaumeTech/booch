@@ -1,5 +1,5 @@
 <div>
-	<a href="/"> Go back to the main app</a>
+	<a href="/"> Go back to the app</a>
 	<h2>Welcome to <span>my fermentation notes </span> !</h2>
 	<p>
 		I created this app because I love fermenting things like kombucha, and I wanted an easy way to
