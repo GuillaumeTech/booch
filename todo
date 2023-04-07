@@ -102,7 +102,7 @@
 [x] use a form library
 [x] update logo
 [x] click near point selects it (that's for mobile)
-- [-] styling
+- [x] styling
       [x] header
       [x] side panel for point detail
       --> became a detail box
@@ -110,7 +110,7 @@
       [x] generic input
       [x] css buttons
       [x] css icons
-      [-] csss general style
+      [x] csss general style
       [x] validate on enter
       [x] better modal
             [x] responsive
@@ -118,7 +118,7 @@
             [x] unified
       [x] text areas
       [X]responsive
-      [] ferment edit add date and grade button styling
+      [x] ferment edit add date and grade button styling
 
 [-] playwright
       [x] testrecipe CRUD
@@ -127,7 +127,7 @@
       [-] CI
             [x] make playwright work in github action
             [] block deploy depending on tests
-[-] better modal compoment
+[x] better modal compoment
       [x] separated on for each use
       [x] ferment edit
       [x] delete
@@ -136,7 +136,14 @@
       [x] new one when not logged 
 [x] bette share link
 [x] better fermentaion edit modal
-[] recipe description
+[-] recipe description
+      [x] gear icon for grading
+      [-] recipe edit momdal
+      [] recipe description field
+      [] plug modal in
+
+
+
 [x] solve a11y
 [] check XSS 
 [x] console.log cleanup
