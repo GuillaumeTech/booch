@@ -141,9 +141,7 @@
       [-] recipe edit momdal
       [] recipe description field
       [] plug modal in
-
-
-
+[] duplicate recipe
 [x] solve a11y
 [] check XSS 
 [x] console.log cleanup
