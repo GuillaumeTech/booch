@@ -139,8 +139,10 @@
 [] recipe description
 [x] solve a11y
 [] check XSS 
-[] add analytics 
 [x] console.log cleanup
+[] storybooks
+[] add analytics 
+
       [] check for no errors in console 
 -------- [] POST ABOUT IT / PROD
       [x] help page / landing
