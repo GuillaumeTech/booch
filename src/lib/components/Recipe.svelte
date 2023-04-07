@@ -11,7 +11,7 @@
 	import FermentEditModal from './Modals/FermentEditModal.svelte';
 	import RecipeChart from './RecipeChart.svelte';
 	import AxisEditModal from './Modals/AxisEditModal.svelte';
-	import IconButton from './Icons/IconButton.svelte';
+	import IconSettings from './Icons/IconSettings.svelte';
 
 	export let name: string,
 		points: Point[] = [],
@@ -159,11 +159,7 @@ it could also be done with reactive statements but seems the point.chornoly does
 		showModal={showAxisEditModal}
 		{axisNames}
 	/>
-
-	<IconButton
-		iconName="edit-2"
-		fill="black"
-		stroke="black"
+	<IconSettings
 		on:click={(e) => {
 			showAxisEditModal = true;
 		}}
