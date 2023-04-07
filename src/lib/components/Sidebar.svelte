@@ -6,8 +6,7 @@
 	import { supabase } from '../../supabaseClient';
 	import { displaySideBarResponsive } from '../../stores/display';
 	import DeleteModal from './Modals/DeleteModal.svelte';
-	import IconButton from './IconButton.svelte';
-	import Recipe from './Recipe.svelte';
+	import IconButton from './Icons/IconButton.svelte';
 
 	let addingNewRecipe = false;
 	let newRecipeName = '';

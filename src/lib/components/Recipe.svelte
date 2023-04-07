@@ -11,7 +11,7 @@
 	import FermentEditModal from './Modals/FermentEditModal.svelte';
 	import RecipeChart from './RecipeChart.svelte';
 	import AxisEditModal from './Modals/AxisEditModal.svelte';
-	import IconButton from './IconButton.svelte';
+	import IconButton from './Icons/IconButton.svelte';
 
 	export let name: string,
 		points: Point[] = [],

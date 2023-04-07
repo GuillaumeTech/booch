@@ -1,13 +1,11 @@
 <script lang="ts">
-	import type { AxisNames, Point } from '../../types/recipe';
+	import type { AxisNames } from '../../types/recipe';
 	import { points, activeRecipe, currentPoints } from '../../stores/recipe';
 	import { fade, fly } from 'svelte/transition';
-	import { writable } from 'svelte/store';
 	import FermentEditModal from './Modals/FermentEditModal.svelte';
 	import Timeline from './Timeline.svelte';
-	import Icon from './Icon.svelte';
 	import DeleteModal from './Modals/DeleteModal.svelte';
-	import IconButton from './IconButton.svelte';
+	import IconButton from './Icons/IconButton.svelte';
 
 	export let pointId: string, resetPickedPoint: Function, readOnly: Boolean, axisNames: AxisNames;
 

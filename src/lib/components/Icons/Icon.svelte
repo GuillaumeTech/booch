@@ -2,6 +2,7 @@
 	import feather from 'feather-icons';
 	export const directions = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'];
 	export let name;
+
 	export let direction = 'n';
 	export let strokeWidth = '1';
 	export let stroke = 'black';

@@ -5,7 +5,7 @@
 	import { field } from 'svelte-forms';
 	import { required } from 'svelte-forms/validators';
 	import { errorsToText } from '$lib/forms';
-	import IconButton from '../IconButton.svelte';
+	import IconButton from '../Icons/IconButton.svelte';
 
 	export let point: NewPoint;
 	export let showModal: boolean;
