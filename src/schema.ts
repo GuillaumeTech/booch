@@ -13,6 +13,7 @@ export interface Database {
                 Row: {
                     axisNames: Json
                     created_at: string | null
+                    description: string | null
                     id: string
                     name: string
                     points: Json | null
@@ -22,6 +23,7 @@ export interface Database {
                 Insert: {
                     axisNames: Json
                     created_at?: string | null
+                    description?: string | null
                     id?: string
                     name: string
                     points?: Json | null
@@ -31,6 +33,7 @@ export interface Database {
                 Update: {
                     axisNames?: Json
                     created_at?: string | null
+                    description?: string | null
                     id?: string
                     name?: string
                     points?: Json | null

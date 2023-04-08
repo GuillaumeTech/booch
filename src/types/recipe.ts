@@ -30,6 +30,7 @@ export type Recipe = {
     axisNames: AxisNames;
     public: boolean
     created_at: Date
+    description?: string
 };
 
 export type RecipeUpdate = AtLeast<Recipe, 'id'>
