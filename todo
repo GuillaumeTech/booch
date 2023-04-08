@@ -138,9 +138,10 @@
 [x] better fermentaion edit modal
 [-] recipe description
       [x] gear icon for grading
-      [-] recipe edit momdal
+      [x] recipe edit momdal
       [] recipe description field
       [] plug modal in
+      [] update help
 [] duplicate recipe
 [x] solve a11y
 [] check XSS 
