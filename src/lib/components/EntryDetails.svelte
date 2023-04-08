@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { AxisNames } from '../../types/recipe';
-	import { points, activeRecipe, currentPoints } from '../../stores/recipe';
+	import { points, activeRecipeId, currentPoints } from '../../stores/recipe';
 	import { fade, fly } from 'svelte/transition';
 	import FermentEditModal from './Modals/FermentEditModal.svelte';
 	import Timeline from './Timeline.svelte';
@@ -26,7 +26,7 @@
 					editing = false;
 				}}
 				onOk={(point) => {
-					points.update(point, $activeRecipe);
+					points.update(point, $activeRecipeId);
 					editing = false;
 				}}
 			/>
@@ -39,7 +39,7 @@
 				onOk={() => {
 					showDeletingModal = false;
 					if (pointPicked) {
-						points.remove(pointPicked.id, $activeRecipe);
+						points.remove(pointPicked.id, $activeRecipeId);
 					}
 					resetPickedPoint();
 				}}

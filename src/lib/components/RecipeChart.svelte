@@ -8,7 +8,7 @@
 	import { quadOut } from 'svelte/easing';
 	import EntryDetails from './EntryDetails.svelte';
 	import type { Margin } from '../../types/layout';
-	import { activeRecipe, points as pointsStore } from '../../stores/recipe';
+	import { activeRecipeId, points as pointsStore } from '../../stores/recipe';
 
 	import { clamp } from 'lodash';
 	import type { Point } from '../../types/recipe';
@@ -48,7 +48,7 @@
 		const x = PixelsToDomain(offsetX, abscissa).toFixed(2);
 		const y = PixelsToDomain(offsetY, ordinate).toFixed(2);
 		if (id && x && y) {
-			pointsStore.update({ id, x, y, isFermenting: false }, $activeRecipe);
+			pointsStore.update({ id, x, y, isFermenting: false }, $activeRecipeId);
 		}
 	}
 
@@ -135,7 +135,7 @@
 			const pointMoved = points[pointMovingIdx];
 			pointsStore.update(
 				{ ...pointMoved, x: pointMoved.x.toFixed(2), y: pointMoved.y.toFixed(2) },
-				$activeRecipe
+				$activeRecipeId
 			);
 		}
 		pointMovingIdx = undefined;

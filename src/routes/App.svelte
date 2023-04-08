@@ -1,8 +1,6 @@
 <script lang="ts">
-	import type { Point } from '../types/recipe';
 	import Recipe from '$lib/components/Recipe.svelte';
-	import { recipes, activeRecipe, points } from '../stores/recipe';
-	import { displaySideBarResponsive } from '../stores/display';
+	import { recipes, activeRecipeId, currentRecipe } from '../stores/recipe';
 
 	import Sidebar from '$lib/components/Sidebar.svelte';
 
@@ -12,7 +10,7 @@
 <div class="app">
 	<Sidebar />
 
-	{#if $recipes && Object.keys($recipes).includes($activeRecipe)}
+	{#if $recipes && Object.keys($recipes).includes($activeRecipeId)}
 		<div class="scroll">
 			<!-- Can't render it as long as we don't have width height -->
 			<!-- fix ssr issue logically and seems on very first render  -->
@@ -20,10 +18,10 @@
 			<div class="recipe" bind:clientWidth={width} bind:clientHeight={height}>
 				{#if width && height}
 					<Recipe
-						name={$recipes[$activeRecipe]?.name}
-						points={$recipes[$activeRecipe]?.points}
-						axisNames={$recipes[$activeRecipe]?.axisNames}
-						isPublic={$recipes[$activeRecipe]?.public}
+						name={$currentRecipe?.name}
+						points={$currentRecipe?.points}
+						axisNames={$currentRecipe?.axisNames}
+						isPublic={$currentRecipe?.public}
 					/>
 				{/if}
 			</div>

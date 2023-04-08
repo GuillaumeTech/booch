@@ -4,14 +4,14 @@ import type { Point, PointUpdate, Recipe, RecipeUpdate } from '../types/recipe';
 import { activeSession, firstLogin, syncing } from './supabase'
 import { supabase } from '../supabaseClient';
 import { toast } from '@zerodevx/svelte-toast'
-import { error, info } from '../lib/toasters';
-const initActiveRecipe = browser && localStorage.activeRecipe && JSON.parse(localStorage.activeRecipe);
+import { error } from '../lib/toasters';
+const initactiveRecipeId = browser && localStorage.activeRecipeId && JSON.parse(localStorage.activeRecipeId);
 
-export const activeRecipe = writable<string>(initActiveRecipe ?? 'kom');
+export const activeRecipeId = writable<string>(initactiveRecipeId ?? 'kom');
 
-activeRecipe.subscribe((activeRecipeId) => {
+activeRecipeId.subscribe((activeRecipeId) => {
     if (browser) {
-        localStorage.activeRecipe = JSON.stringify(activeRecipeId)
+        localStorage.activeRecipeId = JSON.stringify(activeRecipeId)
     }
 })
 
@@ -231,8 +231,14 @@ export const points = {
     },
 };
 
-export const currentPoints = derived([recipes, activeRecipe], ([$recipes, $activeRecipe]) => {
-    return $recipes?.[$activeRecipe]?.points
+export const currentPoints = derived([recipes, activeRecipeId], ([$recipes, $activeRecipeId]) => {
+    return $recipes?.[$activeRecipeId]?.points
+}
+)
+
+
+export const currentRecipe = derived([recipes, activeRecipeId], ([$recipes, $activeRecipeId]) => {
+    return $recipes?.[$activeRecipeId]
 }
 )
 

@@ -4,7 +4,7 @@
 	import { field, form } from 'svelte-forms';
 	import { required } from 'svelte-forms/validators';
 	import { errorsToText } from '$lib/forms';
-	import { activeRecipe, recipes } from '../../../stores/recipe';
+	import { activeRecipeId, recipes } from '../../../stores/recipe';
 
 	export let axisNames: AxisNames;
 	export let showModal: boolean;
@@ -26,7 +26,7 @@
 	}}
 	onOk={() => {
 		if ($updatedAxisNames.valid) {
-			recipes.update({ id: $activeRecipe, axisNames: { x: $xAxis.value, y: $yAxis.value } });
+			recipes.update({ id: $activeRecipeId, axisNames: { x: $xAxis.value, y: $yAxis.value } });
 		}
 		onOk();
 	}}
