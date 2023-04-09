@@ -1,3 +1,5 @@
 [x] sharing link takes the # if in the url
 [x] redirect link from emails points to localhost
-[-] sketchy styling for the border + static scrool -> use css reset
+[x] sketchy styling for the border + static scrool -> use css reset
+[] validate button in sidebar create scroll  
+
