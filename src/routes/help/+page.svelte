@@ -26,9 +26,16 @@
 	Well, here's the process I had in mind when building the app, but feel free to do your own thing.
 
 	<h3>1. Creating a "recipe"</h3>
-	I like to create one recipe per type of fermented good, like one for kombucha, one for tepache, and
-	so on.
+	<p>
+		I like to create one recipe per type of fermented good, like one for kombucha, one for tepache,
+		and so on.
+	</p>
+	<br />
 
+	<p>
+		When a recipe is selected you can access its settings by clicking on the gear icon. From here
+		you can add a description, update the name, change the axis names, and make the recipe public
+	</p>
 	<h3>2. Currently fermenting</h3>
 	<p>
 		This is where you would add what you are Currently fermenting, by clicking on jar with a "+" .
@@ -47,15 +54,15 @@
 	<br />
 	<p>
 		The default axis are "Dryness" and "Funk" but these can be changed to what ever you want by
-		clicking on the little pencil next to "Grading"
+		clicking on the gear pencil next to the recipe name
 	</p>
 
 	<h3>4. Sharing it</h3>
 	<p>
-		If you want to share your notes with friends, you can click "make public" to get a public link.
-		That way, if someone wants to try fermenting something you've already experimented with, they
-		can see all your notes on what worked well and what didn't. The page is read-only, so they can't
-		make any changes. The page is read only so they can't change anything.
+		If you want to share your notes with friends, you can click "make public" in the recipe settings
+		to get a public link. That way, if someone wants to try fermenting something you've already
+		experimented with, they can see all your notes on what worked well and what didn't. The page is
+		read-only, so they can't make any changes. The page is read only so they can't change anything.
 	</p>
 	<br />
 

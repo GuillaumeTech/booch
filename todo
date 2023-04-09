@@ -136,14 +136,14 @@
       [x] new one when not logged 
 [x] bette share link
 [x] better fermentaion edit modal
-[-] recipe description
+[x] recipe description
       [x] gear icon for grading
       [x] recipe edit momdal
       [x] recipe description field
       [x] plug modal in
       [x] add make public in modal
       [x] add public indicator
-      [] update help
+      [x] update help
 [] duplicate recipe
 [x] solve a11y
 [] check XSS 
