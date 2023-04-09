@@ -22,6 +22,7 @@
 						points={$currentRecipe?.points}
 						axisNames={$currentRecipe?.axisNames}
 						isPublic={$currentRecipe?.public}
+						description={$currentRecipe?.description}
 					/>
 				{/if}
 			</div>

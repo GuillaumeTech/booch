@@ -4,20 +4,29 @@
 	import { field, form } from 'svelte-forms';
 	import { required } from 'svelte-forms/validators';
 	import { errorsToText } from '$lib/forms';
-	import { activeRecipe, recipes } from '../../../stores/recipe';
+	import { activeRecipeId, currentRecipe, recipes } from '../../../stores/recipe';
 
-	export let point: NewPoint;
 	export let showModal: boolean;
-	export let axisNames: AxisNames;
+	export let oldAxisNames: AxisNames;
+	export let oldDescription: string;
+	export let oldName: string;
 
 	export let onOk: () => void;
 
 	export let onCancel: () => void;
-	const title = field('title', point?.title, [required()]);
-	const decription = field('decription', point?.details);
-	const xAxis = field('xAxis', axisNames?.x, [required()]);
-	const yAxis = field('yAxis', axisNames?.y, [required()]);
-	const recipeParams = form(title, decription, xAxis, yAxis);
+	let name = field('name', oldName, [required()]);
+	let description = field('description', oldDescription);
+	let xAxis = field('xAxis', oldAxisNames?.x, [required()]);
+	let yAxis = field('yAxis', oldAxisNames?.y, [required()]);
+	let recipeParams = form(name, description, xAxis, yAxis);
+
+	// set fields inital value when props changes
+	$: xAxis = field('xAxis', oldAxisNames?.x, [required()]);
+	$: yAxis = field('yAxis', oldAxisNames?.y, [required()]);
+	$: recipeParams = form(name, description, xAxis, yAxis);
+	$: name = field('name', oldName, [required()]);
+	$: description = field('description', oldDescription);
+
 	recipeParams.validate();
 </script>
 
@@ -30,23 +39,27 @@
 	onOk={() => {
 		if ($recipeParams.valid) {
 			recipes.update({
-				id: $activeRecipe,
+				id: $activeRecipeId,
 				axisNames: { x: $xAxis.value, y: $yAxis.value },
-				description: $decription.value,
-				name: $title.value
+				description: $description.value,
+				name: $name.value
 			});
+		} else {
+			recipeParams.reset();
 		}
 		onOk();
 	}}
 	disableOK={!$recipeParams.valid}
 >
 	<form data-testid="new-point-form" class="content">
-		<label for="title">Title</label>
-		<input id="title" type="text" bind:value={$title.value} />
-		<small> {errorsToText($title.errors)}</small>
+		<label for="namea">{oldName}</label>
+
+		<label for="name">Title</label>
+		<input id="name" type="text" bind:value={$name.value} />
+		<small> {errorsToText($name.errors)}</small>
 
 		<label for="detail">Decription</label>
-		<textarea id="detail" rows="7" bind:value={$decription.value} />
+		<textarea id="detail" rows="7" bind:value={$description.value} />
 		<label for="xAxis">X axis</label>
 		<input id="xAxis" type="text" bind:value={$xAxis.value} />
 		<small> {errorsToText($xAxis.errors)}</small>

@@ -3,15 +3,15 @@
 
 	import type { NewPoint, Point, PointUpdate, StepDate } from '../../types/recipe';
 
-	import { recipes, activeRecipe, points as pointsStore } from '../../stores/recipe';
+	import { recipes, activeRecipeId, points as pointsStore } from '../../stores/recipe';
 	import { flip } from 'svelte/animate';
 	import { activeSession } from '../../stores/supabase';
 
 	import Jar from './Jar.svelte';
 	import FermentEditModal from './Modals/FermentEditModal.svelte';
 	import RecipeChart from './RecipeChart.svelte';
-	import AxisEditModal from './Modals/AxisEditModal.svelte';
 	import IconSettings from './Icons/IconSettings.svelte';
+	import RecipeEditModal from './Modals/RecipeEditModal.svelte';
 
 	export let name: string,
 		points: Point[] = [],
@@ -19,12 +19,13 @@
 		axisNames: {
 			x: string;
 			y: string;
-		};
+		},
+		description: string | undefined = undefined;
 	let pointData: NewPoint;
 	let width: number, height: number;
 	let copyText: string = 'Copy link';
 
-	let showAxisEditModal = false;
+	let showRecipeSettingsModal = false;
 	let showModal = false;
 
 	function dragStart(event: DragEvent, id: string) {
@@ -40,7 +41,7 @@
 			...point,
 			id
 		};
-		pointsStore.add(newPoint, $activeRecipe);
+		pointsStore.add(newPoint, $activeRecipeId);
 	}
 
 	$: pointsFermenting = points.filter(({ isFermenting }) => isFermenting);
@@ -57,12 +58,20 @@
 </script>
 
 <div class="recipe-header">
-	<h2>{name}</h2>
+	<h2>
+		{name}
+
+		<IconSettings
+			on:click={(e) => {
+				showRecipeSettingsModal = true;
+			}}
+		/>
+	</h2>
 	<div>
 		{#if $activeSession}
 			<button
 				on:click={() => {
-					recipes.update({ id: $activeRecipe, public: !isPublic });
+					recipes.update({ id: $activeRecipeId, public: !isPublic });
 				}}
 				class="public-button"
 			>
@@ -72,7 +81,7 @@
 				<button
 					class="copy-button"
 					on:click={() => {
-						navigator.clipboard.writeText(`${window.location.origin}/recipe/${$activeRecipe}`);
+						navigator.clipboard.writeText(`${window.location.origin}/recipe/${$activeRecipeId}`);
 						copyText = 'Copied !';
 						setTimeout(() => {
 							copyText = 'Copy link';
@@ -85,6 +94,9 @@
 		{/if}
 	</div>
 </div>
+{#if description}
+	<p class="description">{description}</p>
+{/if}
 
 <!-- using key here reset the field everytime point data change
 it could also be done with reactive statements but seems the point.chornoly does not ejoy it
@@ -102,11 +114,26 @@ it could also be done with reactive statements but seems the point.chornoly does
 				// type script complains but it's actually fine here
 				// as we just checked that .id exist,
 				// note to self: make it work with a better typedef ??
-				pointsStore.update(point, $activeRecipe);
+				pointsStore.update(point, $activeRecipeId);
 			} else {
 				createNewPoint(point);
 			}
 		}}
+	/>
+{/key}
+
+{#key $activeRecipeId}
+	<RecipeEditModal
+		onOk={() => {
+			showRecipeSettingsModal = false;
+		}}
+		onCancel={() => {
+			showRecipeSettingsModal = false;
+		}}
+		showModal={showRecipeSettingsModal}
+		oldAxisNames={axisNames}
+		oldName={name}
+		oldDescription={description}
 	/>
 {/key}
 
@@ -149,21 +176,6 @@ it could also be done with reactive statements but seems the point.chornoly does
 
 <div class="grading">
 	<h3>GRADING</h3>
-	<AxisEditModal
-		onOk={() => {
-			showAxisEditModal = false;
-		}}
-		onCancel={() => {
-			showAxisEditModal = false;
-		}}
-		showModal={showAxisEditModal}
-		{axisNames}
-	/>
-	<IconSettings
-		on:click={(e) => {
-			showAxisEditModal = true;
-		}}
-	/>
 </div>
 
 <!-- Can't render it as long as we don't have width height -->
@@ -189,6 +201,10 @@ it could also be done with reactive statements but seems the point.chornoly does
 			flex-wrap: wrap;
 			overflow: hidden;
 		}
+	}
+	.description {
+		margin-top: 0.8rem;
+		margin-bottom: 1.5rem;
 	}
 	.chart {
 		width: 100%;
