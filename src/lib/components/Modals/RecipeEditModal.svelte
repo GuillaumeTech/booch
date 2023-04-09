@@ -5,19 +5,23 @@
 	import { required } from 'svelte-forms/validators';
 	import { errorsToText } from '$lib/forms';
 	import { activeRecipeId, currentRecipe, recipes } from '../../../stores/recipe';
+	import { activeSession } from '../../../stores/supabase';
 
 	export let showModal: boolean;
 	export let oldAxisNames: AxisNames;
-	export let oldDescription: string;
+	export let oldDescription: string | undefined;
 	export let oldName: string;
-
+	export let oldIsPublic: boolean | undefined = false;
 	export let onOk: () => void;
-
 	export let onCancel: () => void;
+
+	let copyText = 'Copy link';
+
 	let name = field('name', oldName, [required()]);
 	let description = field('description', oldDescription);
 	let xAxis = field('xAxis', oldAxisNames?.x, [required()]);
 	let yAxis = field('yAxis', oldAxisNames?.y, [required()]);
+	let isPublic = oldIsPublic;
 	let recipeParams = form(name, description, xAxis, yAxis);
 
 	// set fields inital value when props changes
@@ -26,6 +30,7 @@
 	$: recipeParams = form(name, description, xAxis, yAxis);
 	$: name = field('name', oldName, [required()]);
 	$: description = field('description', oldDescription);
+	$: isPublic = oldIsPublic;
 
 	recipeParams.validate();
 </script>
@@ -35,6 +40,7 @@
 	onCancel={() => {
 		onCancel();
 		recipeParams.reset();
+		isPublic = oldIsPublic;
 	}}
 	onOk={() => {
 		if ($recipeParams.valid) {
@@ -42,7 +48,8 @@
 				id: $activeRecipeId,
 				axisNames: { x: $xAxis.value, y: $yAxis.value },
 				description: $description.value,
-				name: $name.value
+				name: $name.value,
+				public: isPublic
 			});
 		} else {
 			recipeParams.reset();
@@ -52,8 +59,6 @@
 	disableOK={!$recipeParams.valid}
 >
 	<form data-testid="new-point-form" class="content">
-		<label for="namea">{oldName}</label>
-
 		<label for="name">Title</label>
 		<input id="name" type="text" bind:value={$name.value} />
 		<small> {errorsToText($name.errors)}</small>
@@ -66,6 +71,35 @@
 		<label for="yAxis">Y axis</label>
 		<input id="yAxis" type="text" bind:value={$yAxis.value} />
 		<small> {errorsToText($yAxis.errors)}</small>
+		<label for="public">This recipe is currenty {isPublic ? 'public' : 'private'}</label>
+
+		<div>
+			{#if $activeSession}
+				<button
+					on:click={() => {
+						isPublic = !isPublic;
+					}}
+					class="public-button"
+					id="public"
+				>
+					{isPublic ? 'Make private' : 'Make public'}</button
+				>
+				{#if isPublic}
+					<button
+						class="copy-button"
+						on:click={() => {
+							navigator.clipboard.writeText(`${window.location.origin}/recipe/${$activeRecipeId}`);
+							copyText = 'Copied !';
+							setTimeout(() => {
+								copyText = 'Copy link';
+							}, 3000);
+						}}
+					>
+						{copyText}</button
+					>
+				{/if}
+			{/if}
+		</div>
 	</form>
 </Modal>
 

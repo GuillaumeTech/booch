@@ -15,7 +15,7 @@
 
 	export let name: string,
 		points: Point[] = [],
-		isPublic: Boolean = false,
+		isPublic: boolean = false,
 		axisNames: {
 			x: string;
 			y: string;
@@ -60,38 +60,13 @@
 <div class="recipe-header">
 	<h2>
 		{name}
-
+	</h2>
+	<div>
 		<IconSettings
 			on:click={(e) => {
 				showRecipeSettingsModal = true;
 			}}
 		/>
-	</h2>
-	<div>
-		{#if $activeSession}
-			<button
-				on:click={() => {
-					recipes.update({ id: $activeRecipeId, public: !isPublic });
-				}}
-				class="public-button"
-			>
-				{isPublic ? 'Make private' : 'Make public'}</button
-			>
-			{#if isPublic}
-				<button
-					class="copy-button"
-					on:click={() => {
-						navigator.clipboard.writeText(`${window.location.origin}/recipe/${$activeRecipeId}`);
-						copyText = 'Copied !';
-						setTimeout(() => {
-							copyText = 'Copy link';
-						}, 3000);
-					}}
-				>
-					{copyText}</button
-				>
-			{/if}
-		{/if}
 	</div>
 </div>
 {#if description}
@@ -134,6 +109,7 @@ it could also be done with reactive statements but seems the point.chornoly does
 		oldAxisNames={axisNames}
 		oldName={name}
 		oldDescription={description}
+		oldIsPublic={isPublic}
 	/>
 {/key}
 
@@ -191,7 +167,7 @@ it could also be done with reactive statements but seems the point.chornoly does
 	.recipe-header {
 		display: flex;
 		justify-content: space-between;
-		align-items: center;
+		align-items: baseline;
 		h2 {
 			font-family: 'Inter';
 			font-weight: 800;
@@ -200,6 +176,9 @@ it could also be done with reactive statements but seems the point.chornoly does
 			text-overflow: ellipsis;
 			flex-wrap: wrap;
 			overflow: hidden;
+		}
+		div {
+			font-size: 1.5rem;
 		}
 	}
 	.description {
