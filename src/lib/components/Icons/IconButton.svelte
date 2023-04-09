@@ -9,7 +9,9 @@
 </script>
 
 <button
-	style={margins !== undefined ? `margin-left:${margins.left}; margin-right:${margins.right}` : ''}
+	style={margins !== undefined
+		? `margin-left:${margins.left}; margin-right:${margins.right}; margin-bottom:${margins.bottom}; margin-top:${margins.top};`
+		: ''}
 	on:click
 	{...$$restProps}
 >
