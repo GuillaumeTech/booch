@@ -138,7 +138,7 @@
 			{:else}
 				<li
 					data-testid={`recipe-${name}`}
-					class={`menu-item ${$activeRecipeId === id ? 'underline' : ''}`}
+					class={`menu-item ${$activeRecipeId === id ? 'selected' : ''}`}
 				>
 					<button
 						on:click={() => {
@@ -334,7 +334,7 @@
 					display: block;
 				}
 			}
-			&.underline {
+			&.selected > button {
 				font-weight: 800;
 			}
 			&.menu-item {
