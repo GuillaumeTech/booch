@@ -142,7 +142,7 @@
       [x] recipe description field
       [x] plug modal in
       [x] add make public in modal
-      [] add public indicator
+      [x] add public indicator
       [] update help
 [] duplicate recipe
 [x] solve a11y

@@ -60,6 +60,9 @@
 <div class="recipe-header">
 	<h2>
 		{name}
+		{#if isPublic}
+			<small>Public</small>
+		{/if}
 	</h2>
 	<div>
 		<IconSettings
@@ -169,6 +172,8 @@ it could also be done with reactive statements but seems the point.chornoly does
 		justify-content: space-between;
 		align-items: baseline;
 		h2 {
+			display: flex;
+			flex-direction: column;
 			font-family: 'Inter';
 			font-weight: 800;
 			white-space: nowrap;
@@ -176,6 +181,9 @@ it could also be done with reactive statements but seems the point.chornoly does
 			text-overflow: ellipsis;
 			flex-wrap: wrap;
 			overflow: hidden;
+			small {
+				font-weight: 400;
+			}
 		}
 		div {
 			font-size: 1.5rem;
