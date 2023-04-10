@@ -6,6 +6,7 @@ import { supabase } from '../supabaseClient';
 import { toast } from '@zerodevx/svelte-toast'
 import { error } from '../lib/toasters';
 import { v4 as uuidv4 } from 'uuid';
+import { cloneDeep } from 'lodash';
 
 const initactiveRecipeId = browser && localStorage.activeRecipeId && JSON.parse(localStorage.activeRecipeId);
 
@@ -88,7 +89,8 @@ export const recipes = (() => {
     // generic try block for all supabseOperation + sync indicator
     async function supabaseOperation(operation: () => Promise<void>, onId: string) {
         const { data } = await supabase.auth.getSession()
-        if (data.session) {
+        if (data.session) { // don't contact supabase is not session
+            // allow for non logged used and no need to mock supabase when testing !
             syncing.add(onId)
             try {
                 await operation()
@@ -172,9 +174,10 @@ export const recipes = (() => {
 
     function reusableUpdate(props: RecipeUpdate, fn = defaultUpdate(props)) {
         update((recipes) => {
-            const orignalRecipe = recipes[props.id]
-            recipes[props.id] = fn(recipes[props.id])
-            updateOnSupabase(props.id, recipes[props.id], orignalRecipe)
+            const recipeUpdate = cloneDeep(props)
+            const orignalRecipe = recipes[recipeUpdate.id]
+            recipes[recipeUpdate.id] = fn(recipes[recipeUpdate.id])
+            updateOnSupabase(recipeUpdate.id, recipes[recipeUpdate.id], orignalRecipe)
             return recipes
         });
     }
@@ -184,9 +187,10 @@ export const recipes = (() => {
         set,
         add: (recipe: Recipe) => {
             update((recipes) => {
+                const newRecipe = cloneDeep(recipe)
                 const orignalRecipes = recipes
-                recipes[recipe.id] = recipe;
-                createOnSupabase(recipe.id, recipe, orignalRecipes)
+                recipes[recipe.id] = newRecipe;
+                createOnSupabase(recipe.id, newRecipe, orignalRecipes)
                 return recipes;
 
             });
