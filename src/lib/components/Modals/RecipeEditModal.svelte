@@ -59,7 +59,7 @@
 	disableOK={!$recipeParams.valid}
 >
 	<form data-testid="new-point-form" class="content">
-		<label for="name">Title</label>
+		<label for="name">Name</label>
 		<input id="name" type="text" bind:value={$name.value} />
 		<small> {errorsToText($name.errors)}</small>
 
