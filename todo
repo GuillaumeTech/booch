@@ -145,6 +145,10 @@
       [x] add public indicator
       [x] update help
 [] duplicate recipe
+      [x] store method reduplicate by id, remove grades
+      [-] test the above
+      [] add duplicate button
+      [] duplicate popup
 [x] solve a11y
 [] check XSS 
 [x] console.log cleanup

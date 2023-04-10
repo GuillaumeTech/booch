@@ -1,10 +1,12 @@
 import { browser } from '$app/environment';
 import { derived, get, writable } from 'svelte/store';
-import type { Point, PointUpdate, Recipe, RecipeUpdate } from '../types/recipe';
+import type { NewPoint, Point, PointUpdate, Recipe, RecipeUpdate } from '../types/recipe';
 import { activeSession, firstLogin, syncing } from './supabase'
 import { supabase } from '../supabaseClient';
 import { toast } from '@zerodevx/svelte-toast'
 import { error } from '../lib/toasters';
+import { v4 as uuidv4 } from 'uuid';
+
 const initactiveRecipeId = browser && localStorage.activeRecipeId && JSON.parse(localStorage.activeRecipeId);
 
 export const activeRecipeId = writable<string>(initactiveRecipeId ?? 'kom');
@@ -219,7 +221,6 @@ export const recipes = (() => {
 
 
 export const points = {
-
     add: (point: Point, recipeId: string) => {
         recipes.update({ id: recipeId }, addPointToRecipe(point));
     },
@@ -229,6 +230,18 @@ export const points = {
     update: (pointUpdate: PointUpdate, recipeId: string) => {
         recipes.update({ id: recipeId }, updatePointFromRecipe(pointUpdate));
     },
+    duplicate: (pointId: string, recipeId: string) => {
+        const recipesData = get(recipes)
+        const recipe = recipesData[recipeId]
+        const pointToDuplicate: NewPoint = recipe.points.find(({ id }) => id === pointId)
+        if (pointToDuplicate) {
+            pointToDuplicate.x = undefined
+            pointToDuplicate.y = undefined
+            pointToDuplicate.isFermenting = true
+            pointToDuplicate.id = uuidv4()
+            recipes.update({ id: recipeId }, addPointToRecipe(pointToDuplicate));
+        }
+    }
 };
 
 export const currentPoints = derived([recipes, activeRecipeId], ([$recipes, $activeRecipeId]) => {
@@ -265,5 +278,6 @@ function updatePointFromRecipe(pointUpdate: PointUpdate) {
         return recipe;
     };
 }
+
 
 
