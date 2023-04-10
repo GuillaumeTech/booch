@@ -10,7 +10,6 @@ export type Point = {
     title: string;
     details?: string;
     chronology?: StepDate[]
-    tasted_at?: Date;
     isFermenting: boolean
 };
 

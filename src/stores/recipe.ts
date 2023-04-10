@@ -258,7 +258,7 @@ export const currentRecipe = derived([recipes, activeRecipeId], ([$recipes, $act
 
 function addPointToRecipe(point: Point) {
     return (recipe: Recipe) => {
-        recipe.points.push({ ...point, tasted_at: new Date() });
+        recipe.points.push(point);
         return recipe;
     };
 }
