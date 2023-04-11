@@ -35,7 +35,7 @@ activeSession.subscribe(async (session) => {
 				firstLogin.set(false);
 			}
 			toast.pop({ target: 'notloggedin' });
-		} catch (e) { }
+		} catch (e) {}
 	} else {
 		// not sure about this yet it's a bit weird
 		// info('We recommend you to create an account, if you plan to use this app seriouly !', { target: 'notloggedin' })
@@ -208,7 +208,9 @@ export const points = {
 	duplicate: (pointId: string, recipeId: string) => {
 		const recipesData = get(recipes);
 		const recipe = recipesData[recipeId];
-		const pointToDuplicate: NewPoint = lodash.cloneDeep(recipe.points.find(({ id }) => id === pointId));
+		const pointToDuplicate: NewPoint = lodash.cloneDeep(
+			recipe.points.find(({ id }) => id === pointId)
+		);
 		if (pointToDuplicate) {
 			pointToDuplicate.x = undefined;
 			pointToDuplicate.y = undefined;
