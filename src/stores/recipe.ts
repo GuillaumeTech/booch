@@ -35,7 +35,7 @@ activeSession.subscribe(async (session) => {
 				firstLogin.set(false);
 			}
 			toast.pop({ target: 'notloggedin' });
-		} catch (e) {}
+		} catch (e) { }
 	} else {
 		// not sure about this yet it's a bit weird
 		// info('We recommend you to create an account, if you plan to use this app seriouly !', { target: 'notloggedin' })
@@ -57,7 +57,8 @@ function objectToArray(recipes: Record<string, Recipe>) {
 }
 
 async function loadRecipesFromSupabase(): Promise<Record<string, Recipe>> {
-	const { data, error } = await supabase.from('recipes').select();
+	const currentUserId = get(activeSession)?.user.id
+	const { data, error } = await supabase.from('recipes').select().eq('user_id', currentUserId);
 	if (error) {
 		throw new Error(error.message);
 	}

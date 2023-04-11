@@ -3,4 +3,4 @@
 [x] sketchy styling for the border + static scrool -> use css reset
 [x] validate button in sidebar create scroll  
 [x] icons shifting arround in sidebar when selected
-
+[-] public recipe are shown to every logged account in their sidebar
