@@ -6,7 +6,7 @@ import { supabase } from '../supabaseClient';
 import { toast } from '@zerodevx/svelte-toast';
 import { error } from '../lib/toasters';
 import { v4 as uuidv4 } from 'uuid';
-import { cloneDeep } from 'lodash';
+import lodash from 'lodash';
 
 const initactiveRecipeId =
 	browser && localStorage.activeRecipeId && JSON.parse(localStorage.activeRecipeId);
@@ -35,7 +35,7 @@ activeSession.subscribe(async (session) => {
 				firstLogin.set(false);
 			}
 			toast.pop({ target: 'notloggedin' });
-		} catch (e) {}
+		} catch (e) { }
 	} else {
 		// not sure about this yet it's a bit weird
 		// info('We recommend you to create an account, if you plan to use this app seriouly !', { target: 'notloggedin' })
@@ -149,7 +149,7 @@ export const recipes = (() => {
 
 	function reusableUpdate(props: RecipeUpdate, fn = defaultUpdate(props)) {
 		update((recipes) => {
-			const recipeUpdate = cloneDeep(props);
+			const recipeUpdate = lodash.cloneDeep(props);
 			const orignalRecipe = recipes[recipeUpdate.id];
 			recipes[recipeUpdate.id] = fn(recipes[recipeUpdate.id]);
 			updateOnSupabase(recipeUpdate.id, recipes[recipeUpdate.id], orignalRecipe);
@@ -162,7 +162,7 @@ export const recipes = (() => {
 		set,
 		add: (recipe: Recipe) => {
 			update((recipes) => {
-				const newRecipe = cloneDeep(recipe);
+				const newRecipe = lodash.cloneDeep(recipe);
 				const orignalRecipes = recipes;
 				recipes[recipe.id] = newRecipe;
 				createOnSupabase(recipe.id, newRecipe, orignalRecipes);
