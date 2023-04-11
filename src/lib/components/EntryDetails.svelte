@@ -4,8 +4,8 @@
 	import { fade, fly } from 'svelte/transition';
 	import FermentEditModal from './Modals/FermentEditModal.svelte';
 	import Timeline from './Timeline.svelte';
-	import DeleteModal from './Modals/DeleteModal.svelte';
 	import IconButton from './Icons/IconButton.svelte';
+	import AlertModal from './Modals/AlertModal.svelte';
 
 	export let pointId: string, resetPickedPoint: Function, readOnly: Boolean, axisNames: AxisNames;
 
@@ -30,8 +30,7 @@
 					editing = false;
 				}}
 			/>
-			<DeleteModal
-				deleting={pointPicked.title}
+			<AlertModal
 				showModal={showDeletingModal}
 				onCancel={() => {
 					showDeletingModal = false;
@@ -43,7 +42,11 @@
 					}
 					resetPickedPoint();
 				}}
-			/>
+			>
+				<p>
+					Are you sure about deleting <b>{pointPicked.title}</b> ? This can't be undone
+				</p></AlertModal
+			>
 
 			<div class="title-and-options">
 				<h3>{pointPicked.title}</h3>

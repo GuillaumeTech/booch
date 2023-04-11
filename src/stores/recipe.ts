@@ -1,10 +1,13 @@
 import { browser } from '$app/environment';
 import { derived, get, writable } from 'svelte/store';
-import type { Point, PointUpdate, Recipe, RecipeUpdate } from '../types/recipe';
+import type { NewPoint, Point, PointUpdate, Recipe, RecipeUpdate } from '../types/recipe';
 import { activeSession, firstLogin, syncing } from './supabase';
 import { supabase } from '../supabaseClient';
 import { toast } from '@zerodevx/svelte-toast';
 import { error } from '../lib/toasters';
+import { v4 as uuidv4 } from 'uuid';
+import lodash from 'lodash';
+
 const initactiveRecipeId =
 	browser && localStorage.activeRecipeId && JSON.parse(localStorage.activeRecipeId);
 
@@ -75,6 +78,8 @@ export const recipes = (() => {
 	async function supabaseOperation(operation: () => Promise<void>, onId: string) {
 		const { data } = await supabase.auth.getSession();
 		if (data.session) {
+			// don't contact supabase if no session
+			// allow for non logged use and no need to mock supabase when testing !
 			syncing.add(onId);
 			try {
 				await operation();
@@ -144,9 +149,10 @@ export const recipes = (() => {
 
 	function reusableUpdate(props: RecipeUpdate, fn = defaultUpdate(props)) {
 		update((recipes) => {
-			const orignalRecipe = recipes[props.id];
-			recipes[props.id] = fn(recipes[props.id]);
-			updateOnSupabase(props.id, recipes[props.id], orignalRecipe);
+			const recipeUpdate = lodash.cloneDeep(props);
+			const orignalRecipe = recipes[recipeUpdate.id];
+			recipes[recipeUpdate.id] = fn(recipes[recipeUpdate.id]);
+			updateOnSupabase(recipeUpdate.id, recipes[recipeUpdate.id], orignalRecipe);
 			return recipes;
 		});
 	}
@@ -156,9 +162,10 @@ export const recipes = (() => {
 		set,
 		add: (recipe: Recipe) => {
 			update((recipes) => {
+				const newRecipe = lodash.cloneDeep(recipe);
 				const orignalRecipes = recipes;
-				recipes[recipe.id] = recipe;
-				createOnSupabase(recipe.id, recipe, orignalRecipes);
+				recipes[recipe.id] = newRecipe;
+				createOnSupabase(recipe.id, newRecipe, orignalRecipes);
 				return recipes;
 			});
 		},
@@ -197,6 +204,20 @@ export const points = {
 	},
 	update: (pointUpdate: PointUpdate, recipeId: string) => {
 		recipes.update({ id: recipeId }, updatePointFromRecipe(pointUpdate));
+	},
+	duplicate: (pointId: string, recipeId: string) => {
+		const recipesData = get(recipes);
+		const recipe = recipesData[recipeId];
+		const pointToDuplicate: NewPoint = lodash.cloneDeep(
+			recipe.points.find(({ id }) => id === pointId)
+		);
+		if (pointToDuplicate) {
+			pointToDuplicate.x = undefined;
+			pointToDuplicate.y = undefined;
+			pointToDuplicate.isFermenting = true;
+			pointToDuplicate.id = uuidv4();
+			recipes.update({ id: recipeId }, addPointToRecipe(pointToDuplicate));
+		}
 	}
 };
 
@@ -210,7 +231,7 @@ export const currentRecipe = derived([recipes, activeRecipeId], ([$recipes, $act
 
 function addPointToRecipe(point: Point) {
 	return (recipe: Recipe) => {
-		recipe.points.push({ ...point, tasted_at: new Date() });
+		recipe.points.push(point);
 		return recipe;
 	};
 }

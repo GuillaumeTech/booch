@@ -5,8 +5,8 @@
 	import { activeSession } from '../../stores/supabase';
 	import { supabase } from '../../supabaseClient';
 	import { displaySideBarResponsive } from '../../stores/display';
-	import DeleteModal from './Modals/DeleteModal.svelte';
 	import IconButton from './Icons/IconButton.svelte';
+	import AlertModal from './Modals/AlertModal.svelte';
 
 	let addingNewRecipe = false;
 	let newRecipeName = '';
@@ -207,9 +207,8 @@
 	</ul>
 </div>
 
-<DeleteModal
+<AlertModal
 	showModal={showDeleteConfirm}
-	deleting={deletingName}
 	onCancel={() => {
 		showDeleteConfirm = false;
 		resetDeletingInfo();
@@ -219,7 +218,12 @@
 		deleteRecipe(deletingId);
 		resetDeletingInfo();
 	}}
-/>
+>
+	<p>
+		Are you sure about deleting <b>{deletingName}</b> ? This can't be undone
+	</p>
+</AlertModal>
+
 <LoginModal
 	showModal={showLoginModal}
 	onCancel={() => {

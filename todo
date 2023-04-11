@@ -144,14 +144,18 @@
       [x] add make public in modal
       [x] add public indicator
       [x] update help
-[] duplicate recipe
+[-] duplicate recipe
+      [x] store method reduplicate by id, remove grades
+      [x] test the above
+      [x] add duplicate button
+      [x] duplicate popup
+      [] update help
 [x] solve a11y
 [] check XSS 
 [x] console.log cleanup
-[] storybooks
+[] storybooks at some point
 [] add analytics 
-
-      [] check for no errors in console 
+[] check for no errors in console 
 -------- [] POST ABOUT IT / PROD
       [x] help page / landing
       [] proper domain

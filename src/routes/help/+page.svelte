@@ -43,6 +43,12 @@
 		about the order of dates in the Chronology part - they'll be sorted later from oldest to most
 		recent. You can always go back and edit your ferment later by clicking on the jar.
 	</p>
+	<br />
+
+	<p>
+		You can also create new ferment by duplicating one. This is really helpfull when spliting
+		batches or when you always have the same base for the ferment.
+	</p>
 
 	<h3>3. Grading it</h3>
 	<p>
@@ -73,6 +79,7 @@
 			here</a
 		>
 	</p>
+	<br />
 </div>
 
 <style lang="less">
