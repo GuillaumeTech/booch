@@ -208,7 +208,7 @@ export const points = {
 	duplicate: (pointId: string, recipeId: string) => {
 		const recipesData = get(recipes);
 		const recipe = recipesData[recipeId];
-		const pointToDuplicate: NewPoint = recipe.points.find(({ id }) => id === pointId);
+		const pointToDuplicate: NewPoint = lodash.cloneDeep(recipe.points.find(({ id }) => id === pointId));
 		if (pointToDuplicate) {
 			pointToDuplicate.x = undefined;
 			pointToDuplicate.y = undefined;

@@ -6,6 +6,8 @@
 	import { required } from 'svelte-forms/validators';
 	import { errorsToText } from '$lib/forms';
 	import IconButton from '../Icons/IconButton.svelte';
+	import AlertModal from './AlertModal.svelte';
+	import { activeRecipeId, points } from '../../../stores/recipe';
 
 	export let point: NewPoint;
 	export let showModal: boolean;
@@ -15,6 +17,7 @@
 
 	export let onCancel: () => void;
 	let grading = false;
+	let showDuplicatePopup = false;
 	let chronology: StepDate[] = point?.chronology || [];
 	const title = field('title', point?.title, [required()]);
 	const details = field('details', point?.details);
@@ -54,7 +57,32 @@
 	}}
 	disableOK={!isValid}
 >
+	<AlertModal
+		showModal={showDuplicatePopup}
+		onCancel={() => {
+			showDuplicatePopup = false;
+		}}
+		onOk={() => {
+			if (point.id) {
+				points.duplicate(point.id, $activeRecipeId);
+			}
+		}}
+	>
+		<p>
+			You will duplicate <b>{$title.value}</b>, The grades for the duplicapted one will be reset and
+			moved to "Currently Fermenting"
+		</p></AlertModal
+	>
 	<form data-testid="new-point-form" class="content">
+		<button
+			class="duplicate"
+			disabled={!isValid || typeof point?.id !== 'string'}
+			on:click={() => {
+				showDuplicatePopup = true;
+			}}
+		>
+			Duplicate
+		</button>
 		<label for="title">Title</label>
 		<input id="title" type="text" bind:value={$title.value} />
 		<small> {errorsToText($title.errors)}</small>
@@ -64,7 +92,6 @@
 		<div class="label-side-button">
 			<label for="detail">Chronology</label>
 			<button
-				class="add date"
 				on:click={() => {
 					chronology = [...chronology, { title: '', date: new Date() }];
 				}}
@@ -160,5 +187,11 @@
 	}
 	small {
 		height: 0.7rem;
+	}
+
+	.duplicate {
+		margin: auto;
+		margin-right: 0rem;
+		max-width: 6rem;
 	}
 </style>
