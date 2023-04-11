@@ -153,10 +153,9 @@
 [x] solve a11y
 [] check XSS 
 [x] console.log cleanup
-[] storybooks
+[] storybooks at some point
 [] add analytics 
-
-      [] check for no errors in console 
+[] check for no errors in console 
 -------- [] POST ABOUT IT / PROD
       [x] help page / landing
       [] proper domain
