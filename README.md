@@ -1,4 +1,8 @@
-it's a work in progress but you can check it out at https://myfermentationnotes.vercel.app/
+# For svelte hack
+This project entered svelte hack
+here is the link where you can access it:  https://myfermentationnotes.vercel.app/
+and a demo quick video demo : [to come] 
+
 
 # create-svelte
 
