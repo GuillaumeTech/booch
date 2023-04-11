@@ -61,7 +61,7 @@ describe('Recipes store', () => {
 		});
 		points.duplicate(pointId, recipeId);
 		expect(get(recipes)).toStrictEqual({
-			[recipeId]: { ...recipeFixture, points: [pointsFixture, { ...pointsFixture, id: 'abc' }] }
+			[recipeId]: { ...recipeFixture, points: [pointsFixture, { ...pointsFixture, id: 'abc', x: undefined, y: undefined }] }
 		});
 	});
 });
