@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [main, master]
 jobs:
-  test:
+  test-unit:
     env:
       PUBLIC_SUPABASE_URL: https://qtrjysvownlgrjolkgvs.supabase.co
       PUBLIC_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0cmp5c3Zvd25sZ3Jqb2xrZ3ZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzc4Nzg0NTUsImV4cCI6MTk5MzQ1NDQ1NX0.gk_tihxLVk-eE0R9SxzINsA17PJKWCRrql24nZKC6uU
