@@ -22,7 +22,6 @@ jobs:
         run: npm ci
       - name: Run Unitest tests
         run: npm run test:unit
-
  Integration-Tests:
     env:
       PUBLIC_SUPABASE_URL: https://qtrjysvownlgrjolkgvs.supabase.co
@@ -46,7 +45,6 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
-
   Deploy-Preview:
     runs-on: ubuntu-latest
     steps:
