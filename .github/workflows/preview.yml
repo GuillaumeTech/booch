@@ -6,10 +6,6 @@ on:
   push:
     branches-ignore:
       - main
-  workflow_run:
-    workflows: [Playwright Tests]
-    types:
-      - completed
 jobs:
   Unit-Test:
     env:
