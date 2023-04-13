@@ -24,7 +24,7 @@ jobs:
       - name: Run Unitest tests
         run: npm run test:unit
 
- Integration-Tests:
+  Integration-Tests:
     needs: [Unit-Test]
     env:
       PUBLIC_SUPABASE_URL: https://qtrjysvownlgrjolkgvs.supabase.co
