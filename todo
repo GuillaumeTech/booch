@@ -154,7 +154,7 @@
 [] check XSS 
 [x] console.log cleanup
 [] storybooks at some point
-[] add analytics 
+[x] add analytics 
 [] check for no errors in console 
 -------- [] POST ABOUT IT / PROD
       [x] help page / landing
