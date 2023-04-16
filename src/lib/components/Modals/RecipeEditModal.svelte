@@ -116,31 +116,6 @@
 		}
 	}
 
-	div.label-side-button {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-	}
-	hr {
-		margin: 1rem 0;
-	}
-	div.chrono {
-		display: flex;
-		flex-direction: row;
-		margin-bottom: 0.5rem;
-		input[type='text'] {
-			flex-grow: 1;
-			min-width: 1rem;
-		}
-
-		input[type='date'] {
-			min-width: 8rem;
-		}
-	}
-	hr {
-		width: 100%;
-	}
 	small {
 		height: 0.7rem;
 	}

@@ -110,20 +110,6 @@
 			height: 2rem;
 		}
 	}
-	.loader {
-		animation: blink 0.5s ease-in-out infinite;
-
-		span.text {
-			font-size: 1.2rem;
-			font-size: 0.9rem;
-			margin-right: 0.7rem;
-		}
-		span {
-			font-size: 1.2rem;
-
-			margin-right: 1rem;
-		}
-	}
 
 	@keyframes blink {
 		0% {
