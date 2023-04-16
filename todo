@@ -144,12 +144,12 @@
       [x] add make public in modal
       [x] add public indicator
       [x] update help
-[-] duplicate recipe
+[x] duplicate recipe
       [x] store method reduplicate by id, remove grades
       [x] test the above
       [x] add duplicate button
       [x] duplicate popup
-      [] update help
+      [x] update help
 [x] solve a11y
 [] check XSS 
 [x] console.log cleanup
