@@ -5,6 +5,13 @@
 	import { displaySideBarResponsive } from '../stores/display';
 	import Icon from '$lib/components/Icons/Icon.svelte';
 	import { page } from '$app/stores';
+	import { dev } from '$app/environment';
+
+	if (browser) {
+		import('@vercel/analytics')
+			.then(({ inject }) => inject({ mode: dev ? 'development' : 'production' }))
+			.catch(() => {}); // do nothing in the catch, this fails probably because the user has an adblocker
+	}
 </script>
 
 <!-- limit this to client side rendering, behave a bit weirdly with ssr -->
