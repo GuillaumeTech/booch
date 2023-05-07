@@ -157,6 +157,7 @@
 		} else if (!nearestPoint) {
 			pointPicked = undefined;
 		}
+		console.log(pointPicked);
 	}}
 >
 	<Axis {width} {height} type="x" name={axisNames.x} scale={abscissa} tickNumber={10} {margin} />
@@ -184,5 +185,5 @@
 </svg>
 
 {#if pointPicked}
-	<EntryDetails {readOnly} {axisNames} pointId={pointPicked.id} {resetPickedPoint} />
+	<EntryDetails {readOnly} {axisNames} {pointPicked} {resetPickedPoint} />
 {/if}
