@@ -42,6 +42,7 @@
 		width: 100%;
 		position: static;
 		overflow-y: auto;
+		scrollbar-gutter: stable;
 	}
 	div.recipe {
 		margin: auto;
