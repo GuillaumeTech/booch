@@ -71,10 +71,9 @@
 		<label for="yAxis">Y axis</label>
 		<input id="yAxis" type="text" bind:value={$yAxis.value} />
 		<small> {errorsToText($yAxis.errors)}</small>
-		<label for="public">This recipe is currenty {isPublic ? 'public' : 'private'}</label>
-
-		<div>
-			{#if $activeSession}
+		{#if $activeSession}
+			<label for="public">This recipe is currenty {isPublic ? 'public' : 'private'}</label>
+			<div>
 				<button
 					on:click={() => {
 						isPublic = !isPublic;
@@ -98,8 +97,8 @@
 						{copyText}</button
 					>
 				{/if}
-			{/if}
-		</div>
+			</div>
+		{/if}
 	</form>
 </Modal>
 
