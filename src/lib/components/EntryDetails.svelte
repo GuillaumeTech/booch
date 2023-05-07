@@ -1,16 +1,17 @@
 <script lang="ts">
-	import type { AxisNames } from '../../types/recipe';
-	import { points, activeRecipeId, currentPoints } from '../../stores/recipe';
+	import type { AxisNames, Point } from '../../types/recipe';
+	import { points, activeRecipeId } from '../../stores/recipe';
 	import { fade, fly } from 'svelte/transition';
 	import FermentEditModal from './Modals/FermentEditModal.svelte';
 	import Timeline from './Timeline.svelte';
 	import IconButton from './Icons/IconButton.svelte';
 	import AlertModal from './Modals/AlertModal.svelte';
 
-	export let pointId: string, resetPickedPoint: Function, readOnly: Boolean, axisNames: AxisNames;
+	export let pointPicked: Point,
+		resetPickedPoint: Function,
+		readOnly: Boolean,
+		axisNames: AxisNames;
 
-	currentPoints;
-	$: pointPicked = $currentPoints.find(({ id }) => id === pointId);
 	let editing = false;
 	let showDeletingModal = false;
 </script>

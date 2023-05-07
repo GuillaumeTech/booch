@@ -5,6 +5,7 @@
 	let width: number, height: number;
 
 	const name = $page.data.recipe.name;
+	const description = $page.data.recipe?.description;
 	const points = $page.data.recipe.points;
 	const axisNames = $page.data.recipe.axisNames;
 
@@ -26,6 +27,9 @@
 			<h2>{name}</h2>
 		</div>
 
+		{#if description}
+			<p class="description">{description}</p>
+		{/if}
 		{#if width && height}
 			<RecipeChart {width} {height} points={pointsFermented} {axisNames} readOnly />
 		{/if}
