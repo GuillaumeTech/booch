@@ -373,6 +373,7 @@
 						font-style: italic;
 						padding-left: 0.7rem;
 						min-width: 5rem;
+						flex-grow: 2;
 					}
 				}
 			}
