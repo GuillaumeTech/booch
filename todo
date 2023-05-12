@@ -160,7 +160,10 @@
       [x] help page / landing
       [] proper domain
       [] reddit posts
-[] list of all public recipes
+[-] list of all public recipes
+ [x] basic page
+ [] search
+ [] display number of brewing
 [] login modal navigation
 [] google sign in
 - [] CI/CI 
