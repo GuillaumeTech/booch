@@ -172,7 +172,7 @@
 [x] show points tasted at date
 [x] make tasted at editable
 [-] full proper ssr for main page with login and stuff -> see feat/ssr
-
+[x] dependabot does not do preview deploy
 [] more axis
 [] download you data
 [x] currently fermenting
