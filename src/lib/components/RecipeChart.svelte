@@ -157,7 +157,6 @@
 		} else if (!nearestPoint) {
 			pointPicked = undefined;
 		}
-		console.log(pointPicked);
 	}}
 >
 	<Axis {width} {height} type="x" name={axisNames.x} scale={abscissa} tickNumber={10} {margin} />
