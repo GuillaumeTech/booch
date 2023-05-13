@@ -6,7 +6,6 @@ on:
   push:
     branches-ignore:
       - main
-      - 'chore**'
 jobs:
   Unit-Test:
     env:
@@ -48,6 +47,7 @@ jobs:
           retention-days: 30
   Deploy-Preview:
     runs-on: ubuntu-latest
+      if: "!contains(github.ref, 'chore')"
     steps:
       - uses: actions/checkout@v2
       - name: Install Vercel CLI
