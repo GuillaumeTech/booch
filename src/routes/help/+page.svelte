@@ -6,7 +6,7 @@
 		keep track of all my experiments with different flavors and fermentation times. At first, I
 		tried keeping notes on paper, but it was tough to get a overview of which ones I liked or didn't
 		like at once. Plus, I would often forget my notes at home when going grocery shopping and end up
-		buying a random one, that I might already have tried.
+		buying a random juice or fruits, that I might already have tried.
 	</p>
 	<br />
 	<p>
@@ -23,7 +23,9 @@
 	</p>
 
 	<h2>How I use it</h2>
-	Well, here's the process I had in mind when building the app, but feel free to do your own thing.
+	Well, here's the process I had in mind when building the app, but feel free to do your own thing. If
+	you're planning on using it seriouly i recommend you to create an account as it allows you to access
+	your notes on multiple devices and access some feature like sharing a recipe.
 
 	<h3>1. Creating a "recipe"</h3>
 	<p>
@@ -60,7 +62,7 @@
 	<br />
 	<p>
 		The default axis are "Dryness" and "Funk" but these can be changed to what ever you want by
-		clicking on the gear pencil next to the recipe name
+		clicking on the gear icon next to the recipe name
 	</p>
 
 	<h3>4. Sharing it</h3>
