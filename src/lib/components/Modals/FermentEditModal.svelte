@@ -140,7 +140,7 @@
 			<label for="xAxis">{axisNames.x}</label>
 			<input id="xAxis" type="number" min="0" max="10" bind:value={$xAxis.value} />
 			<small> {errorsToText($xAxis.errors)}</small>
-			<label for="yAxis{axisNames.x}">{axisNames.y}</label>
+			<label for="yAxis">{axisNames.y}</label>
 			<input id="yAxis" type="number" min="0" max="10" bind:value={$yAxis.value} />
 			<small> {errorsToText($yAxis.errors)}</small>
 		{/if}
