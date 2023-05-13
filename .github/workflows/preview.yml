@@ -47,7 +47,7 @@ jobs:
           retention-days: 30
   Deploy-Preview:
     runs-on: ubuntu-latest
-    if: "!contains(github.ref, 'chore')"
+    if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
       - uses: actions/checkout@v2
       - name: Install Vercel CLI
