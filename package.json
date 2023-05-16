@@ -10,6 +10,7 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test:unit": "vitest",
+		"test:unit:coverage": "vitest run --coverage",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write ."
 	},
@@ -24,6 +25,7 @@
 		"@types/lodash": "^4.14.194",
 		"@typescript-eslint/eslint-plugin": "^5.58.0",
 		"@typescript-eslint/parser": "^5.58.0",
+		"@vitest/coverage-istanbul": "^0.31.0",
 		"@zerodevx/svelte-toast": "^0.9.3",
 		"eslint": "^8.38.0",
 		"eslint-config-prettier": "^8.8.0",
