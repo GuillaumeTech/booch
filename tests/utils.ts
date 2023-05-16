@@ -41,8 +41,17 @@ export async function deleteRecipe(page: Page, recipeName: string) {
 	await page.getByRole('button', { name: 'OK' }).click();
 }
 
-export async function editAxes(page: Page, axisNames: { x: string; y: string }) {
-	return;
+export async function editAxes(page: Page, currentName: string, axisNames: { x: string; y: string }) {
+	await page.getByTestId(`settings`).click();
+	await page.getByTestId(`xaxis-name`).click();
+	await page.getByTestId(`xaxis-name`).fill(axisNames.x);
+	await page.getByTestId(`yaxis-name`).click();
+	await page.getByTestId(`yaxis-name`).fill(axisNames.y);
+	await page.getByRole('button', { name: 'OK' }).click();
+
+	await expect(page.getByTestId('x-axis')).toHaveText(axisNames.x);
+	await expect(page.getByTestId('y-axis')).toHaveText(axisNames.y);
+
 }
 
 export async function createPoint(page: Page, title: string, details: string) {

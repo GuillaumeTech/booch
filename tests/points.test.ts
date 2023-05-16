@@ -11,7 +11,3 @@ test('Can create,edit and delete a point', async ({ page }) => {
 	await deletePoint(page, 'something-new');
 	await expect(page.locator('circle')).toBeHidden();
 });
-
-// test('Can edit Axis name, async ({ page })', async ({ page }) => {
-//     return
-// });

@@ -66,10 +66,10 @@
 		<label for="detail">Decription</label>
 		<textarea id="detail" rows="7" bind:value={$description.value} />
 		<label for="xAxis">X axis</label>
-		<input id="xAxis" type="text" bind:value={$xAxis.value} />
+		<input id="xAxis" data-testid="xaxis-name" type="text" bind:value={$xAxis.value} />
 		<small> {errorsToText($xAxis.errors)}</small>
 		<label for="yAxis">Y axis</label>
-		<input id="yAxis" type="text" bind:value={$yAxis.value} />
+		<input id="yAxis" data-testid="yaxis-name" type="text" bind:value={$yAxis.value} />
 		<small> {errorsToText($yAxis.errors)}</small>
 		{#if $activeSession}
 			<label for="public">This recipe is currenty {isPublic ? 'public' : 'private'}</label>

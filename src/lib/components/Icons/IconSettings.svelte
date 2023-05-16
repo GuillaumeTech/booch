@@ -9,6 +9,7 @@ thus its center is not transparent. here is a proper svg path that does have a t
 </script>
 
 <button
+	data-testid="settings"
 	style={margins !== undefined ? `margin-left:${margins.left}; margin-right:${margins.right}` : ''}
 	on:click
 	{...$$restProps}
