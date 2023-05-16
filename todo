@@ -158,10 +158,10 @@
 [] check for no errors in console 
 [] more tests
  [x] setup coverage
- [] test all store CRUD functions
- [] mock suppabase
- [] at least 90% statements coverage for recipe store
+ [x] test all store CRUD functions
+ [x] at least coverage of non supabase stuff for recipe store
  [] full happy path for e2e
+ [] mock suppabase
 -------- [] POST ABOUT IT / PROD
       [x] help page / landing
       [] proper domain
