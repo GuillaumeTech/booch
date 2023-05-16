@@ -222,9 +222,6 @@ export const points = {
 	}
 };
 
-export const currentPoints = derived([recipes, activeRecipeId], ([$recipes, $activeRecipeId]) => {
-	return $recipes?.[$activeRecipeId]?.points;
-});
 
 export const currentRecipe = derived([recipes, activeRecipeId], ([$recipes, $activeRecipeId]) => {
 	return $recipes?.[$activeRecipeId];
