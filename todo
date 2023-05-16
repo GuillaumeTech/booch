@@ -157,7 +157,9 @@
 [x] add analytics 
 [] check for no errors in console 
 [] more tests
- [] setup coverage
+ [x] setup coverage
+ [] test all store CRUD functions
+ [] mock suppabase
  [] at least 90% statements coverage for recipe store
  [] full happy path for e2e
 -------- [] POST ABOUT IT / PROD
