@@ -25,7 +25,9 @@
 	const yAxis = field('yAxis', point?.y, [required()]);
 	title.validate();
 	$: isValid =
-		$title.valid && (!grading || ($xAxis.valid && $yAxis.valid && $xAxis.value && $yAxis.value));
+		$title.valid &&
+		((!grading && point.isFermenting) ||
+			($xAxis.valid && $yAxis.valid && $xAxis.value && $yAxis.value));
 </script>
 
 <Modal
