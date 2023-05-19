@@ -25,9 +25,11 @@
 	const margin: Margin = { top: 50, right: 25, bottom: 50, left: 30 };
 
 	let pointMovingIdx: number | undefined;
-	let pointPicked: Point | undefined;
+	let pointPickedId: string;
 	let nearestPoint: Point | null = null;
 	let click: boolean = false;
+
+	$: pointPicked = points.find(({ id }) => id === pointPickedId);
 
 	function computeEuclideanDistance(xa: number, ya: number, xb: number, yb: number): number {
 		return Math.sqrt((xa - xb) ** 2 + (ya - yb) ** 2);
@@ -38,7 +40,7 @@
 	}
 
 	function resetPickedPoint() {
-		pointPicked = undefined;
+		pointPickedId = '';
 	}
 
 	function drop(event: DragEvent) {
@@ -153,9 +155,9 @@
 			}
 		}
 		if (nearestPoint && !pointMovingIdx) {
-			pointPicked = points.find((point) => point.id === nearestPoint.id);
+			pointPickedId = nearestPoint.id;
 		} else if (!nearestPoint) {
-			pointPicked = undefined;
+			pointPickedId = '';
 		}
 	}}
 >
