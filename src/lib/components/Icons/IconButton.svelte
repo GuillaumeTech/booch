@@ -21,6 +21,7 @@
 <style lang="less">
 	button {
 		border: none;
+		padding: 0 6px;
 		transition: transform 150ms ease-out;
 		&:hover:not(disabled) {
 			background: none;
