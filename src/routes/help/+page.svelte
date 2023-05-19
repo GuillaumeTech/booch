@@ -5,8 +5,8 @@
 		I created this app because I love fermenting things like kombucha, and I wanted an easy way to
 		keep track of all my experiments with different flavors and fermentation times. At first, I
 		tried keeping notes on paper, but it was tough to get a overview of which ones I liked or didn't
-		like at once. Plus, I would often forget my notes at home when going grocery shopping and end up
-		buying a random juice or fruits, that I might already have tried.
+		like at once. Plus, I would often forget my notes at home when going grocery shopping resulting
+		in unintentionally purchasing juices or fruits that I had already tried before.
 	</p>
 	<br />
 	<p>
@@ -19,13 +19,13 @@
 
 	<p>
 		And well, maybe I'm not the only one who struggled with this kind of thing - that's why I
-		decided to make the app public and more general-purpose.
+		decided to make the app public and more general-purpose than just kombucha.
 	</p>
 
 	<h2>How I use it</h2>
 	Well, here's the process I had in mind when building the app, but feel free to do your own thing. If
-	you're planning on using it seriouly i recommend you to create an account as it allows you to access
-	your notes on multiple devices and access some feature like sharing a recipe.
+	you're planning on using it seriouly I recommend you to create an account (bottom left in the app sidebar)
+	as it allows you to access your notes on multiple devices and access some feature like sharing a recipe.
 
 	<h3>1. Creating a "recipe"</h3>
 	<p>
@@ -88,13 +88,14 @@
 	div {
 		padding: 0 10rem;
 		margin: auto;
+		margin-top: 1rem;
 		@media screen and (max-width: 800px) {
 			padding: 0 1rem;
 		}
 	}
 
 	h2 {
-		margin-top: 2rem;
+		margin-top: 1.5rem;
 		span {
 			font-family: Oi;
 			font-size: 1.2rem;
