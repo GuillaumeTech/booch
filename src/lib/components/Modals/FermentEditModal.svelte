@@ -26,7 +26,7 @@
 	title.validate();
 	$: isValid =
 		$title.valid &&
-		((!grading && point.isFermenting) ||
+		((!grading && point?.isFermenting) ||
 			($xAxis.valid && $yAxis.valid && $xAxis.value && $yAxis.value));
 </script>
 
@@ -140,10 +140,24 @@
 		{/if}
 		{#if !point?.isFermenting || grading}
 			<label for="xAxis">{axisNames.x}</label>
-			<input id="xAxis" type="number" min="0" max="10" bind:value={$xAxis.value} />
+			<input
+				id="xAxis"
+				data-testid={`xValue-${point?.title}`}
+				type="number"
+				min="0"
+				max="10"
+				bind:value={$xAxis.value}
+			/>
 			<small> {errorsToText($xAxis.errors)}</small>
 			<label for="yAxis">{axisNames.y}</label>
-			<input id="yAxis" type="number" min="0" max="10" bind:value={$yAxis.value} />
+			<input
+				id="yAxis"
+				data-testid={`yValue-${point?.title}`}
+				type="number"
+				min="0"
+				max="10"
+				bind:value={$yAxis.value}
+			/>
 			<small> {errorsToText($yAxis.errors)}</small>
 		{/if}
 	</form>
