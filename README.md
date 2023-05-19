@@ -1,6 +1,6 @@
 # My Fermentation Notes
-🛠 Built with Svelte, Supabase and deployed with vercel here:  https://myfermentationnotes.vercel.app/
 
+🛠 Built with Svelte, Supabase and deployed with vercel here: https://myfermentationnotes.vercel.app/
 
 ## Developing
 

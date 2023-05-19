@@ -29,6 +29,7 @@
 	let nearestPoint: Point | null = null;
 	let click: boolean = false;
 
+	// we don't keep pointPicked directly so when points are updated the picked points is also updated
 	$: pointPicked = points.find(({ id }) => id === pointPickedId);
 
 	function computeEuclideanDistance(xa: number, ya: number, xb: number, yb: number): number {

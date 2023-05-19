@@ -14,12 +14,13 @@ vi.mock('@supabase/supabase-js', () => {
 	return {
 		createClient: () => ({
 			auth: {
-				getSession: () => { return { data: { session: true } } }
+				getSession: () => {
+					return { data: { session: true } };
+				}
 			}
 		})
 	};
 });
-
 
 const recipeFixture = {
 	name: 'test',
@@ -31,7 +32,6 @@ const recipeFixture = {
 	description: 'test test descript'
 };
 
-
 const recipeUpdateFixture = {
 	id: recipeId,
 	name: 'testaa',
@@ -40,7 +40,6 @@ const recipeUpdateFixture = {
 	created_at: new Date(),
 	description: 'test test descript'
 };
-
 
 const pointsFixture = {
 	x: 5,
@@ -92,11 +91,13 @@ describe('Recipes store', () => {
 		recipes.add(recipeFixture);
 		expect(get(recipes)).toStrictEqual({ [recipeId]: recipeFixture });
 		recipes.update(recipeUpdateFixture);
-		expect(get(recipes)).toStrictEqual({ [recipeId]: { ...recipeFixture, ...recipeUpdateFixture } });
+		expect(get(recipes)).toStrictEqual({
+			[recipeId]: { ...recipeFixture, ...recipeUpdateFixture }
+		});
 	});
 
 	it('update a recipe name', () => {
-		const newName = 'newname'
+		const newName = 'newname';
 		recipes.add(recipeFixture);
 		expect(get(recipes)).toStrictEqual({ [recipeId]: recipeFixture });
 		recipes.updateName(recipeId, newName);
@@ -106,11 +107,9 @@ describe('Recipes store', () => {
 	it('get active recipe', () => {
 		recipes.add(recipeFixture);
 		recipes.add({ ...recipeFixture, id: 'active' });
-		activeRecipeId.set('active')
+		activeRecipeId.set('active');
 		expect(get(currentRecipe)).toStrictEqual({ ...recipeFixture, id: 'active' });
-
 	});
-
 
 	it('duplicate a point', () => {
 		recipes.add(recipeFixture);
@@ -121,7 +120,10 @@ describe('Recipes store', () => {
 		});
 		points.duplicate(pointId, recipeId);
 		expect(get(recipes)).toStrictEqual({
-			[recipeId]: { ...recipeFixture, points: [pointsFixture, { ...pointsFixture, id: 'abc', x: undefined, y: undefined }] }
+			[recipeId]: {
+				...recipeFixture,
+				points: [pointsFixture, { ...pointsFixture, id: 'abc', x: undefined, y: undefined }]
+			}
 		});
 	});
 
@@ -157,7 +159,8 @@ describe('Recipes store', () => {
 		points.update(pointsUpdateFixture, recipeId);
 		expect(get(recipes)).toStrictEqual({
 			[recipeId]: {
-				...recipeFixture, points: [{ ...pointsFixture, ...pointsUpdateFixture }]
+				...recipeFixture,
+				points: [{ ...pointsFixture, ...pointsUpdateFixture }]
 			}
 		});
 	});
