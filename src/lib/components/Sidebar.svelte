@@ -200,6 +200,7 @@
 		</li>
 		<li class="help-contact"><a href="/help">Help/About</a></li>
 		<li class="help-contact"><a href="/contact">Contact</a></li>
+		<li class="help-contact"><a href="/download">Export data</a></li>
 
 		{#if activeSession && $activeSession?.user}
 			<li class="user">Logged as: {$activeSession.user.email}</li>
