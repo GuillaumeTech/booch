@@ -22,9 +22,8 @@ test('Cannot set grading to empty', async ({ page }) => {
 	// 	opens the edit modal
 	await page.getByTestId('something-new').click();
 	await page.getByTestId('edit-something-new').click();
-	// empties the x value	
+	// empties the x value
 	await page.getByTestId('xValue-something-new').fill('');
 	// check that we can't save
 	await expect(page.getByRole('button', { name: 'OK' })).toBeDisabled();
 });
-
