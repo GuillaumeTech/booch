@@ -6,6 +6,11 @@
 </script>
 
 <div class="recipes">
+	<span
+		><h2>All public recipes</h2>
+		<a href="/"> Go back to the app</a></span
+	>
+
 	<li>
 		{#each recipes as { id, name, description } (id)}
 			<ul>
@@ -34,6 +39,7 @@
 	}
 	div.pages {
 		margin-top: 2rem;
+		margin-bottom: 2rem;
 		display: flex;
 		flex-direction: row;
 		.next {
@@ -49,5 +55,12 @@
 		a {
 			font-size: 1.2rem;
 		}
+	}
+	span {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 1rem;
 	}
 </style>
