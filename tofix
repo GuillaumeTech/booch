@@ -4,3 +4,4 @@
 [x] validate button in sidebar create scroll  
 [x] icons shifting arround in sidebar when selected
 [x] public recipe are shown to every logged account in their sidebar
+[x] password Recovery flow bad layout +  bad redirect url
