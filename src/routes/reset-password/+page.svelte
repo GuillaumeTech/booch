@@ -5,7 +5,6 @@
 	import { errorsToText } from '$lib/forms';
 	import { supabase } from '../../supabaseClient';
 
-	const emailFromQuery = $page.url.searchParams.get('email');
 	let success = false;
 	let resetError = false;
 	const password = field('password', '', [required(), min(6)]);
@@ -61,15 +60,14 @@
 	form {
 		display: flex;
 		flex-direction: column;
-		min-height: 20rem;
+
 		max-width: 30rem;
 
 		gap: 1rem;
 		border: black 2px solid;
 		padding: 2rem;
 		margin: auto;
-		position: relative;
-		top: 20%;
+		margin-top: 25rem;
 	}
 	@media screen and (max-width: 600px) {
 		form {
@@ -84,7 +82,6 @@
 	div {
 		margin: auto;
 		position: relative;
-		top: 30%;
 	}
 	small {
 		height: 1.2rem;

@@ -55,14 +55,13 @@
 	form {
 		display: flex;
 		flex-direction: column;
-		min-height: 20rem;
 		max-width: 30rem;
 
 		gap: 1rem;
 		border: black 2px solid;
 		padding: 2rem;
 		margin: auto;
-		margin-top: 25vh;
+		margin-top: 25rem;
 	}
 	@media screen and (max-width: 600px) {
 		form {
@@ -76,7 +75,6 @@
 	div {
 		margin: auto;
 		position: relative;
-		top: 30%;
 	}
 	small {
 		height: 1.2rem;
