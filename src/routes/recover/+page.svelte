@@ -33,7 +33,7 @@
 			on:click={async () => {
 				if ($email.value) {
 					const { data, error } = await supabase.auth.resetPasswordForEmail($email.value, {
-						redirectTo: window.location.origin // not /reset-password as it's included in the email template
+						redirectTo: `${window.location.origin}/reset-password`
 					});
 
 					if (!error) {
