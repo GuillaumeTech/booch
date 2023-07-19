@@ -16,7 +16,7 @@
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^17.6.3",
-		"@commitlint/config-conventional": "^17.6.3",
+		"@commitlint/config-conventional": "^17.6.7",
 		"@playwright/test": "^1.33.0",
 		"@sveltejs/adapter-auto": "^2.0.1",
 		"@sveltejs/adapter-vercel": "^3.0.1",
